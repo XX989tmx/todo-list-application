@@ -105,6 +105,12 @@ class Inbox {
     this.size = 0;
   }
 
+  addNewTodo(title, notes, scheduledDate, deadline) {
+    const todo = new Todo();
+    const newTodo = todo.set(title, notes, scheduledDate, deadline);
+    this.add(newTodo);
+  };
+
   getAll() {
     return this.list;
   }
