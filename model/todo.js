@@ -1,14 +1,23 @@
 const { v4: uuidv4 } = require("uuid");
 
 class Todo {
-  constructor(title, notes, dateCreated, deadline, scheduledDate, deadline) {
-    this.id = uuidv4();
+  constructor(title, notes, dateCreated, deadline, scheduledDate) {
+    this.id = null;
     this.title = null;
     this.notes = null;
-    this.dateCreated = new Date();
+    this.dateCreated = null;
     this.scheduledDate = null;
     this.deadline = null;
     this.isDone = false;
+  }
+
+  set(title, notes, scheduledDate, deadline) {
+    this.id = "12345";
+    this.title = title ? title : null;
+    this.notes = notes ? notes : null;
+    this.dateCreated = new Date();
+    this.scheduledDate = scheduledDate ? new Date(scheduledDate) : null;
+    this.deadline = deadline ? new Date(deadline) : null;
   }
 
   completeTodo() {
@@ -40,6 +49,14 @@ class Todo {
   }
 }
 
+const todo = new Todo();
+todo.set("todo", "buy milk", "2021-1-23", "2021-2-23");
+console.log(todo);
+todo.completeTodo();
+const todo2 = new Todo();
+todo2.set("todo2", "buy milk2", "2021-1-23", "2021-2-23");
+console.log(todo);
+
 class Tody {
   constructor() {
     this.todaysList = [];
@@ -68,10 +85,12 @@ class Tody {
 class Inbox {
   constructor() {
     this.list = [];
+    this.size = 0;
   }
 
   add(todo) {
     this.list.push(todo);
+    this.size++;
   }
 
   remove(id) {
@@ -79,6 +98,7 @@ class Inbox {
       (v) => v.id.toString() === id.toString()
     );
     this.list.splice(target, 1);
+    this.size--;
   }
 
   find(id) {
@@ -89,9 +109,38 @@ class Inbox {
   }
 
   count() {
-    return this.list.length;
+    return this.size;                   
+  }
+
+  checkIsDone(id) {
+    let target;
+    for (let i = 0; i < this.list.length; i++) {
+      const todo = this.list[i];
+      if (this.list[i].id.toString() === id.toString()) {
+        if (this.list[i].isDone === true) {
+          return i;
+        }
+      }
+    }
+    return false;
+  }
+
+  removeCompletedTodo(id) {
+    let idx = this.checkIsDone(id);
+    console.log(idx);
+    this.list = this.list.filter((v) => v.isDone !== true);
+    this.size--;
   }
 }
+
+const inbox = new Inbox();
+inbox.add(todo);
+inbox.add(todo2)
+console.log(inbox);
+inbox.removeCompletedTodo("12345");
+console.log(inbox);
+console.log(inbox.count);
+
 
 class Project {
   constructor(title, notes, isDone, dateCreated, deadLine, scheduledDate) {
