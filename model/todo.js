@@ -62,6 +62,23 @@ class Tody {
     this.todaysList = [];
   }
 
+  getAll() {
+    return this.todaysList;
+  }
+
+  completeTodo(id) {
+    for (let i = 0; i < this.list.length; i++) {
+      if (
+        this.list[i].toString() === id.toString() &&
+        this.list[i].isDone === false
+      ) {
+        this.list[i].isDone = true;
+        this.removeTodoFromToday(id);
+        return this.list[i];
+      }
+    }
+  }
+
   setTodoAsToday(todo) {
     this.todaysList.push(todo);
   }
@@ -88,6 +105,10 @@ class Inbox {
     this.size = 0;
   }
 
+  getAll() {
+    return this.list;
+  }
+
   add(todo) {
     this.list.push(todo);
     this.size++;
@@ -109,7 +130,7 @@ class Inbox {
   }
 
   count() {
-    return this.size;                   
+    return this.size;
   }
 
   checkIsDone(id) {
@@ -135,12 +156,12 @@ class Inbox {
 
 const inbox = new Inbox();
 inbox.add(todo);
-inbox.add(todo2)
+inbox.add(todo2);
 console.log(inbox);
 inbox.removeCompletedTodo("12345");
 console.log(inbox);
 console.log(inbox.count);
-
+console.log(inbox.getAll());
 
 class Project {
   constructor(title, notes, isDone, dateCreated, deadLine, scheduledDate) {
