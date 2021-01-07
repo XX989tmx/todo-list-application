@@ -18,7 +18,7 @@ class Todo {
     this.dateCreated = new Date();
     this.scheduledDate = scheduledDate ? new Date(scheduledDate) : null;
     this.deadline = deadline ? new Date(deadline) : null;
-  }
+  };
 
   completeTodo() {
     this.isDone = true;
