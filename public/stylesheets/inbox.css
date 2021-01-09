@@ -17,3 +17,29 @@
 .list-style-none {
     list-style-type: none;
 }
+
+#todo-input {
+    display: none;
+    z-index: 200;
+};
+
+.backdrop {
+    
+    display:none;
+    background-color: black;
+    opacity: 0.5;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+}
+.backdropActive {
+    background-color: black;
+    opacity: 0.5;
+    min-width: 100vw;
+    min-height: 100vh;
+    z-index: 100;
+}
+
+.inbox-mainsection-heading {
+    color: aqua;
+}

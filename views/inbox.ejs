@@ -29,7 +29,7 @@
             <!-- main section -->
             <div class="row">
               <div class="col">
-                <h3 id="inbox-mainsection-heading">Inbox</h3>
+                <h3 id="inbox-mainsection-heading" class='inbox-mainsection-heading'>Inbox</h3>
               </div>
             </div>
             <div class="main-section row">
@@ -40,26 +40,37 @@
                       <div class="col-1">
                         <input type="checkbox" name="" id="checkbox1" />
                       </div>
-                      <div class="col-11"></div>
+                      <div class="col-11" id="todo-item1"></div>
                     </div>
                   </li>
                 </ul>
               </div>
-              <div class="col-12"><div id="add-todo-button">add todo</div></div>
+              <div class="col-12">
+                <div id="add-todo-button">add todo</div>
+
+                <div id="todo-input">
+                  <form>
+                    <input
+                      id="todo-input-title"
+                      type=""
+                      name=""
+                      value=""
+                    /><button type="submit">add</button>
+                  </form>
+                </div>
+
+                <a id="linkto-google" href="google.com" title="google"></a>
+              </div>
             </div>
           </div>
         </div>
+        <div class="backdrop" id="backdrop"></div>
       </div>
     </main>
     <footer></footer>
-    <script>
-      let inboxSidebarHeading = document.getElementById(
-        "inbox-sidebar-heading"
-      );
-      inboxSidebarHeading.addEventListener("mouseover", () => {
-        console.log("mouse-over");
-      });
+    <!-- Option 1: Bootstrap Bundle with Popper -->
 
+    <script>
       let addTodoBtn = document.getElementById("add-todo-button");
       addTodoBtn.addEventListener("click", () => {
         console.log("clicked");
@@ -76,6 +87,57 @@
       inboxMainsectionHeading.addEventListener("mouseover", () => {
         console.log("mouse-over");
       });
+
+      let todoItem1 = document.getElementById("todo-item1");
+      todoItem1.addEventListener("click", () => {
+        console.log("clicked1");
+      });
+
+      $(document).ready(function () {
+        $("#add-todo-button").on({
+          click: function () {
+              $('#inbox-mainsection-heading').removeClass('inbox-mainsection-heading').addClass('red')
+            $("#todo-input").toggle("fast");
+            $("#todo-input-title").focus().val("test");
+            console.log($("#todo-input-title").val());
+            console.log($("#inbox-sidebar-heading").html());
+            console.log($("#linkto-google").attr("href"));
+            $("#linkto-google").attr({
+              href: "youtube.com",
+              title: "youtube",
+            });
+            console.log($("#linkto-google").attr("href"));
+            let input2 =
+              '<input id="todo-input-title2" type="" name="" value="" />';
+            $("#todo-input").append(input2);
+          },
+        });
+      });
+
+      class InboxEjsScript {
+        setInboxSidebarHeadingAction() {
+          let inboxSidebarHeading = document.getElementById(
+            "inbox-sidebar-heading"
+          );
+          inboxSidebarHeading.addEventListener("mouseover", () => {
+            console.log("mouse-over");
+          });
+
+          $(document).ready(function () {
+            $("#inbox-sidebar-heading").on({
+              click: function () {
+                console.log("heading-clicked2");
+              },
+
+              mouseleave: function () {
+                $("#inbox-sidebar-heading").hide(1000);
+              },
+            });
+          });
+        }
+      }
+      const inbox = new InboxEjsScript();
+      inbox.setInboxSidebarHeadingAction();
     </script>
   </body>
 </html>
