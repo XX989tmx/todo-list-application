@@ -1,3 +1,19 @@
 .red {
-    color: red;
+  color: red;
+}
+.sidebar {
+  min-height: 100vh;
+}
+
+.main-area {
+  min-height: 100vh;
+}
+
+.margin-and-padding-0 {
+    margin: 0;
+    padding: 0;
+}
+
+.list-style-none {
+    list-style-type: none;
 }

@@ -16,17 +16,19 @@ app.get("/inbox", (req, res) => {
 //     if (err) console.log(err);
 //     connection.release();
 // })
-database
-  .execute("SELECT * FROM todo")
-  .then((result) => {
-    console.log(result);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+// database
+//   .execute("SELECT * FROM todo")
+//   .then((result) => {
+//     console.log(result);
+//   })
+//   .catch((err) => {
+//     console.log(err);
+//   });
 
 app.use((req, res, next) => {
   res.status(404).render("404");
 });
 
-app.listen(3000);
+
+
+app.listen(8080);

@@ -2,13 +2,80 @@
 <html lang="en">
   <head>
     <title>inbox page</title>
+
     <%- include('./partials/_head.ejs') %>
     <link href="/stylesheets/inbox.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
     <header></header>
-    <main><h1 class="red">inbox</h1></main>
+    <main>
+      <div class="container-md fluid">
+        <div class="row">
+          <!-- 以下はパーシャル化
+             -->
+
+          <div class="sidebar col-xs-3 col-sm-4 col-md-3">
+            <!-- sidebar -->
+            <ul class="margin-and-padding-0 list-style-none">
+              <li>
+                <div class="row">
+                  <div class="col-1"></div>
+                  <div class="col-11" id="inbox-sidebar-heading">Inbox</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="main-area col-xs-9 col-sm-8 col-md-9">
+            <!-- main section -->
+            <div class="row">
+              <div class="col">
+                <h3 id="inbox-mainsection-heading">Inbox</h3>
+              </div>
+            </div>
+            <div class="main-section row">
+              <div class="col-12">
+                <ul class="margin-and-padding-0 list-style-none">
+                  <li>
+                    <div class="row">
+                      <div class="col-1">
+                        <input type="checkbox" name="" id="checkbox1" />
+                      </div>
+                      <div class="col-11"></div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-12"><div id="add-todo-button">add todo</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
     <footer></footer>
-    <script></script>
+    <script>
+      let inboxSidebarHeading = document.getElementById(
+        "inbox-sidebar-heading"
+      );
+      inboxSidebarHeading.addEventListener("mouseover", () => {
+        console.log("mouse-over");
+      });
+
+      let addTodoBtn = document.getElementById("add-todo-button");
+      addTodoBtn.addEventListener("click", () => {
+        console.log("clicked");
+      });
+
+      let checkbox1 = document.getElementById("checkbox1");
+      checkbox1.addEventListener("change", () => {
+        console.log("checked");
+      });
+
+      let inboxMainsectionHeading = document.getElementById(
+        "inbox-mainsection-heading"
+      );
+      inboxMainsectionHeading.addEventListener("mouseover", () => {
+        console.log("mouse-over");
+      });
+    </script>
   </body>
 </html>
