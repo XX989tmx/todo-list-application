@@ -45,7 +45,16 @@
                       <div class="col-1">
                         <input type="checkbox" name="" id="checkbox1" />
                       </div>
-                      <div class="col-10" id="todo-item">todo item title</div>
+                      <div class="col-9" id="todo-item">todo item title</div>
+                      <div class="drag-button" id="drag-button">D</div>
+                      <div
+                        class="col-1"
+                        id="update-todo-button"
+                        data-toggle="modal"
+                        data-target="#update-todo-input-modal"
+                      >
+                        E
+                      </div>
                       <div id="delete-todo-button" class="col-1 delete-todo">
                         X
                       </div>
@@ -62,12 +71,14 @@
                   add todo
                 </div>
 
+                <!--　パーシャル化  -->
+                <!-- input modal. add new todo modal -->
                 <div id="todo-input-modal" class="modal fade" role="dialog">
                   <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
                         <div class="row">
-                          <div class="col-10"></div>
+                          <div class="col-10">Add todo</div>
                           <div class="col-2">
                             <button
                               type="submit"
@@ -139,6 +150,89 @@
                 </div>
 
                 <a id="linkto-google" href="google.com" title="google"></a>
+              </div>
+
+              <!-- update existing item modal -->
+              <div
+                id="update-todo-input-modal"
+                class="modal fade"
+                role="dialog"
+              >
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <div class="row">
+                        <div class="col-10">Update todo</div>
+                        <div class="col-2">
+                          <button
+                            type="submit"
+                            id="close-modal-button"
+                            data-dismiss="modal"
+                          >
+                            close
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-body">
+                      <form id="update-todo-form" role="form">
+                        <div class="form-group">
+                          <label for="todo-input-title">todo name</label>
+                          <input
+                            id="update-todo-input-title"
+                            type="text"
+                            name=""
+                            value=""
+                            placeholder="to do"
+                          />
+                        </div>
+                        <div class="form-group">
+                          <label for="todo-input-notes">notes</label>
+                          <input
+                            id="update-todo-input-notes"
+                            type="textarea"
+                            name=""
+                            value=""
+                            placeholder="notes"
+                          />
+                        </div>
+                        <div class="form-group">
+                          <label for="todo-schedule">schedule</label>
+                          <input
+                            id="update-todo-schedule"
+                            type="datetime"
+                            name=""
+                            id=""
+                            aria-label="schedule"
+                          />
+                        </div>
+                        <div class="form-group">
+                          <label for="todo-deadline">deadline</label>
+                          <input
+                            id="update-todo-deadline"
+                            type="datetime"
+                            name=""
+                            id=""
+                            aria-label="deadline"
+                          />
+                        </div>
+
+                        <button id="update-todo-inputs" type="submit">
+                          Update
+                        </button>
+                      </form>
+                    </div>
+                    <div class="modal-footer">
+                      <button
+                        id="cancel-todo-input"
+                        type="submit"
+                        data-dismiss="modal"
+                      >
+                        cancel
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -298,18 +392,45 @@
 
         viewTodo() {
           // in case updateTodo action could not meet a requirement, implement this.
+          $(document).ready(function () {
+            $("#todo-item").on({
+              mouseover: function () {
+                //pop over?
+                console.log("show contents");
+              },
+            });
+          });
+        }
+
+        dragTodo() {
+          $(document).ready(function () {
+            $("#drag-button").on({
+              drag: function () {
+                console.log("dragged");
+              },
+            });
+          });
         }
 
         updateTodo() {
           $(document).ready(function () {
-            $('#todo-item').on({
+            let formData = new FormData();
+            $("#update-todo-button").on({
               click: function () {
                 // update todo item via modal window;
                 // if item is updated, send patch request to server. ajax.
-                console.log('open update window');
-              }
-            })
-          })
+                console.log("open update window");
+                $("#update-todo-input-modal").modal();
+              },
+            });
+
+            $("#update-todo-form").on({
+              submit: function (event) {
+                
+                console.log($("#update-todo-input-title").val());
+              },
+            });
+          });
         }
 
         deleteTodo() {
@@ -323,18 +444,17 @@
               },
             });
           });
-        };
+        }
 
         completeTodo() {
           $(document).ready(function () {
-            $('#checkbox1').on({
+            $("#checkbox1").on({
               click: function () {
                 // complete todo item. move item into completed folder. send request to server. ajax.
-
                 // hide todo item animation. namely add method to remove dom node of target todo item.
-              }
-            })
-          })
+              },
+            });
+          });
         }
       }
       const inbox = new InboxEjsScript();
@@ -342,6 +462,8 @@
       inbox.addNewTodo();
       inbox.updateTodo();
       inbox.deleteTodo();
+      inbox.viewTodo();
+      inbox.dragTodo();
     </script>
   </body>
 </html>
