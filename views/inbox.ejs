@@ -51,65 +51,87 @@
                 </ul>
               </div>
               <div class="col-12">
-                <div id="add-todo-button">add todo</div>
+                <div
+                  id="add-todo-button"
+                  data-toggle="modal"
+                  data-target="#todo-input-modal"
+                >
+                  add todo
+                </div>
 
-                <div id="todo-input-modal">
-                  <div class="modal-header">
-                    <div class="row">
-                      <div class="col-10"></div>
-                      <div class="col-2">
-                        <button type="submit" id="close-modal-button">
-                          close
+                <div id="todo-input-modal" class="modal fade" role="dialog">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <div class="row">
+                          <div class="col-10"></div>
+                          <div class="col-2">
+                            <button
+                              type="submit"
+                              id="close-modal-button"
+                              data-dismiss="modal"
+                            >
+                              close
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal-body">
+                        <form role="form">
+                          <div class="form-group">
+                            <label for="todo-input-title">todo name</label>
+                            <input
+                              id="todo-input-title"
+                              type="text"
+                              name=""
+                              value=""
+                            />
+                          </div>
+                          <div class="form-group">
+                            <label for="todo-input-notes">notes</label>
+                            <input
+                              id="todo-input-notes"
+                              type="textarea"
+                              name=""
+                              value=""
+                            />
+                          </div>
+                          <div class="form-group">
+                            <label for="todo-schedule">schedule</label>
+                            <input
+                              id="todo-schedule"
+                              type="datetime"
+                              name=""
+                              id=""
+                              aria-label="schedule"
+                            />
+                          </div>
+                          <div class="form-group">
+                            <label for="todo-deadline">deadline</label>
+                            <input
+                              id="todo-deadline"
+                              type="datetime"
+                              name=""
+                              id=""
+                              aria-label="deadline"
+                            />
+                          </div>
+
+                          <button id="submit-todo-inputs" type="submit">
+                            add
+                          </button>
+                        </form>
+                      </div>
+                      <div class="modal-footer">
+                        <button
+                          id="cancel-todo-input"
+                          type="submit"
+                          data-dismiss="modal"
+                        >
+                          cancel
                         </button>
                       </div>
                     </div>
-                  </div>
-                  <div class="modal-body">
-                    <form role="form">
-                      <div class="form-group">
-                        <label for="todo-input-title">todo name</label>
-                        <input
-                          id="todo-input-title"
-                          type="text"
-                          name=""
-                          value=""
-                        />
-                      </div>
-                      <div class="form-group">
-                        <label for="todo-input-notes">notes</label>
-                        <input
-                          id="todo-input-notes"
-                          type="textarea"
-                          name=""
-                          value=""
-                        />
-                      </div>
-                      <div class="form-group">
-                        <label for="todo-schedule">schedule</label>
-                        <input
-                          id="todo-schedule"
-                          type="datetime"
-                          name=""
-                          id=""
-                          aria-label="schedule"
-                        />
-                      </div>
-                      <div class="form-group">
-                        <label for="todo-deadline">deadline</label>
-                        <input
-                          id="todo-deadline"
-                          type="datetime"
-                          name=""
-                          id=""
-                          aria-label="deadline"
-                        />
-                      </div>
-
-                      <button id="submit-todo-inputs" type="submit">add</button>
-                    </form>
-                  </div>
-                  <div class="modal-footer">
-                    <button id="cancel-todo-input" type="submit">cancel</button>
                   </div>
                 </div>
 
@@ -123,7 +145,21 @@
     </main>
     <footer></footer>
     <!-- Option 1: Bootstrap Bundle with Popper -->
-
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
+      integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
+      integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+      crossorigin="anonymous"
+    ></script>
     <script>
       let addTodoBtn = document.getElementById("add-todo-button");
       addTodoBtn.addEventListener("click", () => {
@@ -205,7 +241,7 @@
                 console.log("title focused");
               },
               blur: function () {
-                // add green check dom element or show element; 
+                // add green check dom element or show element;
                 console.log("lose focus");
               },
             });
