@@ -45,7 +45,10 @@
                       <div class="col-1">
                         <input type="checkbox" name="" id="checkbox1" />
                       </div>
-                      <div class="col-11" id="todo-item1"></div>
+                      <div class="col-10" id="todo-item">todo item title</div>
+                      <div id="delete-todo-button" class="col-1 delete-todo">
+                        X
+                      </div>
                     </div>
                   </li>
                 </ul>
@@ -178,7 +181,7 @@
         console.log("mouse-over");
       });
 
-      let todoItem1 = document.getElementById("todo-item1");
+      let todoItem1 = document.getElementById("todo-item");
       todoItem1.addEventListener("click", () => {
         console.log("clicked1");
       });
@@ -292,10 +295,53 @@
             });
           });
         }
+
+        viewTodo() {
+          // in case updateTodo action could not meet a requirement, implement this.
+        }
+
+        updateTodo() {
+          $(document).ready(function () {
+            $('#todo-item').on({
+              click: function () {
+                // update todo item via modal window;
+                // if item is updated, send patch request to server. ajax.
+                console.log('open update window');
+              }
+            })
+          })
+        }
+
+        deleteTodo() {
+          $(document).ready(function () {
+            $("#delete-todo-button").on({
+              click: function () {
+                // delete. move item into trash. send delete request to server. ajax;
+
+                // hide todo item animation. namely add method to remove dom node of target todo item. fade animation.
+                console.log("deleted");
+              },
+            });
+          });
+        };
+
+        completeTodo() {
+          $(document).ready(function () {
+            $('#checkbox1').on({
+              click: function () {
+                // complete todo item. move item into completed folder. send request to server. ajax.
+
+                // hide todo item animation. namely add method to remove dom node of target todo item.
+              }
+            })
+          })
+        }
       }
       const inbox = new InboxEjsScript();
       inbox.setInboxSidebarHeadingAction();
       inbox.addNewTodo();
+      inbox.updateTodo();
+      inbox.deleteTodo();
     </script>
   </body>
 </html>
