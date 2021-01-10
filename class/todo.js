@@ -47,6 +47,31 @@ class Todo {
   updateDeadline(deadLine) {
     this.deadline = deadLine;
   }
+
+  getRemainingDay() {
+    const today = new Date();
+    const todaysMonth = today.getMonth();
+    const todaysDay = today.getDay();
+
+    const deadline = this.deadline;
+    const deadlineMonth = deadline.getMonth();
+    let remainingDayOfThisMonth;
+    const deadLineDay = deadline.getDay();
+    if (todaysMonth === deadlineMonth) {
+      remainingDayOfThisMonth = +deadLineDay - +todaysDay;
+
+    } else {
+      // get date count of from today to end of this month;
+      // above count + deadlineDay;
+      // return this sum
+    }
+
+
+  };
+
+  countDownToDeadline() {
+    
+  }
 }
 
 const todo = new Todo();

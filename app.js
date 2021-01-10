@@ -9,9 +9,15 @@ app.set("view engine", "ejs");
 app.set("views", "./views");
 app.use(express.static(__dirname + "/public"));
 
-app.get("/inbox", (req, res) => {
+app.get("/inbox", async(req, res,next) => {
   res.render("inbox");
 });
+
+app.post('/inbox/createTodo',async(req,res,next) => {
+  
+
+  res.status(302).redirect('/inbox');
+})
 // database.getConnection((err) => {
 //     if (err) console.log(err);
 //     connection.release();

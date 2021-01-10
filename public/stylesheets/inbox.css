@@ -1,3 +1,7 @@
+.main {
+  margin-top: 30px;
+}
+
 .red {
   color: red;
 }
@@ -10,36 +14,39 @@
 }
 
 .margin-and-padding-0 {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 .list-style-none {
-    list-style-type: none;
+  list-style-type: none;
 }
 
 #todo-input {
-    display: none;
-    z-index: 200;
-};
+  display: none;
+  z-index: 200;
+}
+
+.todo-items {
+  cursor: pointer;
+}
 
 .backdrop {
-    
-    display:none;
-    background-color: black;
-    opacity: 0.5;
-    width: 100%;
-    height: 100%;
-    z-index: 100;
+  display: none;
+  background-color: black;
+  opacity: 0.5;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
 }
 .backdropActive {
-    background-color: black;
-    opacity: 0.5;
-    min-width: 100vw;
-    min-height: 100vh;
-    z-index: 100;
+  background-color: black;
+  opacity: 0.5;
+  min-width: 100vw;
+  min-height: 100vh;
+  z-index: 100;
 }
 
-.inbox-mainsection-heading {
+/* .inbox-mainsection-heading {
     color: aqua;
-}
+} */
