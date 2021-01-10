@@ -37,7 +37,7 @@
                 </h3>
               </div>
             </div>
-            <div class="main-section row">
+            <div id="main-section" class="main-section row">
               <div class="col-12">
                 <ul class="margin-and-padding-0 list-style-none">
                   <li>
@@ -321,6 +321,12 @@
               },
             });
           });
+        };
+
+        loadItem(idTagElement) {
+          $(document).ready(function () {
+            $('#main-section').load('inbox');
+          })
         }
 
         addNewTodo() {
