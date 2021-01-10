@@ -53,17 +53,64 @@
               <div class="col-12">
                 <div id="add-todo-button">add todo</div>
 
-                <div id="todo-input">
-                  <form>
-                    <input id="todo-input-title" type="text" name="" value="" />
-                    <input
-                      id="todo-input-notes"
-                      type="textarea"
-                      name=""
-                      value=""
-                    />
-                    <button type="submit">add</button>
-                  </form>
+                <div id="todo-input-modal">
+                  <div class="modal-header">
+                    <div class="row">
+                      <div class="col-10"></div>
+                      <div class="col-2">
+                        <button type="submit" id="close-modal-button">
+                          close
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-body">
+                    <form role="form">
+                      <div class="form-group">
+                        <label for="todo-input-title">todo name</label>
+                        <input
+                          id="todo-input-title"
+                          type="text"
+                          name=""
+                          value=""
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label for="todo-input-notes">notes</label>
+                        <input
+                          id="todo-input-notes"
+                          type="textarea"
+                          name=""
+                          value=""
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label for="todo-schedule">schedule</label>
+                        <input
+                          id="todo-schedule"
+                          type="datetime"
+                          name=""
+                          id=""
+                          aria-label="schedule"
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label for="todo-deadline">deadline</label>
+                        <input
+                          id="todo-deadline"
+                          type="datetime"
+                          name=""
+                          id=""
+                          aria-label="deadline"
+                        />
+                      </div>
+
+                      <button id="submit-todo-inputs" type="submit">add</button>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button id="cancel-todo-input" type="submit">cancel</button>
+                  </div>
                 </div>
 
                 <a id="linkto-google" href="google.com" title="google"></a>
@@ -142,9 +189,77 @@
             });
           });
         }
+
+        addNewTodo() {
+          $(document).ready(function () {
+            $("#add-todo-button").on({
+              click: function () {
+                $("#todo-input-modal").modal();
+              },
+            });
+
+            // form related actions
+            $("#todo-input-title").on({
+              focus: function () {
+                // pop help dialog?
+                console.log("title focused");
+              },
+              blur: function () {
+                // add green check dom element or show element; 
+                console.log("lose focus");
+              },
+            });
+
+            $("#todo-input-notes").on({
+              focus: function () {
+                // pop dialog
+              },
+              blur: function () {
+                console.log("lose focus2");
+              },
+            });
+
+            $("#todo-schedule").on({
+              focus: function () {
+                // pop dialog
+              },
+              blur: function () {
+                console.log("lose focus3");
+              },
+            });
+
+            $("#todo-deadline").on({
+              focus: function () {
+                // pop dialog
+              },
+              blur: function () {
+                console.log("lose focus4");
+              },
+            });
+
+            $("#submit-todo-inputs").on({
+              submit: function () {
+                // post to backend url; ajax
+              },
+            });
+
+            $("#close-modal-button").on({
+              click: function () {
+                // close modal action
+              },
+            });
+
+            $("#cancel-todo-input").on({
+              click: function () {
+                // close modal action
+              },
+            });
+          });
+        }
       }
       const inbox = new InboxEjsScript();
       inbox.setInboxSidebarHeadingAction();
+      inbox.addNewTodo();
     </script>
   </body>
 </html>
