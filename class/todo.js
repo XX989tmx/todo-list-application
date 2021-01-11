@@ -18,7 +18,7 @@ class Todo {
     this.dateCreated = new Date();
     this.scheduledDate = scheduledDate ? new Date(scheduledDate) : null;
     this.deadline = deadline ? new Date(deadline) : null;
-  };
+  }
 
   completeTodo() {
     this.isDone = true;
@@ -59,18 +59,17 @@ class Todo {
     const deadLineDay = deadline.getDay();
     if (todaysMonth === deadlineMonth) {
       remainingDayOfThisMonth = +deadLineDay - +todaysDay;
-
     } else {
       // get date count of from today to end of this month;
       // above count + deadlineDay;
       // return this sum
     }
+  }
 
+  countDownToDeadline() {}
 
-  };
-
-  countDownToDeadline() {
-    
+  static async saveToDatabase() {
+    // save specific todo item to database
   }
 }
 
@@ -122,6 +121,14 @@ class Tody {
   count() {
     return this.todaysList.length;
   }
+
+  static async save() {
+    // save todaysList to database;
+  };
+
+  static async getTodaysList() {
+    // get todays list from database
+  }
 }
 
 class Inbox {
@@ -134,7 +141,7 @@ class Inbox {
     const todo = new Todo();
     const newTodo = todo.set(title, notes, scheduledDate, deadline);
     this.add(newTodo);
-  };
+  }
 
   getAll() {
     return this.list;
@@ -182,6 +189,17 @@ class Inbox {
     console.log(idx);
     this.list = this.list.filter((v) => v.isDone !== true);
     this.size--;
+  };
+
+  static async saveInboxData() {
+    // save inbox data to database;
+  }
+
+  static async fetchInboxDataFromDatabase(params) {
+    // { userId:userId,
+    //   inbox:[todoId]
+    //   size: x
+    // {
   }
 }
 

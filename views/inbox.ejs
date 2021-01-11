@@ -257,6 +257,10 @@
       integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
       crossorigin="anonymous"
     ></script>
+
+    <script>
+      class Sidebar {}
+    </script>
     <script>
       let addTodoBtn = document.getElementById("add-todo-button");
       addTodoBtn.addEventListener("click", () => {
@@ -321,12 +325,12 @@
               },
             });
           });
-        };
+        }
 
         loadItem(idTagElement) {
           $(document).ready(function () {
-            $('#main-section').load('inbox');
-          })
+            $("#main-section").load("inbox");
+          });
         }
 
         addNewTodo() {
@@ -432,7 +436,6 @@
 
             $("#update-todo-form").on({
               submit: function (event) {
-                
                 console.log($("#update-todo-input-title").val());
               },
             });
