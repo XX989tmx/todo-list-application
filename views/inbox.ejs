@@ -45,7 +45,14 @@
                       <div class="col-1">
                         <input type="checkbox" name="" id="checkbox1" />
                       </div>
-                      <div class="col-8" id="todo-item" data-toggle="collapse" data-target="#todo-item-collapse">todo item title</div>
+                      <div
+                        class="col-8"
+                        id="todo-item"
+                        data-toggle="collapse"
+                        data-target="#todo-item-collapse"
+                      >
+                        todo item title
+                      </div>
                       <div class="drag-button col-1" id="drag-button">D</div>
                       <div
                         class="col-1"
@@ -65,8 +72,17 @@
                         X
                       </div>
                     </div>
-                    <div id="todo-item-collapse" class="todo-item-collapse collapse row">
-                      <p>todo notes & deadline</p>
+                    <div
+                      id="todo-item-collapse"
+                      class="todo-item-collapse collapse row"
+                    >
+                      <div
+                        id="todo-item-collapse-contents"
+                        data-toggle="modal"
+                        data-target="#update-todo-input-modal"
+                      >
+                        <p>todo notes & deadline</p>
+                      </div>
                     </div>
                   </li>
                 </ul>
@@ -334,14 +350,21 @@
         trigger: "focus",
         content: "Input deadline of todo(optional).",
       });
-      $('#update-todo-inputs').popover({
-        trigger:'hover focus',
-        content:"Submit input information."
+      $("#update-todo-inputs").popover({
+        trigger: "hover focus",
+        content: "Submit input information.",
+      });
+      $("#todo-item-collapse-contents").popover({
+        trigger: "hover",
+        content: "Edit",
       });
 
       //ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー-
 
       // modal
+      // $(document).ready(function () {
+      //   $("#todo-item-collapse-contents").modal();
+      // });
 
       //
 
