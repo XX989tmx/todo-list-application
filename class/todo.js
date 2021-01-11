@@ -124,7 +124,7 @@ class Tody {
 
   static async save() {
     // save todaysList to database;
-  };
+  }
 
   static async getTodaysList() {
     // get todays list from database
@@ -189,7 +189,7 @@ class Inbox {
     console.log(idx);
     this.list = this.list.filter((v) => v.isDone !== true);
     this.size--;
-  };
+  }
 
   static async saveInboxData() {
     // save inbox data to database;
@@ -284,6 +284,137 @@ class Project {
   getCountOfTodo() {
     return this.todoLists.length;
   }
+}
+
+class Activity {
+  // 毎日計測
+  // productivity scoreはクライアント側で色の濃度と連動
+  // productivity score 基準
+  // 0個達成：0, 1個以上達成:1, 5個以上達成:2, 10個以上達成:3
+  // inRow bonus:
+  // 2日以上highが連続するとtrueにする。クライアントサイドで金色に連動
+
+  constructor() {
+    this.id = null;
+    this.date = null; // date of today
+    this.accomplishedTodo = [];
+    this.accomplishedCount = 0;
+    this.productivityScore = 0; // 0:none,1:low,2:mid,3:high
+    this.isInRow = false;
+    this.InRowDuration = 0;
+    this.longestInRowDuration = 0; //n days
+  }
+
+  set(todoDoc, date, accomplishedTodo) {
+    this.id = todoDoc.id;
+    this.date = this.getToday();
+    this.accomplishedTodo = this.setAccomplishedTodo();
+    this.accomplishedCount = this.setAccomplishedCount();
+    this.productivityScore = this.getProductivityScore();
+    this.isInRow = this.isInRow(todoDoc);
+    this.InRowDuration = this.getInRowDuration(todoDoc);
+    this.longestInRowDuration = this.getLongestInRowDuration(todoDoc);
+  }
+
+  setAccomplishedTodo(todo) {
+    this.accomplishedTodo.push(todo);
+    return this.accomplishedTodo;
+  }
+
+  getToday() {
+    return new Date();
+  }
+
+  setAccomplishedCount() {
+    const count = this.accomplishedTodo.length;
+    this.accomplishedCount = count;
+    return this.accomplishedCount;
+  }
+
+  getAccomplishedCount() {
+    return this.setAccomplishedCount();
+  }
+
+  setProductivityScore() {
+    this.productivityScore = this.getAccomplishedCount();
+    return this.productivityScore;
+  }
+
+  getProductivityScore() {
+    return this.setProductivityScore();
+  }
+
+  isInRow(todoDoc) {
+    const id = todoDoc.id;
+    let oldToNewSortedArr = this.accomplishedTodo.sort(
+      (a, b) => a.date - b.date
+    );
+    let count = 0;
+    for (let i = id; i < oldToNewSortedArr.length; i--) {
+      if (oldToNewSortedArr[i].productivityScore > 10) {
+        count += 1;
+      }
+    }
+    if (count > 1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  getInRowDuration(todoDoc) {
+    const id = todoDoc.id;
+    let oldToNewSortedArr = this.accomplishedTodo.sort(
+      (a, b) => a.date - b.date
+    );
+    let idxOfTargetDocId;
+    for (let i = 0; i < this.accomplishedTodo.length; i++) {
+      if (this.accomplishedTodo.id.toString() === id.toString()) {
+        idxOfTargetDocId = this.accomplishedTodo.id.toString();
+      }
+    }
+
+    let count = 0;
+    for (let i = idxOfTargetDocId; i < oldToNewSortedArr.length; i--) {
+      if (oldToNewSortedArr[i].productivityScore > 10) {
+        count += 1;
+      } else {
+        break;
+      }
+    }
+    return count;
+  }
+
+  getLongestInRowDuration(todoDoc) {
+    const id = todoDoc.id;
+    let oldToNewSortedArr = this.accomplishedTodo.sort(
+      (a, b) => a.date - b.date
+    );
+    let idxOfTargetDocId;
+    for (let i = 0; i < this.accomplishedTodo.length; i++) {
+      if (this.accomplishedTodo.id.toString() === id.toString()) {
+        idxOfTargetDocId = this.accomplishedTodo.id.toString();
+      }
+    }
+    let countArr = [];
+    let count = 0;
+    for (let i = idxOfTargetDocId; i < oldToNewSortedArr.length; i--) {
+      if (oldToNewSortedArr[i].productivityScore > 10) {
+        count += 1;
+      } else {
+        countArr.push(count);
+        count = 0;
+      }
+    }
+    const maxInRow = Math.max(...countArr);
+    return maxInRow;
+  }
+
+  static async saveToDatabase() {
+    // save to database
+  }
+
+  static async getAllFromDatabase() {}
 }
 
 class Logbook {}
