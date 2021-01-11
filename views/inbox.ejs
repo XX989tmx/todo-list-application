@@ -39,14 +39,14 @@
             </div>
             <div id="main-section" class="main-section row">
               <div class="col-12">
-                <ul class="margin-and-padding-0 list-style-none">
-                  <li>
+                <ul class="margin-and-padding-0 list-style-none list-group">
+                  <li class="list-group-item">
                     <div class="todo-items row">
                       <div class="col-1">
                         <input type="checkbox" name="" id="checkbox1" />
                       </div>
-                      <div class="col-9" id="todo-item">todo item title</div>
-                      <div class="drag-button" id="drag-button">D</div>
+                      <div class="col-8" id="todo-item" data-toggle="collapse" data-target="#todo-item-collapse">todo item title</div>
+                      <div class="drag-button col-1" id="drag-button">D</div>
                       <div
                         class="col-1"
                         id="update-todo-button"
@@ -64,6 +64,9 @@
                       >
                         X
                       </div>
+                    </div>
+                    <div id="todo-item-collapse" class="todo-item-collapse collapse row">
+                      <p>todo notes & deadline</p>
                     </div>
                   </li>
                 </ul>
