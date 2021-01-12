@@ -109,6 +109,7 @@
                               type="submit"
                               id="close-modal-button"
                               data-dismiss="modal"
+                              class="btn btn-outline-dark"
                             >
                               close
                             </button>
@@ -120,26 +121,36 @@
                           <div class="form-group">
                             <label for="todo-input-title">todo name</label>
                             <input
+                              class="modal-input"
                               id="todo-input-title"
                               type="text"
                               name=""
                               value=""
+                              autofocus
                             />
                           </div>
                           <div class="form-group">
                             <label for="todo-input-notes">notes</label>
-                            <input
+                            <!-- <input
+                              class="modal-notes-input"
                               id="todo-input-notes"
                               type="textarea"
                               name=""
                               value=""
-                            />
+                            /> -->
+                            <textarea
+                              rows=""
+                              cols=""
+                              class="modal-notes-input"
+                              id="todo-input-notes"
+                            ></textarea>
                           </div>
                           <div class="form-group">
                             <label for="todo-schedule">schedule</label>
                             <input
+                              class="modal-input"
                               id="todo-schedule"
-                              type="datetime"
+                              type="date"
                               name=""
                               id=""
                               aria-label="schedule"
@@ -148,15 +159,20 @@
                           <div class="form-group">
                             <label for="todo-deadline">deadline</label>
                             <input
+                              class="modal-input"
                               id="todo-deadline"
-                              type="datetime"
+                              type="date"
                               name=""
                               id=""
                               aria-label="deadline"
                             />
                           </div>
 
-                          <button id="submit-todo-inputs" type="submit">
+                          <button
+                            id="submit-todo-inputs"
+                            type="submit"
+                            class="btn btn-success"
+                          >
                             add
                           </button>
                         </form>
@@ -166,6 +182,7 @@
                           id="cancel-todo-input"
                           type="submit"
                           data-dismiss="modal"
+                          class="btn btn-outline-dark"
                         >
                           cancel
                         </button>
@@ -193,6 +210,7 @@
                             type="submit"
                             id="close-modal-button"
                             data-dismiss="modal"
+                            class="btn btn-outline-dark"
                           >
                             close
                           </button>
@@ -204,28 +222,31 @@
                         <div class="form-group">
                           <label for="todo-input-title">todo name</label>
                           <input
+                            class="modal-input"
                             id="update-todo-input-title"
                             type="text"
                             name=""
                             value=""
                             placeholder="to do"
+                            autofocus
                           />
                         </div>
                         <div class="form-group">
                           <label for="todo-input-notes">notes</label>
-                          <input
+                          <textarea
+                            rows=""
+                            cols=""
+                            class="modal-notes-input"
                             id="update-todo-input-notes"
-                            type="textarea"
-                            name=""
-                            value=""
                             placeholder="notes"
-                          />
+                          ></textarea>
                         </div>
                         <div class="form-group">
                           <label for="todo-schedule">schedule</label>
                           <input
+                            class="modal-input"
                             id="update-todo-schedule"
-                            type="datetime"
+                            type="date"
                             name=""
                             id=""
                             aria-label="schedule"
@@ -234,15 +255,20 @@
                         <div class="form-group">
                           <label for="todo-deadline">deadline</label>
                           <input
+                            class="modal-input"
                             id="update-todo-deadline"
-                            type="datetime"
+                            type="date"
                             name=""
                             id=""
                             aria-label="deadline"
                           />
                         </div>
 
-                        <button id="update-todo-inputs" type="submit">
+                        <button
+                          id="update-todo-inputs"
+                          type="submit"
+                          class="btn btn-success"
+                        >
                           Update
                         </button>
                       </form>
@@ -252,6 +278,7 @@
                         id="cancel-todo-input"
                         type="submit"
                         data-dismiss="modal"
+                        class="btn btn-outline-dark"
                       >
                         cancel
                       </button>
@@ -458,6 +485,14 @@
                 // add green check dom element or show element;
                 console.log("lose focus");
               },
+              change: function (event) {
+                console.log(event.target.value);
+                // let todoInputTitle = document.getElementById(
+                //   "todo-input-title"
+                // );
+                // const value = todoInputTitle.value;
+                // console.log(value);
+              },
             });
 
             $("#todo-input-notes").on({
@@ -466,6 +501,13 @@
               },
               blur: function () {
                 console.log("lose focus2");
+              },
+              change: function (event) {
+                // const todoInputNotes = document.getElementById(
+                //   "todo-input-notes"
+                // );
+                // const value = todoInputNotes.value;
+                console.log(event.target.value);
               },
             });
 
@@ -476,6 +518,9 @@
               blur: function () {
                 console.log("lose focus3");
               },
+              change: function (event) {
+                console.log(event.target.value);
+              },
             });
 
             $("#todo-deadline").on({
@@ -484,6 +529,9 @@
               },
               blur: function () {
                 console.log("lose focus4");
+              },
+              change: function (event) {
+                console.log(event.target.value);
               },
             });
 
@@ -541,6 +589,36 @@
               },
             });
 
+            $("#update-todo-input-title").on({
+              change: function (event) {
+                console.log(event.target.value);
+              },
+            });
+
+            $("#update-todo-input-notes").on({
+              change: function (event) {
+                console.log(event.target.value);
+              },
+            });
+
+            $("#update-todo-schedule").on({
+              change: function (event) {
+                console.log(event.target.value);
+              },
+            });
+
+            $("#update-todo-deadline").on({
+              change: function (event) {
+                console.log(event.target.value);
+              },
+            });
+
+            $("#update-todo-inputs").on({
+              click: function (event) {
+                console.log(event.target.value);
+              },
+            });
+
             $("#update-todo-form").on({
               submit: function (event) {
                 console.log($("#update-todo-input-title").val());
@@ -581,6 +659,30 @@
       inbox.deleteTodo();
       inbox.viewTodo();
       inbox.dragTodo();
+
+      class _AJAX {
+        _sendXMLHttpRequest(method, url, async, idElement) {
+          //get eg
+          // xhttp.open("GET", "demo_get2.asp?fname=Henry&lname=Ford", true);
+          // xhttp.send();
+          // post eg
+          // xhttp.open("POST", "demo_post.asp", true);
+          // xhttp.send();
+          const updateInnerHtml = (xhttp, idElement) => {
+            document.getElementById(idElement).innerHTML = xhttp.responseText;
+          };
+
+          const xhttp = new XMLHttpRequest();
+          xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+              // document.getElementById('#example').innerHTML = this.responseText;
+              updateInnerHtml(this, idElement);
+            }
+          };
+          xhttp.open(method, url, async);
+          xhttp.send();
+        }
+      }
     </script>
   </body>
 </html>

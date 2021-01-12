@@ -47,10 +47,25 @@
   z-index: 100;
 }
 
+.modal-input {
+  margin: 10px;
+  width: 320px;
+  height: 40px;
+  box-shadow: -1px -1px grey;
+  border: solid black 1px;
+}
+
+.modal-notes-input {
+  margin: 10px;
+  width: 320px;
+  height: 150px;
+  box-shadow: -1px -1px grey;
+  border: solid black 1px;
+}
+
 /* .inbox-mainsection-heading {
     color: aqua;
 } */
-
 
 /* Popover
 .popover {
