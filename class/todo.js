@@ -123,6 +123,7 @@ class Tody {
 
   empty(params) {
     this.todaysList = [];
+    return this;
   }
 
   count() {
@@ -293,7 +294,7 @@ class Project {
   }
 
   updateDeadline(deadLine) {
-    this.deadLine = deadline;
+    this.deadLine = deadLine;
   }
 
   getDateCreated() {

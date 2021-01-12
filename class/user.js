@@ -25,7 +25,8 @@ class User {
     today,
     logbook,
     trashBox,
-    activity
+    activity,
+    userDoc
   ) {
     this.id = this.setId(id);
     this.name = this.setName(name);
@@ -38,6 +39,7 @@ class User {
     this.logbook = this.setLogbook(logbook);
     this.trashBox = this.setTrashBox(trashBox);
     this.activity = this.setActivity(activity);
+    this.lastLoggedIns = this.setLastLoggedIns(userDoc);
   }
 
   setId(id) {
@@ -115,7 +117,9 @@ class User {
     }
   }
 
-  setLastLoggedIns() {
+  setLastLoggedIns(userDoc) {
+    const lastLogin = userDoc ? userDoc.lastLoggedIns : [];
+    this.lastLoggedIns = lastLogin;
     let now = new Date();
     this.lastLoggedIns.push(now);
     return this.lastLoggedIns;
@@ -129,7 +133,7 @@ class User {
   }
 
   static async updateAndSaveExistingUser() {
-      // update and sav. this.set() + save();
+    // update and sav. this.set() + save();
   }
 
   static async getUserFromDatabase(userId) {
