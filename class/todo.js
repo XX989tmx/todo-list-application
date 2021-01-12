@@ -1,15 +1,23 @@
 const { v4: uuidv4 } = require("uuid");
 
 class Todo {
-  constructor(todoObj, title, notes, dateCreated, deadline, scheduledDate) {
+  constructor(
+    title,
+    notes,
+    dateCreated,
+    deadline,
+    scheduledDate,
+    isDone,
+    userId
+  ) {
     this.id = null;
-    this.title = todoObj ? todoObj.title : null;
-    this.notes = todoObj ? todoObj.notes : null;
-    this.dateCreated = todoObj ? todoObj.dateCreated : null;
-    this.scheduledDate = todoObj ? todoObj.scheduledDate : null;
-    this.deadline = todoObj ? todoObj.deadline : null;
-    this.isDone = todoObj ? todoObj.isDone : false;
-    this.userId = todoObj ? todoObj.userId : null;
+    this.title = title ? title : null;
+    this.notes = notes ? notes : null;
+    this.dateCreated = dateCreated ? dateCreated : new Date();
+    this.scheduledDate = scheduledDate ? scheduledDate : null;
+    this.deadline = deadline ? deadline : null;
+    this.isDone = isDone ? isDone : false;
+    this.userId = userId ? userId : null;
   }
 
   set(id, title, notes, scheduledDate, deadline) {
@@ -83,25 +91,17 @@ class Todo {
   }
 }
 
-const todo = new Todo({
-  title: "homework",
-  notes: "need friend",
-  dateCreated: new Date(),
-  deadline: new Date("2021-1-23"),
-  scheduledDate: new Date("2020-2-23"),
-  isDone: false,
-  userId: "33333",
-});
+
 // todo.set("12345","todo", "buy milk", "2021-1-23", "2021-2-23");
 // console.log(todo);
 // todo.completeTodo();
 // const todo2 = new Todo();
 // todo2.set("6789","todo2", "buy milk2", "2021-1-23", "2021-2-23");
-console.log(todo);
-todo.completeTodo();
-console.log(todo)
-const todo3 = new Todo();
-console.log(todo3);
+// console.log(todo);
+// todo.completeTodo();
+// console.log(todo);
+// const todo3 = new Todo();
+// console.log(todo3);
 
 class Tody {
   constructor() {
@@ -161,16 +161,18 @@ class Tody {
 }
 
 class Inbox {
-  constructor() {
-    this.list = [];
-    this.size = 0;
-    this.userId = null;
+  constructor(listData, userId) {
+    this.list = listData ? listData : [];
+    this.size = listData ? listData.length : 0;
+    this.userId = userId ? userId : null;
   }
 
   addNewTodo(title, notes, scheduledDate, deadline) {
-    const todo = new Todo();
-    const newTodo = todo.set(title, notes, scheduledDate, deadline);
+    let todo = new Todo();
+    let newTodo = todo.set(title, notes, scheduledDate, deadline);
+    console.log(newTodo);
     this.add(newTodo);
+    return this;
   }
 
   getAll() {
@@ -180,6 +182,7 @@ class Inbox {
   add(todo) {
     this.list.push(todo);
     this.size++;
+    return this;
   }
 
   remove(id) {
@@ -238,7 +241,19 @@ class Inbox {
   }
 }
 
-// const inbox = new Inbox();
+const inbox = new Inbox();
+console.log(inbox);
+
+const inbox2 = new Inbox(
+  [
+    { title: "abc", notes: "gggg" },
+    { title: "dadads", notes: "ggggg" },
+  ],
+  "user1"
+);
+console.log(inbox2);
+inbox2.add(new Todo("77777", "77777" ));
+console.log(inbox2);
 // inbox.add(todo);
 // inbox.add(todo2);
 // console.log(inbox);
