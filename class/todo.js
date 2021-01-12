@@ -1,24 +1,28 @@
 const { v4: uuidv4 } = require("uuid");
 
 class Todo {
-  constructor(title, notes, dateCreated, deadline, scheduledDate) {
+  constructor(todoObj, title, notes, dateCreated, deadline, scheduledDate) {
     this.id = null;
-    this.title = null;
-    this.notes = null;
-    this.dateCreated = null;
-    this.scheduledDate = null;
-    this.deadline = null;
-    this.isDone = false;
-    this.userId = null;
+    this.title = todoObj ? todoObj.title : null;
+    this.notes = todoObj ? todoObj.notes : null;
+    this.dateCreated = todoObj ? todoObj.dateCreated : null;
+    this.scheduledDate = todoObj ? todoObj.scheduledDate : null;
+    this.deadline = todoObj ? todoObj.deadline : null;
+    this.isDone = todoObj ? todoObj.isDone : false;
+    this.userId = todoObj ? todoObj.userId : null;
   }
 
-  set(title, notes, scheduledDate, deadline) {
-    this.id = "12345";
+  set(id, title, notes, scheduledDate, deadline) {
+    this.id = id ? id : null;
     this.title = title ? title : null;
     this.notes = notes ? notes : null;
     this.dateCreated = new Date();
     this.scheduledDate = scheduledDate ? new Date(scheduledDate) : null;
     this.deadline = deadline ? new Date(deadline) : null;
+  }
+
+  get() {
+    return this;
   }
 
   completeTodo() {
@@ -79,13 +83,25 @@ class Todo {
   }
 }
 
-const todo = new Todo();
-todo.set("todo", "buy milk", "2021-1-23", "2021-2-23");
+const todo = new Todo({
+  title: "homework",
+  notes: "need friend",
+  dateCreated: new Date(),
+  deadline: new Date("2021-1-23"),
+  scheduledDate: new Date("2020-2-23"),
+  isDone: false,
+  userId: "33333",
+});
+// todo.set("12345","todo", "buy milk", "2021-1-23", "2021-2-23");
+// console.log(todo);
+// todo.completeTodo();
+// const todo2 = new Todo();
+// todo2.set("6789","todo2", "buy milk2", "2021-1-23", "2021-2-23");
 console.log(todo);
 todo.completeTodo();
-const todo2 = new Todo();
-todo2.set("todo2", "buy milk2", "2021-1-23", "2021-2-23");
-console.log(todo);
+console.log(todo)
+const todo3 = new Todo();
+console.log(todo3);
 
 class Tody {
   constructor() {
@@ -214,7 +230,7 @@ class Inbox {
     //   inbox:[todoId]
     //   size: x
     // {
-  };
+  }
 
   setUserId(userId) {
     this.userId = userId;
@@ -222,14 +238,14 @@ class Inbox {
   }
 }
 
-const inbox = new Inbox();
-inbox.add(todo);
-inbox.add(todo2);
-console.log(inbox);
-inbox.removeCompletedTodo("12345");
-console.log(inbox);
-console.log(inbox.count);
-console.log(inbox.getAll());
+// const inbox = new Inbox();
+// inbox.add(todo);
+// inbox.add(todo2);
+// console.log(inbox);
+// inbox.removeCompletedTodo("12345");
+// console.log(inbox);
+// console.log(inbox.count);
+// console.log(inbox.getAll());
 
 class Project {
   constructor(title, notes, isDone, dateCreated, deadLine, scheduledDate) {
@@ -303,7 +319,7 @@ class Project {
 
   getCountOfTodo() {
     return this.todoLists.length;
-  };
+  }
 
   setUserId(userId) {
     this.userId = userId;
@@ -331,7 +347,7 @@ class Activity {
     this.userId = null;
   }
 
-  set(todoDoc, date, accomplishedTodo,userId) {
+  set(todoDoc, date, accomplishedTodo, userId) {
     this.id = todoDoc.id;
     this.date = this.getToday();
     this.accomplishedTodo = this.setAccomplishedTodo();
@@ -441,7 +457,7 @@ class Activity {
     // save to database
   }
 
-  static async getAllFromDatabase() {};
+  static async getAllFromDatabase() {}
 
   setUserId(userId) {
     this.userId = userId;
