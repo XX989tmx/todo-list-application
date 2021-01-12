@@ -9,15 +9,21 @@ app.set("view engine", "ejs");
 app.set("views", "./views");
 app.use(express.static(__dirname + "/public"));
 
-app.get("/inbox", async(req, res,next) => {
+app.get("/inbox", async (req, res, next) => {
   res.render("inbox");
 });
 
-app.post('/inbox/createTodo',async(req,res,next) => {
-  
+app.post("/inbox/createTodo", async (req, res, next) => {
+  res.status(302).redirect("/inbox");
+});
 
-  res.status(302).redirect('/inbox');
-})
+app.post("/user/signup", async (req, res, next) => {
+  // singup
+});
+
+app.post("/user/login", async (req, res, next) => {
+  // login
+});
 // database.getConnection((err) => {
 //     if (err) console.log(err);
 //     connection.release();
@@ -34,7 +40,5 @@ app.post('/inbox/createTodo',async(req,res,next) => {
 app.use((req, res, next) => {
   res.status(404).render("404");
 });
-
-
 
 app.listen(8080);

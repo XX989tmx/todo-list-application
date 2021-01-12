@@ -9,6 +9,7 @@ class Todo {
     this.scheduledDate = null;
     this.deadline = null;
     this.isDone = false;
+    this.userId = null;
   }
 
   set(title, notes, scheduledDate, deadline) {
@@ -71,6 +72,11 @@ class Todo {
   static async saveToDatabase() {
     // save specific todo item to database
   }
+
+  setUserId(userId) {
+    this.userId = userId;
+    return this.userId;
+  }
 }
 
 const todo = new Todo();
@@ -84,6 +90,7 @@ console.log(todo);
 class Tody {
   constructor() {
     this.todaysList = [];
+    this.userId = null;
   }
 
   getAll() {
@@ -127,7 +134,12 @@ class Tody {
   }
 
   static async getTodaysList() {
-    // get todays list from database
+    // get todays list from; database
+  }
+
+  setUserId(userId) {
+    this.userId = userId;
+    return this.userId;
   }
 }
 
@@ -135,6 +147,7 @@ class Inbox {
   constructor() {
     this.list = [];
     this.size = 0;
+    this.userId = null;
   }
 
   addNewTodo(title, notes, scheduledDate, deadline) {
@@ -200,6 +213,11 @@ class Inbox {
     //   inbox:[todoId]
     //   size: x
     // {
+  };
+
+  setUserId(userId) {
+    this.userId = userId;
+    return userId;
   }
 }
 
@@ -221,7 +239,8 @@ class Project {
     this.dateCreated = new Date();
     this.deadLine = null;
     this.scheduledDate = null;
-    this.progressStatus = 0; // 0 - 100
+    this.progressStatus = 0; // 0 - 100;
+    this.userId = null;
   }
 
   getProgressStatus(params) {
@@ -283,6 +302,11 @@ class Project {
 
   getCountOfTodo() {
     return this.todoLists.length;
+  };
+
+  setUserId(userId) {
+    this.userId = userId;
+    return userId;
   }
 }
 
@@ -303,9 +327,10 @@ class Activity {
     this.isInRow = false;
     this.InRowDuration = 0;
     this.longestInRowDuration = 0; //n days
+    this.userId = null;
   }
 
-  set(todoDoc, date, accomplishedTodo) {
+  set(todoDoc, date, accomplishedTodo,userId) {
     this.id = todoDoc.id;
     this.date = this.getToday();
     this.accomplishedTodo = this.setAccomplishedTodo();
@@ -314,6 +339,7 @@ class Activity {
     this.isInRow = this.isInRow(todoDoc);
     this.InRowDuration = this.getInRowDuration(todoDoc);
     this.longestInRowDuration = this.getLongestInRowDuration(todoDoc);
+    this.userId = this.setUserId(userId);
   }
 
   setAccomplishedTodo(todo) {
@@ -414,7 +440,12 @@ class Activity {
     // save to database
   }
 
-  static async getAllFromDatabase() {}
+  static async getAllFromDatabase() {};
+
+  setUserId(userId) {
+    this.userId = userId;
+    return this.userId;
+  }
 }
 
 class Logbook {}
