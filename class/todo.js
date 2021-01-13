@@ -667,6 +667,10 @@ class Trash {
   }
 }
 
+class WhatToDoNext {
+  
+}
+
 class Upcoming {}
 
 class Anytime {}
