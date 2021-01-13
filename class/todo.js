@@ -46,14 +46,14 @@ class Todo {
     this.isDone = true;
     this.dateCompleted = new Date();
     return this;
-  };
+  }
 
   setPriority(priority) {
     this.priority = priority;
     return this;
-  };
+  }
 
-  getPriority () {
+  getPriority() {
     return this.priority;
   }
 
@@ -176,6 +176,22 @@ class Tody {
     return this.todaysList.length;
   }
 
+  getTodaysTodoFromAll(todoAll) {
+    // todoAll = todoDoc[];
+    // get todo matched with todays date or scheduled at today from outer list such as inbox or allTodo or schedule class.
+    // 起動するごと実行し、todayにスケジュールされたTodoをTodaysListに入れる。
+    let today = new Date().getDate();
+    for (const todo of todoAll) {
+      const todoDate = todo.scheduledDate.getDate();
+      if (todoDate === today) {
+        this.todaysList.push(todo);
+        this.size++;
+      }
+    }
+
+    return this;
+  }
+
   static async save() {
     // save todaysList to database;
   }
@@ -197,9 +213,9 @@ class Inbox {
     this.userId = userId ? userId : null;
   }
 
-  addNewTodo(title, notes, scheduledDate, deadline) {
+  addNewTodo(title, notes, priority, scheduledDate, deadline) {
     let todo = new Todo();
-    let newTodo = todo.set(title, notes, scheduledDate, deadline);
+    let newTodo = todo.set(title, notes, priority, scheduledDate, deadline);
     console.log(newTodo);
     this.add(newTodo);
     return this;
@@ -667,9 +683,8 @@ class Trash {
   }
 }
 
-class WhatToDoNext {
-  
-}
+class WhatToDoNext {}
+class Schedule {}
 
 class Upcoming {}
 
