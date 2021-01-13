@@ -45,8 +45,9 @@
                       <div class="col-1">
                         <input type="checkbox" name="" id="checkbox1" />
                       </div>
+                      <div class="col-1" id="todo-priority">1</div>
                       <div
-                        class="col-8"
+                        class="col-7"
                         id="todo-item"
                         data-toggle="collapse"
                         data-target="#todo-item-collapse"
@@ -146,6 +147,14 @@
                             ></textarea>
                           </div>
                           <div class="form-group">
+                            <label for="priority-option">Priority:</label>
+                            <select class="form-control" id="priority-option">
+                              <option>1</option>
+                              <option>2</option>
+                              <option>3</option>
+                            </select>
+                          </div>
+                          <div class="form-group">
                             <label for="todo-schedule">schedule</label>
                             <input
                               class="modal-input"
@@ -241,6 +250,14 @@
                             placeholder="notes"
                           ></textarea>
                         </div>
+                        <div class="form-group">
+                            <label for="update-priority-option">Priority:</label>
+                            <select class="form-control" id="update-priority-option">
+                              <option>1</option>
+                              <option>2</option>
+                              <option>3</option>
+                            </select>
+                          </div>
                         <div class="form-group">
                           <label for="todo-schedule">schedule</label>
                           <input
@@ -348,6 +365,12 @@
         trigger: "focus",
         content: "Notes or Additional information.",
       });
+      $("#priority-option").popover({
+        trigger:'focus',
+        title:'Priority input',
+        content:'Priority criteria. 1 : low importance. 2 : mid importance. 3 : high importance.',
+        placement:'top'
+      })
       $("#todo-schedule").popover({
         trigger: "focus",
         content: "Input target date.(optional)",
@@ -369,6 +392,12 @@
         trigger: "focus",
         content: "Notes or Additional information.",
       });
+      $("#update-priority-option").popover({
+        trigger:'focus',
+        title:'Priority input',
+        content:'Priority criteria. 1 : low importance. 2 : mid importance. 3 : high importance.',
+        placement:'top'
+      })
       $("#update-todo-schedule").popover({
         trigger: "focus",
         content: "Input target date.(optional)",
@@ -513,6 +542,11 @@
                 body["notes"] = event.target.value;
               },
             });
+            $("#priority-option").on({
+              change: function(event) {
+                console.log(event.target.value);
+              }
+            })
 
             $("#todo-schedule").on({
               focus: function () {
@@ -537,7 +571,7 @@
               change: function (event) {
                 console.log(event.target.value);
                 body["deadline"] = event.target.value;
-                console.log(body)
+                console.log(body);
               },
             });
 
@@ -610,6 +644,12 @@
               },
             });
 
+            $('#update-priority-option').on({
+              change : function (event) {
+                console.log(event.target.value);
+              }
+            })
+
             $("#update-todo-schedule").on({
               change: function (event) {
                 console.log(event.target.value);
@@ -647,7 +687,7 @@
                 // hide todo item animation. namely add method to remove dom node of target todo item. fade animation.
 
                 console.log("deleted");
-                $('#todo-item-li').remove();
+                $("#todo-item-li").remove();
               },
             });
           });
@@ -659,7 +699,7 @@
               click: function () {
                 // complete todo item. move item into completed folder. send request to server. ajax.
                 // hide todo item animation. namely add method to remove dom node of target todo item.
-                $('#todo-item-li').remove();
+                $("#todo-item-li").remove();
               },
             });
           });
@@ -672,7 +712,7 @@
       inbox.deleteTodo();
       inbox.viewTodo();
       inbox.dragTodo();
-      inbox.completeTodo()
+      inbox.completeTodo();
 
       class _AJAX {
         _sendXMLHttpRequest(method, url, async, idElement) {
