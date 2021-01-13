@@ -1,9 +1,12 @@
 const express = require("express");
+const mongoose = require("mongoose");
 const database = require("./utils/database");
 const todoFile = require("./class/todo");
 const Todo = todoFile.todo;
 const Inbox = todoFile.inbox;
-
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
 const app = express();
 const ejs = require("ejs");
 const bodyParser = require("body-parser");
@@ -16,8 +19,9 @@ app.get("/inbox", async (req, res, next) => {
   // get todo data from database
 
   // initialize todo class
-  const todo = new Todo("uuu", "www", 3);
+  const todo = new Todo("uuu", "www", 3,new Date(), new Date(),false,'1234');
   console.log(todo);
+  
   // get inbox data from database
 
   // initialize inbox class
@@ -96,4 +100,14 @@ app.use((req, res, next) => {
   res.status(404).render("404");
 });
 
-app.listen(8080);
+mongoose
+  .connect(
+    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0-7slh6.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`,
+    { useNewUrlParser: true }
+  )
+  .then(() => {
+    app.listen(process.env.PORT || 8080);
+  })
+  .catch((err) => {
+    console.log(err);
+  });

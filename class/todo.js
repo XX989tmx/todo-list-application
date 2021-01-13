@@ -1,14 +1,15 @@
 const { v4: uuidv4 } = require("uuid");
+const TodoSchema = require("../model/todoSchema");
+const InboxSchema = require("../model/inboxSchema");
 
- class Todo {
+class Todo {
   // priority 1 , 2 ,3.  1 = lowest, 3 = highest
   constructor(
     title,
     notes,
     priority,
-    dateCreated,
-    deadline,
     scheduledDate,
+    deadline,
     isDone,
     userId
   ) {
@@ -16,7 +17,7 @@ const { v4: uuidv4 } = require("uuid");
     this.title = title ? title : null;
     this.notes = notes ? notes : null;
     this.priority = priority ? priority : null;
-    this.dateCreated = dateCreated ? dateCreated : new Date();
+    this.dateCreated = new Date();
     this.scheduledDate = scheduledDate ? scheduledDate : null;
     this.deadline = deadline ? deadline : null;
     this.isDone = isDone ? isDone : false;
@@ -109,8 +110,26 @@ const { v4: uuidv4 } = require("uuid");
     return this;
   }
 
-  static async saveToDatabase() {
+  static async saveToDatabase(todo) {
     // save specific todo item to database
+    const createdTodoSchema = new TodoSchema({
+      title: todo.title,
+      notes: todo.notes,
+      priority: todo.priority,
+      dateCreated: todo.dateCreated,
+      scheduledDate: todo.scheduledDate,
+      deadline: todo.deadline,
+      isDone: todo.isDone,
+      userId: todo.userId,
+    });
+    try {
+      await createdTodoSchema.save();
+    } catch (error) {
+      console.log(error);
+    };
+
+    // initialize user class;
+    // User.saveToDatabase(createdTodoSchema.id); exc static method
     return this;
   }
 
@@ -272,17 +291,34 @@ class Inbox {
     return this;
   }
 
-  static async saveInboxData() {
+  static async saveInboxData(inboxInstance) {
     // save inbox data to database;
-    return this;
+    const createdInboxSchema = new InboxSchema({
+      list: inboxInstance.list,
+      size: inboxInstance.size,
+      userId: inboxInstance.userId,
+    });
+    try {
+      await createdInboxSchema.save();
+    } catch (error) {
+      console.log(error);
+    }
+
+    return createdInboxSchema;
   }
 
-  static async fetchInboxDataFromDatabase(params) {
+  static async fetchInboxDataFromDatabase(inboxId) {
     // { userId:userId,
     //   inbox:[todoId]
     //   size: x
     // {
-    return this;
+    let inboxData;
+    try {
+      inboxData = await InboxSchema.findById(inboxId);
+    } catch (error) {
+      console.log(error);
+    }
+    return inboxData;
   }
 
   setUserId(userId) {
@@ -692,7 +728,6 @@ class Upcoming {}
 class Anytime {}
 
 class Someday {}
-
 
 module.exports.todo = Todo;
 module.exports.inbox = Inbox;
