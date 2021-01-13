@@ -40,7 +40,7 @@
             <div id="main-section" class="main-section row">
               <div class="col-12">
                 <ul class="margin-and-padding-0 list-style-none list-group">
-                  <li class="list-group-item">
+                  <li id="todo-item-li" class="list-group-item">
                     <div class="todo-items row">
                       <div class="col-1">
                         <input type="checkbox" name="" id="checkbox1" />
@@ -647,6 +647,7 @@
                 // hide todo item animation. namely add method to remove dom node of target todo item. fade animation.
 
                 console.log("deleted");
+                $('#todo-item-li').remove();
               },
             });
           });
@@ -658,6 +659,7 @@
               click: function () {
                 // complete todo item. move item into completed folder. send request to server. ajax.
                 // hide todo item animation. namely add method to remove dom node of target todo item.
+                $('#todo-item-li').remove();
               },
             });
           });
@@ -670,6 +672,7 @@
       inbox.deleteTodo();
       inbox.viewTodo();
       inbox.dragTodo();
+      inbox.completeTodo()
 
       class _AJAX {
         _sendXMLHttpRequest(method, url, async, idElement) {

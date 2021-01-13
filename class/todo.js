@@ -18,15 +18,19 @@ class Todo {
     this.deadline = deadline ? deadline : null;
     this.isDone = isDone ? isDone : false;
     this.userId = userId ? userId : null;
+    this.dateCompleted = null;
   }
 
-  set(id, title, notes, scheduledDate, deadline) {
+  set(id, title, notes, scheduledDate, deadline, userId) {
     this.id = id ? id : null;
     this.title = title ? title : null;
     this.notes = notes ? notes : null;
     this.dateCreated = new Date();
     this.scheduledDate = scheduledDate ? new Date(scheduledDate) : null;
     this.deadline = deadline ? new Date(deadline) : null;
+    this.isDone = null;
+    this.userId = userId ? userId : null;
+    this.dateCompleted = null;
   }
 
   get() {
@@ -35,6 +39,7 @@ class Todo {
 
   completeTodo() {
     this.isDone = true;
+    this.dateCompleted = new Date();
   }
 
   setDeadline(deadLine) {
@@ -90,7 +95,6 @@ class Todo {
     return this.userId;
   }
 }
-
 
 // todo.set("12345","todo", "buy milk", "2021-1-23", "2021-2-23");
 // console.log(todo);
@@ -252,7 +256,7 @@ const inbox2 = new Inbox(
   "user1"
 );
 console.log(inbox2);
-inbox2.add(new Todo("77777", "77777" ));
+inbox2.add(new Todo("77777", "77777"));
 console.log(inbox2);
 // inbox.add(todo);
 // inbox.add(todo2);
@@ -480,9 +484,141 @@ class Activity {
   }
 }
 
-class Logbook {}
+class Logbook {
+  constructor() {
+    this.list = [];
+    this.size = 0;
+  }
 
-class Trash {}
+  set(completedTodoList) {
+    this.list = completedTodoList;
+    this.size = this.list.length;
+    return this;
+  }
+
+  get() {
+    return this;
+  }
+
+  add(completedTodo) {
+    this.list.push(completedTodo);
+    this.size++;
+    return this;
+  }
+
+  organizeByDate(order) {
+    let list = this.list;
+    let res = {};
+    let currentDate;
+    let completedTodo = [];
+    for (let i = 0; i < list.length; i++) {
+      const element = list[i];
+      const nextElement = list[i + 1];
+      currentDate = element.dateCompleted;
+      completedTodo.push(element);
+      if (currentDate !== nextElement.dateCompleted) {
+        res[currentDate] = completedTodo;
+        completedTodo = [];
+        currentDate = nextElement.dateCompleted;
+        continue;
+      }
+    }
+
+    return res;
+  }
+
+  sortByDate(order) {
+    // 0 ase 1 des
+    let list = this.list;
+    if (order === 0) {
+      // ase
+      list.sort((a, b) => a.dateCompleted - b.dateCompleted);
+    } else {
+      // des
+      list.sort((a, b) => b.dateCompleted - a.dateCompleted);
+    }
+    return list;
+  }
+
+  static async saveToDatabase() {
+    // save
+  }
+
+  static async getAll() {
+    // get all doc from database;
+  }
+}
+
+class Trash {
+  constructor() {
+    this.list = [];
+    this.size = 0;
+  }
+
+  set(list) {
+    this.list = list;
+    this.size = this.list.length;
+    return this;
+  }
+
+  putBack(id, destName, destObj) {
+    const targetTodo = this.find(id);
+    let oldLength = destObj.list.length;
+    switch (destName) {
+      case "inbox":
+        destObj.list.push(targetTodo);
+        if (destObj.list.length === oldLength + 1) {
+          this.remove(id);
+        }
+
+        break;
+      case "today":
+        destObj.todaysList.push(targetTodo);
+        if (destObj.list.length === oldLength + 1) {
+          this.remove(id);
+        }
+
+        break;
+
+      default:
+        break;
+    }
+
+    return this;
+  }
+
+  find(id) {
+    const target = this.list.findIndex(
+      (v) => v.id.toString() === id.toString()
+    );
+    return list[target];
+  }
+
+  remove(id) {
+    this.list = this.list.filter((v) => {
+      v.id.toString() !== id.toString();
+    });
+    this.size--;
+    return this;
+  }
+
+  getSize() {
+    return this.list.length;
+  }
+
+  empty() {
+    this.list = [];
+    this.size = 0;
+  }
+
+  static async saveToDatabase() {
+    // save
+  }
+
+  static async getAll() {
+    // get all doc from database;
+  }
+}
 
 class Upcoming {}
 
