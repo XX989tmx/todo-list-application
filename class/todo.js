@@ -1,9 +1,11 @@
 const { v4: uuidv4 } = require("uuid");
 
 class Todo {
+  // priority 1 , 2 ,3.  1 = lowest, 3 = highest
   constructor(
     title,
     notes,
+    priority,
     dateCreated,
     deadline,
     scheduledDate,
@@ -13,6 +15,7 @@ class Todo {
     this.id = null;
     this.title = title ? title : null;
     this.notes = notes ? notes : null;
+    this.priority = priority ? priority : null;
     this.dateCreated = dateCreated ? dateCreated : new Date();
     this.scheduledDate = scheduledDate ? scheduledDate : null;
     this.deadline = deadline ? deadline : null;
@@ -21,16 +24,18 @@ class Todo {
     this.dateCompleted = null;
   }
 
-  set(id, title, notes, scheduledDate, deadline, userId) {
+  set(id, title, notes, priority, scheduledDate, deadline, userId) {
     this.id = id ? id : null;
     this.title = title ? title : null;
     this.notes = notes ? notes : null;
+    this.priority = priority ? priority : null;
     this.dateCreated = new Date();
     this.scheduledDate = scheduledDate ? new Date(scheduledDate) : null;
     this.deadline = deadline ? new Date(deadline) : null;
     this.isDone = null;
     this.userId = userId ? userId : null;
     this.dateCompleted = null;
+    return this;
   }
 
   get() {
@@ -40,30 +45,46 @@ class Todo {
   completeTodo() {
     this.isDone = true;
     this.dateCompleted = new Date();
+    return this;
+  };
+
+  setPriority(priority) {
+    this.priority = priority;
+    return this;
+  };
+
+  getPriority () {
+    return this.priority;
   }
 
   setDeadline(deadLine) {
     this.deadline = deadLine;
+    return this;
   }
 
   setScheduledDate(scheduledDate) {
     this.scheduledDate = scheduledDate;
+    return this;
   }
 
   updateTitle(title) {
     this.title = title;
+    return this;
   }
 
   updateNotes(notes) {
     this.notes = notes;
+    return this;
   }
 
   updateScheduledDate(scheduledDate) {
     this.scheduledDate = scheduledDate;
+    return this;
   }
 
   updateDeadline(deadLine) {
     this.deadline = deadLine;
+    return this;
   }
 
   getRemainingDay() {
@@ -84,10 +105,13 @@ class Todo {
     }
   }
 
-  countDownToDeadline() {}
+  countDownToDeadline() {
+    return this;
+  }
 
   static async saveToDatabase() {
     // save specific todo item to database
+    return this;
   }
 
   setUserId(userId) {
@@ -132,6 +156,7 @@ class Tody {
 
   setTodoAsToday(todo) {
     this.todaysList.push(todo);
+    return this;
   }
 
   removeTodoFromToday(id) {
@@ -139,6 +164,7 @@ class Tody {
       (v) => v.id.toString() === id.toString()
     );
     this.todaysList.splice(target, 1);
+    return this;
   }
 
   empty(params) {
@@ -195,6 +221,7 @@ class Inbox {
     );
     this.list.splice(target, 1);
     this.size--;
+    return this;
   }
 
   find(id) {
@@ -226,10 +253,12 @@ class Inbox {
     console.log(idx);
     this.list = this.list.filter((v) => v.isDone !== true);
     this.size--;
+    return this;
   }
 
   static async saveInboxData() {
     // save inbox data to database;
+    return this;
   }
 
   static async fetchInboxDataFromDatabase(params) {
@@ -237,6 +266,7 @@ class Inbox {
     //   inbox:[todoId]
     //   size: x
     // {
+    return this;
   }
 
   setUserId(userId) {
@@ -258,6 +288,9 @@ const inbox2 = new Inbox(
 console.log(inbox2);
 inbox2.add(new Todo("77777", "77777"));
 console.log(inbox2);
+// inbox.addNewTodo('abc123','gggg','now','now');
+// inbox.setUserId('eeee')
+// console.log(inbox);
 // inbox.add(todo);
 // inbox.add(todo2);
 // console.log(inbox);
@@ -307,14 +340,17 @@ class Project {
 
   updateProgressStatus(params) {
     this.progressStatus = this.getCurrentProgressPercentage();
+    return this;
   }
 
   complete() {
     this.isDone = true;
+    return this;
   }
 
   addTodo(todo) {
     this.todoLists.push(todo);
+    return this;
   }
 
   removeTodo(id) {
@@ -322,6 +358,7 @@ class Project {
       (v) => v.id.toString() === id.toString()
     );
     this.todoLists.splice(target, 1);
+    return this;
   }
 
   getDeadline() {
@@ -330,6 +367,7 @@ class Project {
 
   updateDeadline(deadLine) {
     this.deadLine = deadLine;
+    return this;
   }
 
   getDateCreated() {
@@ -376,6 +414,7 @@ class Activity {
     this.InRowDuration = this.getInRowDuration(todoDoc);
     this.longestInRowDuration = this.getLongestInRowDuration(todoDoc);
     this.userId = this.setUserId(userId);
+    return this;
   }
 
   setAccomplishedTodo(todo) {
@@ -474,9 +513,12 @@ class Activity {
 
   static async saveToDatabase() {
     // save to database
+    return this;
   }
 
-  static async getAllFromDatabase() {}
+  static async getAllFromDatabase() {
+    return this;
+  }
 
   setUserId(userId) {
     this.userId = userId;
@@ -542,10 +584,12 @@ class Logbook {
 
   static async saveToDatabase() {
     // save
+    return this;
   }
 
   static async getAll() {
     // get all doc from database;
+    return this;
   }
 }
 
@@ -609,14 +653,17 @@ class Trash {
   empty() {
     this.list = [];
     this.size = 0;
+    return this;
   }
 
   static async saveToDatabase() {
     // save
+    return this;
   }
 
   static async getAll() {
     // get all doc from database;
+    return this;
   }
 }
 

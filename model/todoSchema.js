@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const todoSchema = new Schema({
   title: { type: String },
   notes: { type: String },
+  priority: { type: Number },
   dateCreated: { type: Date, required: true },
   scheduledDate: { type: Date },
   deadline: { type: Date },
