@@ -469,6 +469,7 @@
 
         addNewTodo() {
           $(document).ready(function () {
+            let body = {};
             $("#add-todo-button").on({
               click: function () {
                 $("#todo-input-modal").modal();
@@ -487,6 +488,7 @@
               },
               change: function (event) {
                 console.log(event.target.value);
+                body["title"] = event.target.value;
                 // let todoInputTitle = document.getElementById(
                 //   "todo-input-title"
                 // );
@@ -508,6 +510,7 @@
                 // );
                 // const value = todoInputNotes.value;
                 console.log(event.target.value);
+                body["notes"] = event.target.value;
               },
             });
 
@@ -520,6 +523,7 @@
               },
               change: function (event) {
                 console.log(event.target.value);
+                body["schedule"] = event.target.value;
               },
             });
 
@@ -532,6 +536,8 @@
               },
               change: function (event) {
                 console.log(event.target.value);
+                body["deadline"] = event.target.value;
+                console.log(body)
               },
             });
 
@@ -580,6 +586,7 @@
         updateTodo() {
           $(document).ready(function () {
             let formData = new FormData();
+            let body = {};
             $("#update-todo-button").on({
               click: function () {
                 // update todo item via modal window;
@@ -592,24 +599,30 @@
             $("#update-todo-input-title").on({
               change: function (event) {
                 console.log(event.target.value);
+                body["update-todo-input-title"] = event.target.value;
               },
             });
 
             $("#update-todo-input-notes").on({
               change: function (event) {
                 console.log(event.target.value);
+                body["update-todo-input-notes"] = event.target.value;
               },
             });
 
             $("#update-todo-schedule").on({
               change: function (event) {
                 console.log(event.target.value);
+                body["update-todo-schedule"] = event.target.value;
               },
             });
 
             $("#update-todo-deadline").on({
               change: function (event) {
                 console.log(event.target.value);
+
+                body["update-todo-deadline"] = event.target.value;
+                console.log(body);
               },
             });
 
@@ -620,9 +633,7 @@
             });
 
             $("#update-todo-form").on({
-              submit: function (event) {
-                console.log($("#update-todo-input-title").val());
-              },
+              submit: function (event) {},
             });
           });
         }
