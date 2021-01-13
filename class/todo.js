@@ -1,6 +1,6 @@
 const { v4: uuidv4 } = require("uuid");
 
-class Todo {
+ class Todo {
   // priority 1 , 2 ,3.  1 = lowest, 3 = highest
   constructor(
     title,
@@ -131,7 +131,7 @@ class Todo {
 // const todo3 = new Todo();
 // console.log(todo3);
 
-class Tody {
+class Today {
   constructor() {
     this.todaysList = [];
     this.userId = null;
@@ -291,19 +291,19 @@ class Inbox {
   }
 }
 
-const inbox = new Inbox();
-console.log(inbox);
+// const inbox = new Inbox();
+// console.log(inbox);
 
-const inbox2 = new Inbox(
-  [
-    { title: "abc", notes: "gggg" },
-    { title: "dadads", notes: "ggggg" },
-  ],
-  "user1"
-);
-console.log(inbox2);
-inbox2.add(new Todo("77777", "77777"));
-console.log(inbox2);
+// const inbox2 = new Inbox(
+//   [
+//     { title: "abc", notes: "gggg" },
+//     { title: "dadads", notes: "ggggg" },
+//   ],
+//   "user1"
+// );
+// console.log(inbox2);
+// inbox2.add(new Todo("77777", "77777"));
+// console.log(inbox2);
 // inbox.addNewTodo('abc123','gggg','now','now');
 // inbox.setUserId('eeee')
 // console.log(inbox);
@@ -542,7 +542,8 @@ class Activity {
   }
 }
 
-class Logbook {
+class Completed {
+  // Logbook
   constructor() {
     this.list = [];
     this.size = 0;
@@ -609,7 +610,7 @@ class Logbook {
   }
 }
 
-class Trash {
+class TrashBox {
   constructor() {
     this.list = [];
     this.size = 0;
@@ -691,3 +692,11 @@ class Upcoming {}
 class Anytime {}
 
 class Someday {}
+
+
+module.exports.todo = Todo;
+module.exports.inbox = Inbox;
+module.exports.today = Today;
+module.exports.project = Project;
+module.exports.activity = Activity;
+module.exports.trash = TrashBox;

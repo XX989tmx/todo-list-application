@@ -1,5 +1,8 @@
 const express = require("express");
 const database = require("./utils/database");
+const todoFile = require("./class/todo");
+const Todo = todoFile.todo;
+const Inbox = todoFile.inbox;
 
 const app = express();
 const ejs = require("ejs");
@@ -13,13 +16,18 @@ app.get("/inbox", async (req, res, next) => {
   // get todo data from database
 
   // initialize todo class
-
+  const todo = new Todo("uuu", "www", 3);
+  console.log(todo);
   // get inbox data from database
 
   // initialize inbox class
+  const inbox = new Inbox();
+
+  inbox.add(todo);
+  console.log(inbox);
 
   // pass inbox data
-  res.render("inbox");
+  res.render("inbox", { inbox });
 });
 
 app.post("/createTodo", async (req, res, next) => {
@@ -29,6 +37,7 @@ app.post("/createTodo", async (req, res, next) => {
   const todo = new Todo(title, notes, priority, scheduledDate, deadline);
 
   // initialize inbox class
+  const inbox = new Inbox();
   // get inbox data from database;
   // initialize inbox class with inbox data;
   // update inbox class with todo data; inbox.addNewTodo(title, notes, priority, scheduledDate, deadline)
