@@ -4,15 +4,7 @@ const InboxSchema = require("../model/inboxSchema");
 
 class Todo {
   // priority 1 , 2 ,3.  1 = lowest, 3 = highest
-  constructor(
-    title,
-    notes,
-    priority,
-    scheduledDate,
-    deadline,
-    isDone,
-    userId
-  ) {
+  constructor(title, notes, priority, scheduledDate, deadline, isDone, userId) {
     this.id = null;
     this.title = title ? title : null;
     this.notes = notes ? notes : null;
@@ -126,7 +118,7 @@ class Todo {
       await createdTodoSchema.save();
     } catch (error) {
       console.log(error);
-    };
+    }
 
     // initialize user class;
     // User.saveToDatabase(createdTodoSchema.id); exc static method
@@ -735,3 +727,4 @@ module.exports.today = Today;
 module.exports.project = Project;
 module.exports.activity = Activity;
 module.exports.trash = TrashBox;
+module.exports.completed = Completed;
