@@ -1,3 +1,5 @@
+const userSchema = require("../model/userSchema");
+
 class User {
   constructor() {
     this.id = null;
@@ -130,16 +132,80 @@ class User {
 
   // userインスタンスをデータベースに保存する一連の処理
   // -userSchemaインスタンスを作成する処理 createUserSchema() { const userSchema = new userSchema({})}
-  // -userSchemaインスタンスにuserインスタンスデータをセットする処理. refでつなぐ他のスキーマId等のフィールドは除く、userSchemaに固有のデータアトリビュートのみをセット(lastLoggedInsにはEmptyArrをセット)。他はNull setUserSchema()
-  // signup時の処理を想定。各他スキーマインスタンスをInitializeする処理を他で実行し、各SchemaIDを得、それを以下メソッドにセット。(refを作る)
-  // - -userSchemaインスタンスにtodoIdをセットする処理 setTodoIdToUserSchema(todoId);
-  // -userSchemaインスタンスにinboxIdをセットする処理 setInboxIdToUserSchema(inboxId)
-  // -userSchemaインスタンスにtodayIdをセットする処理　setTodayIdToUserSchema(todayId)
-  // -userSchemaインスタンスにlogbookIdをセットする処理　setLogbookIdToUserSchema(logbookId)
-  // -userSchemaインスタンスにtrashBoxIdをセットする処理　setTrashBoxIdToUserSchema(trashBoxId)
-  // -userSchemaインスタンスにactivityIdをセットする処理　setActivityIdToUserSchema(activityId)
+  static createUserSchema() {
+    const userSchemaInstance = new userSchema({
+      name: null,
+      email: null,
+      password: null,
+      todo: null,
+      inbox: null,
+      today: null,
+      logbook: null,
+      trashBox: null,
+      activity: null,
+      lastLoggedIns: null,
+    });
+    return userSchemaInstance;
+  }
+  //userSchemaインスタンスにuserインスタンスデータをセットする処理. refでつなぐ他のスキーマId等のフィールドは除く、userSchemaに固有のデータアトリビュートのみをセット(lastLoggedInsにはEmptyArrをセット)。他はNull setUserSchema()
+  static setUserSchema(userSchemaInstance, userInstance) {
+    try {
+      userSchemaInstance.name = userInstance.name;
+      userSchemaInstance.email = userInstance.email;
+      userSchemaInstance.password = userInstance.password;
+      userSchemaInstance.lastLoggedIns = userInstance.lastLoggedIns;
+    } catch (error) {
+      console.log(error);
+    }
 
-  // -userSchemaインスタンス（mongooseDocument)をデータベースに保存する処理 saveUserSchemaToDatabase() {userSchema.save()} 
+    return userSchemaInstance;
+  }
+  // (signup時の処理を想定。各他スキーマインスタンスをInitializeする処理を他で実行し、各SchemaIDを得、それを以下メソッドにセット。(refを作る))
+
+  // - -userSchemaインスタンスにtodoIdをセットする処理 setTodoIdToUserSchema(todoId);
+  static setTodoIdToUserSchema(userSchemaInstance, todoSchemaInstanceArr) {
+    // signup時に少なくとも一つはTodoSchemaを作成保存する必要がある。サンプルTodoを強制作成保存する。
+    for (let i = 0; i < todoSchemaInstanceArr.length; i++) {
+      const todoSchemaInstance = todoSchemaInstanceArr[i];
+      userSchemaInstance.todo.push(todoSchemaInstance._id);
+    }
+
+    return userSchemaInstance;
+  }
+  // -userSchemaインスタンスにinboxIdをセットする処理 setInboxIdToUserSchema(inboxId)
+  static setInboxIdToUserSchema(userSchemaInstance, inboxSchemaInstance) {
+    userSchemaInstance.inbox = inboxSchemaInstance._id;
+    return userSchemaInstance;
+  }
+  // -userSchemaインスタンスにtodayIdをセットする処理　setTodayIdToUserSchema(todayId)
+  static setTodayIdToUserSchema(userSchemaInstance, todaySchemaInstance) {
+    userSchemaInstance.today = todaySchemaInstance._id;
+    return userSchemaInstance;
+  }
+  // -userSchemaインスタンスにlogbookIdをセットする処理　setLogbookIdToUserSchema(logbookId)
+  static setLogbookIdToUserSchema(userSchemaInstance, logbookSchemaInstance) {
+    userSchemaInstance.logbook = logbookSchemaInstance._id;
+    return userSchemaInstance;
+  }
+  // -userSchemaインスタンスにtrashBoxIdをセットする処理　setTrashBoxIdToUserSchema(trashBoxId)
+  static setTrashBoxIdToUserSchema(userSchemaInstance, trashBoxSchemaInstance) {
+    userSchemaInstance.trashBox = trashBoxSchemaInstance._id;
+    return userSchemaInstance;
+  }
+  // -userSchemaインスタンスにactivityIdをセットする処理　setActivityIdToUserSchema(activityId)
+  static setActivityIdToUserSchema(userSchemaInstance, activitySchemaInstance) {
+    userSchemaInstance.activity = activitySchemaInstance._id;
+    return userSchemaInstance;
+  }
+
+  // -userSchemaインスタンス（mongooseDocument)をデータベースに保存する処理 saveUserSchemaToDatabase() {userSchema.save()}
+  static async saveUserSchemaToDatabase(userSchemaInstance) {
+    try {
+      await userSchemaInstance.save();
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   static async saveToDatabase() {
     // save to database;
