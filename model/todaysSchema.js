@@ -7,4 +7,4 @@ const todaysSchema = new Schema({
   userId: { type: mongoose.Types.ObjectId, ref: "User" },
 });
 
-module.exports = todaysSchema.model("Todays", todaysSchema);
+module.exports = mongoose.model("Todays", todaysSchema);

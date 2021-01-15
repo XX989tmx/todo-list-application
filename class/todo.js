@@ -1,6 +1,7 @@
 const { v4: uuidv4 } = require("uuid");
 const TodoSchema = require("../model/todoSchema");
 const InboxSchema = require("../model/inboxSchema");
+const ProjectSchema = require("../model/projectSchema");
 
 class Todo {
   // priority 1 , 2 ,3.  1 = lowest, 3 = highest
@@ -530,10 +531,46 @@ class Project {
 
   // インスタンスデータをデータベースに保存する処理 //
   // - ProjectSchemaインスタンスの作成　createProjectSchemaInstance()
-  
+  static createProjectSchemaInstance() {
+    const projectSchemaInstance = new ProjectSchema({
+      todoLists: [],
+      title: null,
+      notes: null,
+      isDone: null,
+      dateCreated: null,
+      deadline: null,
+      scheduledDate: null,
+      progressStatus: null,
+      userId: null,
+    });
+    return projectSchemaInstance;
+  }
   // - ProjectSchemaインスタンスにProjectインスタンス（Class)関連のデータアトリビュートを保存する処理(userID以外)　setProjectSchema()
+  static setProjectSchema(projectSchemaInstance, projectInstance) {
+    projectSchemaInstance.todoLists = projectInstance.todoLists;
+    projectSchemaInstance.title = projectInstance.title;
+    projectSchemaInstance.notes = projectInstance.notes;
+    projectSchemaInstance.isDone = projectInstance.isDone;
+    projectSchemaInstance.dateCreated = projectInstance.dateCreated;
+    projectSchemaInstance.deadline = projectInstance.deadline;
+    projectSchemaInstance.scheduledDate = projectInstance.scheduledDate;
+    projectSchemaInstance.progressStatus = projectInstance.progressStatus;
+
+    return projectSchemaInstance;
+  }
   // - ProjectSchemaインスタンスにuserIdを保存する処理 setUserIdToProjectSchema(userId)
+  static setUserIdToProjectSchema(projectSchemaInstance, userSchemaInstance) {
+    projectSchemaInstance.userId = userSchemaInstance._id;
+    return projectSchemaInstance;
+  }
   // - ProjectSchemaインスタンス(mongooseDocument)を保存する処理　　saveProjectSchemaToDatabase() {doc.save()}
+  static async saveProjectSchemaToDatabase(projectSchemaInstance) {
+    try {
+      await projectSchemaInstance.save();
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
 
 class Activity {

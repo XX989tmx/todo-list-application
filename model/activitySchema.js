@@ -12,4 +12,4 @@ const activitySchema = new Schema({
   userId: { type: mongoose.Types.ObjectId, ref: "User" },
 });
 
-module.exports = activitySchema.model("Activity", activitySchema);
+module.exports = mongoose.model("Activity", activitySchema);

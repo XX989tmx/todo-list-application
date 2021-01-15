@@ -7,4 +7,4 @@ const logbookSchema = new Schema({
   size: { type: Number },
 });
 
-module.exports = logbookSchema.model("Completed", logbookSchema);
+module.exports = mongoose.model("Completed", logbookSchema);

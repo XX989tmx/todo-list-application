@@ -15,4 +15,4 @@ const userSchema = new Schema({
   lastLoggedIns: [{ type: Date }],
 });
 
-module.exports = userSchema.model("User", userSchema);
+module.exports = mongoose.model("User", userSchema);

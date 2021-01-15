@@ -7,4 +7,4 @@ const trashBoxSchema = new Schema({
   size: { type: Number },
 });
 
-module.exports = trashBoxSchema.model("TrashBox", trashBoxSchema);
+module.exports = mongoose.model("TrashBox", trashBoxSchema);
