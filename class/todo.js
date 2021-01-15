@@ -2,6 +2,7 @@ const { v4: uuidv4 } = require("uuid");
 const TodoSchema = require("../model/todoSchema");
 const InboxSchema = require("../model/inboxSchema");
 const ProjectSchema = require("../model/projectSchema");
+const LogbookSchema = require("../model/logbookSchema");
 
 class Todo {
   // priority 1 , 2 ,3.  1 = lowest, 3 = highest
@@ -828,9 +829,32 @@ class Logbook {
 
   // インスタンスデータをデータベースに保存する処理 //
   // - LogbookSchemaインスタンスの作成　createLogbookSchemaInstance()
+  static createLogbookSchemaInstance() {
+    const logbookSchemaInstance = new LogbookSchema({
+      list: [],
+      size: 0,
+    });
+    return logbookSchemaInstance;
+  }
   // - LogbookSchemaインスタンスにLogbookインスタンス（Class)関連のデータアトリビュートを保存する処理(userID以外)　setLogbookSchema()
+  static setLogbookSchema(logbookSchemaInstance, logbookInstance) {
+    logbookSchemaInstance.list = logbookInstance.list;
+    logbookSchemaInstance.size = logbookInstance.size;
+    return logbookSchemaInstance;
+  }
   // - LogbookSchemaインスタンスにuserIdを保存する処理 setUserIdToLogbookSchema(userId)
+  static setUserIdToLogbookSchema(logbookSchemaInstance, userSchemaInstance) {
+    logbookSchemaInstance.userId = userSchemaInstance._id;
+    return logbookSchemaInstance;
+  }
   // - LogbookSchemaインスタンス(mongooseDocument)を保存する処理　　saveLogbookSchemaToDatabase() {doc.save()}
+  static async saveLogbookSchemaToDatabase(logbookSchemaInstance) {
+    try {
+      await logbookSchemaInstance.save();
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
 
 class TrashBox {
