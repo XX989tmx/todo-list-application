@@ -102,6 +102,12 @@ class Todo {
     return this;
   }
 
+  // インスタンスデータをデータベースに保存する処理 //
+  // - todoSchemaインスタンスの作成　createTodoSchemaInstance()
+  // - todoSchemaインスタンスにTodoインスタンス（Class)関連のデータアトリビュートを保存する処理(userID以外)　setTodoSchema()
+  // - todoSchemaインスタンスにuserIdを保存する処理 setUserIdToTodoSchema(userId)
+  // - todoSchemaインスタンス(mongooseDocument)を保存する処理　　saveTodoSchemaToDatabase() {doc.save()}
+
   static async saveToDatabase(todo) {
     // save specific todo item to database
     const createdTodoSchema = new TodoSchema({
@@ -203,6 +209,12 @@ class Today {
     return this;
   }
 
+  // インスタンスデータをデータベースに保存する処理 //
+  // - TodaySchemaインスタンスの作成　createTodaySchemaInstance()
+  // - TodaySchemaインスタンスにTodayインスタンス（Class)関連のデータアトリビュートを保存する処理(userID以外)　setTodaySchema()
+  // - TodaySchemaインスタンスにuserIdを保存する処理 setUserIdToTodaySchema(userId)
+  // - TodaySchemaインスタンス(mongooseDocument)を保存する処理　　saveTodaySchemaToDatabase() {doc.save()}
+
   static async save() {
     // save todaysList to database;
   }
@@ -282,6 +294,12 @@ class Inbox {
     this.size--;
     return this;
   }
+
+  // インスタンスデータをデータベースに保存する処理 //
+  // - InboxSchemaインスタンスの作成　createInboxSchemaInstance()
+  // - InboxSchemaインスタンスにInboxインスタンス（Class)関連のデータアトリビュートを保存する処理(userID以外)　setInboxSchema()
+  // - InboxSchemaインスタンスにuserIdを保存する処理 setUserIdToInboxSchema(userId)
+  // - InboxSchemaインスタンス(mongooseDocument)を保存する処理　　saveInboxSchemaToDatabase() {doc.save()}
 
   static async saveInboxData(inboxInstance) {
     // save inbox data to database;
@@ -426,6 +444,12 @@ class Project {
     this.userId = userId;
     return userId;
   }
+
+  // インスタンスデータをデータベースに保存する処理 //
+  // - ProjectSchemaインスタンスの作成　createProjectSchemaInstance()
+  // - ProjectSchemaインスタンスにProjectインスタンス（Class)関連のデータアトリビュートを保存する処理(userID以外)　setProjectSchema()
+  // - ProjectSchemaインスタンスにuserIdを保存する処理 setUserIdToProjectSchema(userId)
+  // - ProjectSchemaインスタンス(mongooseDocument)を保存する処理　　saveProjectSchemaToDatabase() {doc.save()}
 }
 
 class Activity {
@@ -568,9 +592,15 @@ class Activity {
     this.userId = userId;
     return this.userId;
   }
+
+  // インスタンスデータをデータベースに保存する処理 //
+  // - ActivitySchemaインスタンスの作成　createActivitySchemaInstance()
+  // - ActivitySchemaインスタンスにActivityインスタンス（Class)関連のデータアトリビュートを保存する処理(userID以外)　setActivitySchema()
+  // - ActivitySchemaインスタンスにuserIdを保存する処理 setUserIdToActivitySchema(userId)
+  // - ActivitySchemaインスタンス(mongooseDocument)を保存する処理　　saveActivitySchemaToDatabase() {doc.save()}
 }
 
-class Completed {
+class Logbook {
   // Logbook
   constructor() {
     this.list = [];
@@ -636,6 +666,12 @@ class Completed {
     // get all doc from database;
     return this;
   }
+
+  // インスタンスデータをデータベースに保存する処理 //
+  // - LogbookSchemaインスタンスの作成　createLogbookSchemaInstance()
+  // - LogbookSchemaインスタンスにLogbookインスタンス（Class)関連のデータアトリビュートを保存する処理(userID以外)　setLogbookSchema()
+  // - LogbookSchemaインスタンスにuserIdを保存する処理 setUserIdToLogbookSchema(userId)
+  // - LogbookSchemaインスタンス(mongooseDocument)を保存する処理　　saveLogbookSchemaToDatabase() {doc.save()}
 }
 
 class TrashBox {
@@ -710,6 +746,12 @@ class TrashBox {
     // get all doc from database;
     return this;
   }
+
+  // インスタンスデータをデータベースに保存する処理 //
+  // - TrashBoxSchemaインスタンスの作成　createTrashBoxSchemaInstance()
+  // - TrashBoxSchemaインスタンスにTrashBoxインスタンス（Class)関連のデータアトリビュートを保存する処理(userID以外)　setTrashBoxSchema()
+  // - TrashBoxSchemaインスタンスにuserIdを保存する処理 setUserIdToTrashBoxSchema(userId)
+  // - TrashBoxSchemaインスタンス(mongooseDocument)を保存する処理　　saveTrashBoxSchemaToDatabase() {doc.save()}
 }
 
 class WhatToDoNext {}
@@ -727,4 +769,4 @@ module.exports.today = Today;
 module.exports.project = Project;
 module.exports.activity = Activity;
 module.exports.trash = TrashBox;
-module.exports.completed = Completed;
+module.exports.logbook = Logbook;

@@ -128,6 +128,19 @@ class User {
     return this.lastLoggedIns.pop();
   }
 
+  // userインスタンスをデータベースに保存する一連の処理
+  // -userSchemaインスタンスを作成する処理 createUserSchema() { const userSchema = new userSchema({})}
+  // -userSchemaインスタンスにuserインスタンスデータをセットする処理. refでつなぐ他のスキーマId等のフィールドは除く、userSchemaに固有のデータアトリビュートのみをセット(lastLoggedInsにはEmptyArrをセット)。他はNull setUserSchema()
+  // signup時の処理を想定。各他スキーマインスタンスをInitializeする処理を他で実行し、各SchemaIDを得、それを以下メソッドにセット。(refを作る)
+  // - -userSchemaインスタンスにtodoIdをセットする処理 setTodoIdToUserSchema(todoId);
+  // -userSchemaインスタンスにinboxIdをセットする処理 setInboxIdToUserSchema(inboxId)
+  // -userSchemaインスタンスにtodayIdをセットする処理　setTodayIdToUserSchema(todayId)
+  // -userSchemaインスタンスにlogbookIdをセットする処理　setLogbookIdToUserSchema(logbookId)
+  // -userSchemaインスタンスにtrashBoxIdをセットする処理　setTrashBoxIdToUserSchema(trashBoxId)
+  // -userSchemaインスタンスにactivityIdをセットする処理　setActivityIdToUserSchema(activityId)
+
+  // -userSchemaインスタンス（mongooseDocument)をデータベースに保存する処理 saveUserSchemaToDatabase() {userSchema.save()} 
+
   static async saveToDatabase() {
     // save to database;
   }
