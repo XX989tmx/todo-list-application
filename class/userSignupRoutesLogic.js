@@ -1,6 +1,13 @@
 const axios = require("axios");
 const todo = require("./todo");
 const Todo = todo.todo;
+const Today = todo.today;
+const Inbox = todo.inbox;
+const Project = todo.project;
+const Logbook = todo.logbook;
+const Activity = todo.activity;
+const TrashBox = todo.trashBox;
+
 const user = require("./user");
 const User = user.user;
 const TodoSchema = require("../model/todoSchema");
@@ -85,17 +92,90 @@ class UserSignupRoutesLogic {
       userClassInstance
     );
     return updatedUserSchemaInstance;
-  };
+  }
 
   static initializeTodoSchemaInstance() {
-      const todoSchemaInstance = Todo.createTodoSchemaInstance();
-      return todoSchemaInstance;
-  };
+    const todoSchemaInstance = Todo.createTodoSchemaInstance();
+    return todoSchemaInstance;
+  }
 
-  static setTodoSchemaIdToUserSchema(todoSchemaInstance,userSchemaInstance) {
-       const updatedUserSchemaInstance =  User.setTodoIdToUserSchema(userSchemaInstance,[todoSchemaInstance]);
-       return updatedUserSchemaInstance;
-  };
+  static setTodoSchemaIdToUserSchema(todoSchemaInstance, userSchemaInstance) {
+    const updatedUserSchemaInstance = User.setTodoIdToUserSchema(
+      userSchemaInstance,
+      [todoSchemaInstance]
+    );
+    return updatedUserSchemaInstance;
+  }
 
-  
+  static setUserIdToTodoSchema(todoSchemaInstance, userSchemaInstance) {
+    const updatedTodoSchemaInstance = Todo.setUserIdToTodoSchema(
+      todoSchemaInstance,
+      userSchemaInstance
+    );
+    return updatedTodoSchemaInstance;
+  }
+
+  static initializeTodaySchemaInstance() {
+    const todaySchemaInstance = Today.createTodaySchemaInstance();
+    return todaySchemaInstance;
+  }
+
+  static setTodaysSchemaIdToUserSchemaInstance(
+    todaySchemaInstance,
+    userSchemaInstance
+  ) {
+    const updatedUserSchemaInstance = User.setTodayIdToUserSchema(
+      userSchemaInstance,
+      todaySchemaInstance
+    );
+    return updatedUserSchemaInstance;
+  }
+
+  static setUserIdToTodaysSchema(userSchemaInstance, todaySchemaInstance) {
+    const updatedTodaySchemaInstance = Today.setUserIdToTodaySchema(
+      todaySchemaInstance,
+      userSchemaInstance
+    );
+    return updatedTodaySchemaInstance;
+  }
+
+  static initializeInboxSchemaInstance() {
+    const inboxSchemaInstance = Inbox.createInboxSchemaInstance();
+    return inboxSchemaInstance;
+  }
+
+  static setInboxSchemaIdToUserSchemaInstance(
+    inboxSchemaInstance,
+    userSchemaInstance
+  ) {
+    const updatedUserSchemaInstance = User.setInboxIdToUserSchema(
+      userSchemaInstance,
+      inboxSchemaInstance
+    );
+    return updatedUserSchemaInstance;
+  }
+
+  static setUserIdToInboxSchema(userSchemaInstance, inboxSchemaInstance) {
+    const updatedInboxSchemaInstance = Inbox.setUserIdToInboxSchema(
+      inboxSchemaInstance,
+      userSchemaInstance
+    );
+    return updatedInboxSchemaInstance;
+  }
+
+  static initializeProjectSchemaInstance() {
+    const projectSchemaInstance = Project.createProjectSchemaInstance();
+    return projectSchemaInstance;
+  }
+
+  static setProjectSchemaIdToUserSchemaInstance(
+    projectSchemaInstance,
+    userSchemaInstance
+  ) {
+    const updatedUserSchemaInstance = User.setProjectIdToUserSchema(
+      userSchemaInstance,
+      projectSchemaInstance
+    );
+    return updatedUserSchemaInstance;
+  }
 }

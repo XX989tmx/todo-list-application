@@ -195,6 +195,12 @@ class User {
     userSchemaInstance.today = todaySchemaInstance._id;
     return userSchemaInstance;
   }
+  // -userSchemaインスタンスにproject idをセットする処理
+ //　　setProjectIdToUserSchema(projectId)
+  static setProjectIdToUserSchema(userSchemaInstance,projectSchemaInstance) {
+    userSchemaInstance.project = projectSchemaInstance._id;
+    return userSchemaInstance;
+  }
   // -userSchemaインスタンスにlogbookIdをセットする処理　setLogbookIdToUserSchema(logbookId)
   static setLogbookIdToUserSchema(userSchemaInstance, logbookSchemaInstance) {
     userSchemaInstance.logbook = logbookSchemaInstance._id;
