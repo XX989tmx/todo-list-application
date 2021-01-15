@@ -1,19 +1,32 @@
 const userSchema = require("../model/userSchema");
 
 class User {
-  constructor() {
-    this.id = null;
-    this.name = null;
-    this.email = null;
-    this.password = null;
-    this.confirmPassword = null;
-    this.todo = [];
-    this.inbox = null;
-    this.today = null;
-    this.logbook = null;
-    this.trashBox = null;
-    this.activity = null;
-    this.lastLoggedIns = [];
+  constructor(
+    userId,
+    name,
+    email,
+    password,
+    confirmPassword,
+    todo,
+    inbox,
+    today,
+    logbook,
+    trashBox,
+    activity,
+    lastLoggedIns
+  ) {
+    this.id = userId ? userId : null;
+    this.name = name ? name : null;
+    this.email = email ? email : null;
+    this.password = password ? password : null;
+    this.confirmPassword = confirmPassword ? confirmPassword : null;
+    this.todo = todo ? todo : [];
+    this.inbox = inbox ? inbox : null;
+    this.today = today ? today : null;
+    this.logbook = logbook ? logbook : null;
+    this.trashBox = trashBox ? trashBox : null;
+    this.activity = activity ? activity : null;
+    this.lastLoggedIns = lastLoggedIns ? lastLoggedIns : [];
   }
 
   set(
@@ -219,3 +232,5 @@ class User {
     // get userDoc from database;
   }
 }
+
+module.exports.user = User;
