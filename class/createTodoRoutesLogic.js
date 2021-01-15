@@ -37,7 +37,68 @@ class CreateTodoRoutesLogic {
 
   // inbox class instance をReturn
 
-  static createTodo() {}
+  static async createTodo(req) {
+    // todoデータを新規作成保存し、User,InboxスキーマのTodoが関連する値を更新し、保存する。その後、Inboxデータを再度読み出し、Inboxページに渡しRerenderする。
+    // -Userデータをデータベースから読み出す
+    const userData = await this.readUserDataFromDatabase();
+    // -Inboxデータをデータベースから読み出す
+    const inboxData = await this.readInboxDataFromDatabase();
+    //- req.bodyからTodoフィールドの値をOBD
+    const todoInputs = this.parseReqBody(req);
+    //- user class instance をinitialize
+    const userClassInstance = await this.initializeUserClassInstance(userData);
+    // -inbox class instanceをinitialize
+    const inboxClassInstance = await this.initializeInboxClassInstance(
+      inboxData
+    );
+    // todo class instanceをinitialize
+    // todo class instanceにreq.bodyのTodoフィールドの値をセットする。
+    const todoClassInstance = await this.initializeTodoClassInstance(
+      todoInputs
+    );
+
+    // todo dataの保存処理
+    // -todo schema instance をinitialize : createTodoSchemaInstace()
+    const todoSchemaInstance = this.initializeTodoSchemaInstance();
+    // -todo schema instance に todo class instance の値をセット：setTodoSchema();
+    const updatedTodoSchemaInstance = this.setTodoSchemaInstance(
+      todoSchemaInstance,
+      todoClassInstance
+    );
+    // -userIdをtodo schema instanceにセット（UserIdをTodoSchemaに関連付け）:setUserIdToTodoSchema();
+    // - todo schema instanceをデータベースに保存: saveTodoSchemaToDatabase();
+    await this.saveTodoSchemaInstance(updatedTodoSchemaInstance);
+
+    // inbox dataの更新保存処理
+    // -inbox class instanceにInboxDataをセットする：A　set methodでセット　or B inbox class instance initialize時に、InboxDataをセット
+    // -inbox class instance　のinbox fieldにTodoSchema　を追加：inbox.addNewTodo(todoSchema);
+    const updatedInboxClassInstance = this.appendTodoSchemaToInboxClassInstance(
+      inboxClassInstance,
+      updatedTodoSchemaInstance
+    );
+    // -inbox data(databaseから読み出したInboxData)の各フィールドを、inbox class instanceのそれに更新する for n times: inboxData.x = inbox.x
+    const updatedInboxData = this.updateInboxDataWithInboxClassInstance(
+      inboxData,
+      updatedInboxClassInstance
+    );
+    // -inbox schemaを保存 saveInboxSchemaToDatabase();
+    await this.saveInboxSchemaDataToDatabase(updatedInboxData);
+
+    // user dataの更新保存処理
+    //  -user dataのtodo fieldにTodo新規追加：todo schema instance をuser.todo にPush（）
+    const updatedUserData = this.setTodoSchemaInstanceToUserData(
+      updatedTodoSchemaInstance,
+      userData
+    );
+    // -user dataを保存　　saveUserSchemaToDatabase();
+    await this.saveUserSchemaDataToDatabase(updatedUserData);
+    // -inbox fieldについてはRefキーで参照する方式のため、手動更新不要。
+
+    // inbox class instance をReturn
+    return updatedInboxClassInstance;
+
+    //database への保存処理3つは、transaction methodでまとめて同時にやる。
+  }
 
   static async readUserDataFromDatabase(userId) {
     let userData;
@@ -146,10 +207,7 @@ class CreateTodoRoutesLogic {
     }
   }
 
-  static setTodoSchemaInstanceToUserData(
-    todoSchemaInstance,
-    readUserDataFromDatabase
-  ) {
+  static setTodoSchemaInstanceToUserData(todoSchemaInstance, userData) {
     userData.todo.push(todoSchemaInstance._id);
     return userData;
   }
