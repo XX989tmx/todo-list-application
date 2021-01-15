@@ -245,10 +245,33 @@ class Today {
   }
 
   // インスタンスデータをデータベースに保存する処理 //
-  // - TodaySchemaインスタンスの作成　createTodaySchemaInstance()
+  // - TodaySchemaインスタンスの作成　createTodaySchemaInstance();
+
+  static createTodaySchemaInstance() {
+    const todaySchemaInstance = new todaySchema({
+      todaysList: [],
+      userId: null,
+    });
+    return todaySchemaInstance;
+  }
   // - TodaySchemaインスタンスにTodayインスタンス（Class)関連のデータアトリビュートを保存する処理(userID以外)　setTodaySchema()
+  static setTodaySchema(todaySchemaInstance, todayInstance) {
+    todaySchemaInstance.todaysList = todayInstance.todaysList;
+    return todaySchemaInstance;
+  }
   // - TodaySchemaインスタンスにuserIdを保存する処理 setUserIdToTodaySchema(userId)
+  static setUserIdToTodaySchema(todaySchemaInstance, userSchemaInstance) {
+    todaySchemaInstance.userId = userSchemaInstance._id;
+    return todaySchemaInstance;
+  }
   // - TodaySchemaインスタンス(mongooseDocument)を保存する処理　　saveTodaySchemaToDatabase() {doc.save()}
+  static async saveTodaySchemaToDatabase(todaySchemaInstance) {
+    try {
+      await todaySchemaInstance.save();
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   static async save() {
     // save todaysList to database;
@@ -332,9 +355,34 @@ class Inbox {
 
   // インスタンスデータをデータベースに保存する処理 //
   // - InboxSchemaインスタンスの作成　createInboxSchemaInstance()
+  static createInboxSchemaInstance() {
+    const inboxSchemaInstance = new InboxSchema({
+      list: [],
+      size: 0,
+      userId: null,
+    });
+    return inboxSchemaInstance;
+  }
   // - InboxSchemaインスタンスにInboxインスタンス（Class)関連のデータアトリビュートを保存する処理(userID以外)　setInboxSchema()
+  static setInboxSchema(inboxSchemaInstance, inboxInstance) {
+    inboxSchemaInstance.list = inboxInstance.list;
+    inboxSchemaInstance.size = inboxInstance.size;
+    return inboxSchemaInstance;
+  }
   // - InboxSchemaインスタンスにuserIdを保存する処理 setUserIdToInboxSchema(userId)
-  // - InboxSchemaインスタンス(mongooseDocument)を保存する処理　　saveInboxSchemaToDatabase() {doc.save()}
+  static setUserIdToInboxSchema(inboxSchemaInstance, userSchemaInstance) {
+    inboxSchemaInstance.userId = userSchemaInstance._id;
+    return inboxSchemaInstance;
+  }
+  // - InboxSchemaインスタンス(mongooseDocument)を保存する処理　　saveInboxSchemaToDatabase() {doc.save()};
+
+  static async saveInboxSchemaToDatabase(inboxSchemaInstance) {
+    try {
+      await inboxSchemaInstance.save();
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   static async saveInboxData(inboxInstance) {
     // save inbox data to database;
@@ -482,6 +530,7 @@ class Project {
 
   // インスタンスデータをデータベースに保存する処理 //
   // - ProjectSchemaインスタンスの作成　createProjectSchemaInstance()
+  
   // - ProjectSchemaインスタンスにProjectインスタンス（Class)関連のデータアトリビュートを保存する処理(userID以外)　setProjectSchema()
   // - ProjectSchemaインスタンスにuserIdを保存する処理 setUserIdToProjectSchema(userId)
   // - ProjectSchemaインスタンス(mongooseDocument)を保存する処理　　saveProjectSchemaToDatabase() {doc.save()}
