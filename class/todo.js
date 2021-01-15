@@ -3,6 +3,7 @@ const TodoSchema = require("../model/todoSchema");
 const InboxSchema = require("../model/inboxSchema");
 const ProjectSchema = require("../model/projectSchema");
 const LogbookSchema = require("../model/logbookSchema");
+const TrashBoxSchema = require("../model/trashBoxSchema");
 
 class Todo {
   // priority 1 , 2 ,3.  1 = lowest, 3 = highest
@@ -932,9 +933,32 @@ class TrashBox {
 
   // インスタンスデータをデータベースに保存する処理 //
   // - TrashBoxSchemaインスタンスの作成　createTrashBoxSchemaInstance()
+  static createTrashBoxSchemaInstance() {
+    const trashBoxSchemaInstance = new TrashBoxSchema({
+      list: [],
+      size: 0,
+    });
+    return trashBoxSchemaInstance;
+  }
   // - TrashBoxSchemaインスタンスにTrashBoxインスタンス（Class)関連のデータアトリビュートを保存する処理(userID以外)　setTrashBoxSchema()
+  static setTrashBoxSchema(trashBoxSchemaInstance, trashBoxInstance) {
+    trashBoxSchemaInstance.list = trashBoxInstance.list;
+    trashBoxSchemaInstance = trashBoxInstance.size;
+    return trashBoxSchemaInstance;
+  }
   // - TrashBoxSchemaインスタンスにuserIdを保存する処理 setUserIdToTrashBoxSchema(userId)
+  static setUserIdToTrashBoxSchema(trashBoxSchemaInstance, userSchemaInstance) {
+    trashBoxSchemaInstance.userId = userSchemaInstance._id;
+    return trashBoxSchemaInstance;
+  }
   // - TrashBoxSchemaインスタンス(mongooseDocument)を保存する処理　　saveTrashBoxSchemaToDatabase() {doc.save()}
+  static async saveTrashBoxSchemaToDatabase(trashBoxSchemaInstance) {
+    try {
+      await trashBoxSchemaInstance.save();
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
 
 class WhatToDoNext {}
