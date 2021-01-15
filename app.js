@@ -19,9 +19,13 @@ app.get("/inbox", async (req, res, next) => {
   // get todo data from database
 
   // initialize todo class
-  const todo = new Todo("uuu", "www", 3,new Date(), new Date(),false,'1234');
+  const todo = new Todo("uuu", "www", 3, new Date(), new Date(), false, "1234");
   console.log(todo);
-  
+
+  const emptyTodoSchemaInstance = Todo.createTodoSchemaInstance();
+ const settedTodoSchemaInstance = Todo.setTodoSchema(emptyTodoSchemaInstance,todo);
+ console.log(settedTodoSchemaInstance);
+
   // get inbox data from database
 
   // initialize inbox class

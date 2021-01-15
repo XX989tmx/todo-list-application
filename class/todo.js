@@ -104,9 +104,44 @@ class Todo {
 
   // インスタンスデータをデータベースに保存する処理 //
   // - todoSchemaインスタンスの作成　createTodoSchemaInstance()
+  static createTodoSchemaInstance() {
+    const todoSchemaInstance = new TodoSchema({
+      title: null,
+      notes: null,
+      priority: null,
+      dateCreated: null,
+      scheduledDate: null,
+      deadline: null,
+      isDone: null,
+      userId: null,
+    });
+    return todoSchemaInstance;
+  }
   // - todoSchemaインスタンスにTodoインスタンス（Class)関連のデータアトリビュートを保存する処理(userID以外)　setTodoSchema()
+  static setTodoSchema(todoSchemaInstance, todo) {
+    todoSchemaInstance.title = todo.title;
+    todoSchemaInstance.notes = todo.notes;
+    todoSchemaInstance.priority = todo.priority;
+    todoSchemaInstance.dateCreated = todo.dateCreated;
+    todoSchemaInstance.scheduledDate = todo.scheduledDate;
+    todoSchemaInstance.deadline = todo.deadline;
+    todoSchemaInstance.isDone = todo.isDone;
+
+    return todoSchemaInstance;
+  }
   // - todoSchemaインスタンスにuserIdを保存する処理 setUserIdToTodoSchema(userId)
+  static setUserIdToTodoSchema(todoSchemaInstance, userSchemaInstance) {
+    todoSchemaInstance.userId = userSchemaInstance._id;
+    return todoSchemaInstance;
+  }
   // - todoSchemaインスタンス(mongooseDocument)を保存する処理　　saveTodoSchemaToDatabase() {doc.save()}
+  static async saveTodoSchemaToDatabase(todoSchemaInstance) {
+    try {
+      await todoSchemaInstance.save();
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   static async saveToDatabase(todo) {
     // save specific todo item to database
