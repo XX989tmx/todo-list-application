@@ -716,9 +716,47 @@ class Activity {
 
   // インスタンスデータをデータベースに保存する処理 //
   // - ActivitySchemaインスタンスの作成　createActivitySchemaInstance()
+  static createActivitySchemaInstance() {
+    const activitySchemaInstance = new ActivitySchema({
+      date: null,
+      accomplishedTodo: [],
+      accomplishedCount: 0,
+      productivityScore: 0,
+      isInRow: null,
+      inRowDuration: null,
+      longestInRowDuration: 0,
+      userId: null,
+    });
+    return activitySchemaInstance;
+  }
   // - ActivitySchemaインスタンスにActivityインスタンス（Class)関連のデータアトリビュートを保存する処理(userID以外)　setActivitySchema()
+  static setActivitySchema(activitySchemaInstance, activityInstance) {
+    activitySchemaInstance.date = activityInstance.date;
+    activitySchemaInstance.accomplishedTodo = activityInstance.accomplishedTodo;
+    activitySchemaInstance.accomplishedCount =
+      activityInstance.accomplishedCount;
+    activitySchemaInstance.productivityScore =
+      activityInstance.productivityScore;
+    activitySchemaInstance.isInRow = activityInstance.isInRow;
+    activitySchemaInstance.inRowDuration = activityInstance.inRowDuration;
+    activitySchemaInstance.longestInRowDuration =
+      activityInstance.longestInRowDuration;
+
+    return activitySchemaInstance;
+  }
   // - ActivitySchemaインスタンスにuserIdを保存する処理 setUserIdToActivitySchema(userId)
+  static setUserIdToActivitySchema(activitySchemaInstance, userSchemaInstance) {
+    activitySchemaInstance.userId = userSchemaInstance._id;
+    return activitySchemaInstance;
+  }
   // - ActivitySchemaインスタンス(mongooseDocument)を保存する処理　　saveActivitySchemaToDatabase() {doc.save()}
+  static async saveActivitySchemaToDatabase(activitySchemaInstance) {
+    try {
+      await activitySchemaInstance.save();
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
 
 class Logbook {
