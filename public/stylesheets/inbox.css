@@ -63,6 +63,14 @@
   border: solid black 1px;
 }
 
+.sidebar-tab {
+  list-style-type: none;
+}
+
+.sidebar-tab-color-change:hover {
+  background-color: rgb(212, 212, 212);
+}
+
 /* .inbox-mainsection-heading {
     color: aqua;
 } */
