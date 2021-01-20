@@ -20,7 +20,15 @@
               <li>
                 <div class="row">
                   <div class="col-1"></div>
-                  <div class="col-11" id="inbox-sidebar-heading">Inbox</div>
+                  <div class="col-11" id="inbox-sidebar-heading">
+                    <ul>
+                      <li><a href=""> Inbox</a></li>
+                      <li><a href=""> Today</a></li>
+                      <li><a href=""> What to do next</a></li>
+                      <li><a href="">Log</a></li>
+                      <li><a href=""> TrashBox</a></li>
+                    </ul>
+                  </div>
                 </div>
               </li>
             </ul>
@@ -40,19 +48,23 @@
             <div id="main-section" class="main-section row">
               <div class="col-12">
                 <ul class="margin-and-padding-0 list-style-none list-group">
+                  <% inbox.forEach(todo => { %>
+
                   <li id="todo-item-li" class="list-group-item">
                     <div class="todo-items row">
                       <div class="col-1">
                         <input type="checkbox" name="" id="checkbox1" />
                       </div>
-                      <div class="col-1" id="todo-priority">1</div>
+                      <div class="col-1" id="todo-priority">
+                        <span><%= todo.priority %> </span>
+                      </div>
                       <div
                         class="col-7"
                         id="todo-item"
                         data-toggle="collapse"
                         data-target="#todo-item-collapse"
                       >
-                        todo item title
+                        <span><%= todo.title %> </span>
                       </div>
                       <div class="drag-button col-1" id="drag-button">D</div>
                       <div
@@ -83,9 +95,12 @@
                         data-target="#update-todo-input-modal"
                       >
                         <p>todo notes & deadline</p>
+                        <p><%= todo.notes %></p>
+                        <span><%= todo.deadline %> </span>
                       </div>
                     </div>
                   </li>
+                  <% }) %>
                 </ul>
               </div>
               <div class="col-12">
@@ -348,6 +363,7 @@
       class Sidebar {}
     </script>
     <script>
+      
       // pop-over
       $(document).ready(function () {
         $('[data-toggle="popover"]').popover();
@@ -595,11 +611,18 @@
               },
             });
 
-            $("#submit-todo-inputs").on({
-              submit: function () {
-                // post to backend url; ajax
-              },
-            });
+            // $("#submit-todo-inputs").on({
+            //   submit: function () {
+            //     // post to backend url; ajax
+            //     const sendHttpRequest = async(body) => {
+            //       try {
+            //         await axios.pos
+            //       } catch (error) {
+            //         console.log(error);
+            //       }
+            //     }
+            //   },
+            // });
 
             $("#close-modal-button").on({
               click: function () {
@@ -612,6 +635,15 @@
                 // close modal action
               },
             });
+
+            document
+              .getElementById("submit-todo-inputs")
+              .addEventListener("submit", function () {
+                const sendHttpRequest = async (body) => {
+                  
+                };
+                sendHttpRequest(body);
+              });
           });
         }
 

@@ -18,21 +18,26 @@ app.use(express.static(__dirname + "/public"));
 app.get("/inbox", async (req, res, next) => {
   // get todo data from database
 
-  // initialize todo class
-  const todo = new Todo("uuu", "www", 3, new Date(), new Date(), false, "1234");
-  console.log(todo);
+  //   // initialize todo class
+  //   const todo = new Todo("uuu", "www", 3, new Date(), new Date(), false, "1234");
+  //   console.log(todo);
 
-  const emptyTodoSchemaInstance = Todo.createTodoSchemaInstance();
- const settedTodoSchemaInstance = Todo.setTodoSchema(emptyTodoSchemaInstance,todo);
- console.log(settedTodoSchemaInstance);
+  //   const emptyTodoSchemaInstance = Todo.createTodoSchemaInstance();
+  //  const settedTodoSchemaInstance = Todo.setTodoSchema(emptyTodoSchemaInstance,todo);
+  //  console.log(settedTodoSchemaInstance);
 
-  // get inbox data from database
+  //   // get inbox data from database
 
-  // initialize inbox class
-  const inbox = new Inbox();
+  //   // initialize inbox class
+  //   const inbox = new Inbox();
 
-  inbox.add(todo);
-  console.log(inbox);
+  //   inbox.add(todo);
+  //   console.log(inbox);
+  let inbox = [
+    new Todo("todo1", "note11111111", 3, new Date(), new Date(), new Date()),
+    new Todo("todo2", "note2", 2, new Date(), new Date(), new Date(), false),
+    new Todo("todo3",'note3',1,new Date(),new Date(),false)
+  ];
 
   // pass inbox data
   res.render("inbox", { inbox });
@@ -41,11 +46,12 @@ app.get("/inbox", async (req, res, next) => {
 app.post("/createTodo", async (req, res, next) => {
   const { title, notes, priority, scheduledDate, deadline } = req.body;
 
-  // initialize todo class
-  const todo = new Todo(title, notes, priority, scheduledDate, deadline);
+  // // initialize todo class
+  // const todo = new Todo(title, notes, priority, scheduledDate, deadline);
+  console.log(req.body)
 
-  // initialize inbox class
-  const inbox = new Inbox();
+  // // initialize inbox class
+  // const inbox = new Inbox();
   // get inbox data from database;
   // initialize inbox class with inbox data;
   // update inbox class with todo data; inbox.addNewTodo(title, notes, priority, scheduledDate, deadline)
@@ -87,6 +93,14 @@ app.post("/user/signup", async (req, res, next) => {
 app.post("/user/login", async (req, res, next) => {
   // login
 });
+
+app.get("/today", async(req,res,next) => {
+  
+})
+
+app.get("/whatToDoNext",async(req,res,next) => {
+  
+})
 // database.getConnection((err) => {
 //     if (err) console.log(err);
 //     connection.release();
