@@ -36,7 +36,7 @@ app.get("/inbox", async (req, res, next) => {
   let inbox = [
     new Todo("todo1", "note11111111", 3, new Date(), new Date(), new Date()),
     new Todo("todo2", "note2", 2, new Date(), new Date(), new Date(), false),
-    new Todo("todo3",'note3',1,new Date(),new Date(),false)
+    new Todo("todo3", "note3", 1, new Date(), new Date(), false),
   ];
 
   // pass inbox data
@@ -48,7 +48,7 @@ app.post("/createTodo", async (req, res, next) => {
 
   // // initialize todo class
   // const todo = new Todo(title, notes, priority, scheduledDate, deadline);
-  console.log(req.body)
+  console.log(req.body);
 
   // // initialize inbox class
   // const inbox = new Inbox();
@@ -94,13 +94,21 @@ app.post("/user/login", async (req, res, next) => {
   // login
 });
 
-app.get("/today", async(req,res,next) => {
+app.get("/today", async (req, res, next) => {
   res.status(200).render("today");
-})
+});
 
-app.get("/whatToDoNext",async(req,res,next) => {
-  
-})
+app.get("/whatToDoNext", async (req, res, next) => {
+  res.status(200).render("whatToDoNext");
+});
+
+app.get("/log", async (req, res, next) => {
+  res.status(200).render("log");
+});
+
+app.get("/trashBox", async (req, res, next) => {
+  res.status(200).render("trashBox");
+});
 // database.getConnection((err) => {
 //     if (err) console.log(err);
 //     connection.release();

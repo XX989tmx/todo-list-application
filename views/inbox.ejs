@@ -14,27 +14,7 @@
           <!-- 以下はパーシャル化
              -->
 
-          <div class="sidebar col-xs-3 col-sm-4 col-md-3">
-            <!-- sidebar -->
-            <ul class="margin-and-padding-0 list-style-none">
-              <li>
-                <div class="row">
-                  <div class="col-1"></div>
-                  <div class="col-11" id="inbox-sidebar-heading">
-                    <ul>
-                      <li id="sidebar-inbox"><a href="http://localhost:8080/inbox"> Inbox</a></li>
-                      <li id="sidebar-today"><a href="http://localhost:8080/today"> Today</a></li>
-                      <li id="sidebar-whatToDoNext">
-                        <a href=""> What to do next</a>
-                      </li>
-                      <li id="sidebar-log"><a href="">Log</a></li>
-                      <li id="sidebar-trashBox"><a href=""> TrashBox</a></li>
-                    </ul>
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </div>
+          <%- include('./partials/_sidebar.ejs') %> 
           <div class="main-area col-xs-9 col-sm-8 col-md-9">
             <!-- main section -->
             <div class="row">
@@ -364,35 +344,8 @@
     <script>
       class Sidebar {}
     </script>
-    <script>
-      const pathname = window.location.pathname;
-      switch (pathname) {
-        case "/inbox":
-          document.getElementById("sidebar-inbox").style.backgroundColor =
-            "grey";
 
-          break;
-        case "/today":
-          document.getElementById("sidebar-today").style.backgroundColor =
-            "grey";
-          break;
-        case "whatToDoNext":
-          document.getElementById(
-            "sidebar-whatToDoNext"
-          ).style.backgroundColor = "grey";
-          break;
-        case "log":
-          document.getElementById("sidebar-log").style.backgroundColor = "grey";
-          break;
-        case "trashBox":
-          document.getElementById("sidebar-trashBox").style.backgroundColor =
-            "grey";
-          break;
-
-        default:
-          break;
-      }
-    </script>
+    <script type="text/javascript" src="/javascript/sidebarColorChange.js"></script>
     <script>
       // pop-over
       $(document).ready(function () {
