@@ -95,7 +95,7 @@ app.post("/user/login", async (req, res, next) => {
 });
 
 app.get("/today", async(req,res,next) => {
-  
+  res.status(200).render("today");
 })
 
 app.get("/whatToDoNext",async(req,res,next) => {
