@@ -1,5 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const passport = require("passport");
+const cookieParser = require("cookie-parser");
+const expressSession = require("express-session");
 const database = require("./utils/database");
 const todoFile = require("./class/todo");
 const Todo = todoFile.todo;
@@ -14,6 +17,11 @@ const bodyParser = require("body-parser");
 app.set("view engine", "ejs");
 app.set("views", "./views");
 app.use(express.static(__dirname + "/public"));
+app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(expressSession({ secret: "secret" }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.get("/inbox", async (req, res, next) => {
   // get todo data from database
@@ -86,13 +94,33 @@ app.delete("/deleteTodo", async (req, res, next) => {
   // delete todo doc permanently
 });
 
-app.post("/user/signup", async (req, res, next) => {
-  // singup
-});
+app.post(
+  "/user/signup",
+  passport.authenticate("local", {
+    successRedirect: '/',
+    failureRedirect: "/user/signup",
+    failureFlash: "サインアップに失敗しました",
+    successFlash: "サインアップに成功しました",
+  }),
+  async (req, res, next) => {
+    // singup
+    res.redirect("/user/" + req.user.username);
+  }
+);
 
-app.post("/user/login", async (req, res, next) => {
-  // login
-});
+app.post(
+  "/user/login",
+  passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/user/login",
+    failureFlash: "ログインに失敗しました",
+    successFlash: "ログインに成功しました",
+  }),
+  async (req, res, next) => {
+    // login
+    res.redirect("/user/" + req.user.username);
+  }
+);
 
 app.get("/today", async (req, res, next) => {
   res.status(200).render("today");
