@@ -1,6 +1,8 @@
 import { Todo } from './todo';
 
 import {userModel as userSchema} from '../model/userSchema';
+import { ObjectID } from 'bson';
+import { Document, MongooseDocument } from 'mongoose';
 
 export class User {
   id:string 
@@ -234,7 +236,7 @@ export class User {
   }
 
   // -userSchemaインスタンス（mongooseDocument)をデータベースに保存する処理 saveUserSchemaToDatabase() {userSchema.save()}
-  static async saveUserSchemaToDatabase(userSchemaInstance) {
+  static async saveUserSchemaToDatabase(userSchemaInstance:Document) {
     try {
       await userSchemaInstance.save();
     } catch (error) {
@@ -250,7 +252,7 @@ export class User {
     // update and sav. this.set() + save();
   }
 
-  static async getUserFromDatabase(userId) {
+  static async getUserFromDatabase(userId:ObjectID) {
     // get userDoc from database;
   }
 }

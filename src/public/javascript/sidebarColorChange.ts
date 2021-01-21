@@ -1,22 +1,47 @@
 const pathname = window.location.pathname;
 switch (pathname) {
   case "/inbox":
-    document.getElementById("sidebar-inbox").style.backgroundColor =
-      "rgb(229, 229, 229)";
-
+    const sidebarInbox = document.getElementById("sidebar-inbox");
+    if (sidebarInbox === null) {
+      alert("error");
+    } else {
+      sidebarInbox.style.backgroundColor = "rgb(229, 229, 229)";
+    }
     break;
   case "/today":
-    document.getElementById("sidebar-today").style.backgroundColor = "rgb(229, 229, 229)";
+    const sidebarToday = document.getElementById("sidebar-today");
+    if (sidebarToday === null) {
+      alert("error");
+    } else {
+      sidebarToday.style.backgroundColor = "rgb(229, 229, 229)";
+    }
     break;
   case "/whatToDoNext":
-    document.getElementById("sidebar-whatToDoNext").style.backgroundColor =
-      "rgb(229, 229, 229)";
+    const sidebarWhatToDoNext = document.getElementById("sidebar-whatToDoNext");
+    if (sidebarWhatToDoNext === null) {
+      alert('error')
+    } else {
+      sidebarWhatToDoNext.style.backgroundColor = "rgb(229, 229, 229)";
+    }
+
     break;
   case "/log":
-    document.getElementById("sidebar-log").style.backgroundColor = "rgb(229, 229, 229)";
+    const sidebarLog = document.getElementById("sidebar-log");
+    if (sidebarLog === null) {
+      alert("error");
+    } else {
+      sidebarLog.style.backgroundColor = "rgb(229, 229, 229)";
+    }
+
     break;
   case "/trashBox":
-    document.getElementById("sidebar-trashBox").style.backgroundColor = "rgb(229, 229, 229)";
+    const sidebarTrashBox = document.getElementById("sidebar-trashBox");
+    if (sidebarTrashBox === null) {
+      alert("error");
+    } else {
+      sidebarTrashBox.style.backgroundColor = "rgb(229, 229, 229)";
+    }
+
     break;
 
   default:

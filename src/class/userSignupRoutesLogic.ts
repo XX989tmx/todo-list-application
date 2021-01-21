@@ -14,8 +14,14 @@ import { trashBoxModel as TrashBoxSchema } from "../model/trashBoxSchema";
 // const TodaysSchema = require("../model/todaysSchema");
 // const LogbookSchema = require("../model/logbookSchema");
 // const ActivitySchema = require("../model/activitySchema");
+import {userModel as UserSchema} from '../model/userSchema';
+import { Document } from 'mongoose';
+import { Request } from 'express';
 
-
+interface userInputsData {
+  name:string,
+  email:string,password:string
+}
 
 class UserSignupRoutesLogic {
   // User　Schema　インスタンスをInitialize
@@ -67,7 +73,7 @@ class UserSignupRoutesLogic {
     // return new User();
   }
 
-  static parseReqBodyFieldOfUserData(req) {
+  static parseReqBodyFieldOfUserData(req:Request) {
     const { name, email, password } = req.body;
     const userInputsData = {
       name,
@@ -78,10 +84,10 @@ class UserSignupRoutesLogic {
   }
 
   static setUserInputsDataToUserSchemaInstance(
-    userInputsData,
-    userSchemaInstance,
-    userClassInstance
-  ) {
+    userInputsData: userInputsData,
+    userSchemaInstance: Document,
+    userClassInstance: User
+  ):Document {
     userClassInstance.name = userInputsData.name;
     userClassInstance.email = userInputsData.email;
     userClassInstance.password = userInputsData.password;
@@ -97,15 +103,21 @@ class UserSignupRoutesLogic {
     return todoSchemaInstance;
   }
 
-  static setTodoSchemaIdToUserSchema(todoSchemaInstance, userSchemaInstance) {
-    const updatedUserSchemaInstance = User.setTodoIdToUserSchema(
+  static setTodoSchemaIdToUserSchema(
+    todoSchemaInstance: Document,
+    userSchemaInstance: Document
+  ): Document {
+    const updatedUserSchemaInstance: Document = User.setTodoIdToUserSchema(
       userSchemaInstance,
       [todoSchemaInstance]
     );
     return updatedUserSchemaInstance;
   }
 
-  static setUserIdToTodoSchema(todoSchemaInstance, userSchemaInstance) {
+  static setUserIdToTodoSchema(
+    todoSchemaInstance: Document,
+    userSchemaInstance: Document
+  ) {
     const updatedTodoSchemaInstance = Todo.setUserIdToTodoSchema(
       todoSchemaInstance,
       userSchemaInstance
@@ -119,8 +131,8 @@ class UserSignupRoutesLogic {
   }
 
   static setTodaysSchemaIdToUserSchemaInstance(
-    todaySchemaInstance,
-    userSchemaInstance
+    todaySchemaInstance: Document,
+    userSchemaInstance: Document
   ) {
     const updatedUserSchemaInstance = User.setTodayIdToUserSchema(
       userSchemaInstance,
@@ -129,7 +141,10 @@ class UserSignupRoutesLogic {
     return updatedUserSchemaInstance;
   }
 
-  static setUserIdToTodaysSchema(userSchemaInstance, todaySchemaInstance) {
+  static setUserIdToTodaysSchema(
+    userSchemaInstance: Document,
+    todaySchemaInstance: Document
+  ) {
     const updatedTodaySchemaInstance = Today.setUserIdToTodaySchema(
       todaySchemaInstance,
       userSchemaInstance
@@ -143,8 +158,8 @@ class UserSignupRoutesLogic {
   }
 
   static setInboxSchemaIdToUserSchemaInstance(
-    inboxSchemaInstance,
-    userSchemaInstance
+    inboxSchemaInstance: Document,
+    userSchemaInstance: Document
   ) {
     const updatedUserSchemaInstance = User.setInboxIdToUserSchema(
       userSchemaInstance,
@@ -153,7 +168,10 @@ class UserSignupRoutesLogic {
     return updatedUserSchemaInstance;
   }
 
-  static setUserIdToInboxSchema(userSchemaInstance, inboxSchemaInstance) {
+  static setUserIdToInboxSchema(
+    userSchemaInstance: Document,
+    inboxSchemaInstance: Document
+  ) {
     const updatedInboxSchemaInstance = Inbox.setUserIdToInboxSchema(
       inboxSchemaInstance,
       userSchemaInstance
@@ -167,8 +185,8 @@ class UserSignupRoutesLogic {
   }
 
   static setProjectSchemaIdToUserSchemaInstance(
-    projectSchemaInstance,
-    userSchemaInstance
+    projectSchemaInstance: Document,
+    userSchemaInstance: Document
   ) {
     const updatedUserSchemaInstance = User.setProjectIdToUserSchema(
       userSchemaInstance,

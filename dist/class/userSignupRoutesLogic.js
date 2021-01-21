@@ -2,12 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var todo_1 = require("./todo");
 var user_1 = require("./user");
-// const TodoSchema = require("../model/todoSchema");
-// const UserSchema = require("../model/userSchema");
-// const InboxSchema = require("../model/inboxSchema");
-// const TodaysSchema = require("../model/todaysSchema");
-// const LogbookSchema = require("../model/logbookSchema");
-// const ActivitySchema = require("../model/activitySchema");
 var UserSignupRoutesLogic = /** @class */ (function () {
     function UserSignupRoutesLogic() {
     }
