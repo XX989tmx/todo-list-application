@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose, { Document, ObjectId } from "mongoose";
 
 const Schema = mongoose.Schema;
 
@@ -12,5 +12,16 @@ const activitySchema = new Schema({
   longestInRowDuration: { type: Number },
   userId: { type: mongoose.Types.ObjectId, ref: "User" },
 });
+
+export interface IActivitySchema extends Document {
+  date: Date;
+  accomplishedTodo: ObjectId[];
+  accomplishedCount: number;
+  productivityScore: number;
+  isInRow: boolean;
+  inRowDuration: number;
+  longestInRowDuration: number;
+  userId: ObjectId;
+}
 
 export const activityModel = mongoose.model("Activity", activitySchema);

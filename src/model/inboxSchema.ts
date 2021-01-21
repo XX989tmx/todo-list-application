@@ -1,5 +1,4 @@
-import mongoose from 'mongoose'
-
+import mongoose, { Document, ObjectId } from "mongoose";
 
 const Schema = mongoose.Schema;
 const inboxSchema = new Schema({
@@ -7,5 +6,11 @@ const inboxSchema = new Schema({
   size: { type: Number },
   userId: { type: mongoose.Types.ObjectId, ref: "User" },
 });
+
+export interface IInboxSchema extends Document {
+  list: ObjectId[];
+  size: number;
+  userId: ObjectId;
+}
 
 export const inboxModel = mongoose.model("Inbox", inboxSchema);

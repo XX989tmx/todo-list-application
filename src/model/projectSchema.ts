@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Document, ObjectId } from "mongoose";
 
 const Schema = mongoose.Schema;
 
@@ -13,5 +13,17 @@ const projectSchema = new Schema({
   progressStatus: { type: Number },
   userId: { type: mongoose.Types.ObjectId, ref: "User" },
 });
+
+export interface IProjectSchema extends Document {
+  todoLists: ObjectId[];
+  title: string;
+  notes: string;
+  isDone: boolean;
+  dateCreated: Date;
+  deadLine: Date;
+  scheduledDate: Date;
+  progressStatus: number;
+  userId: ObjectId;
+}
 
 export const projectModel = mongoose.model("Project", projectSchema);

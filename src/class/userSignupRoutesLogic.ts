@@ -1,10 +1,12 @@
+import { ITodoSchema } from './../model/todoSchema';
+import { ITodaysSchema } from './../model/todaysSchema';
 import axios from 'axios';
 import {Todo,Inbox,Today,Project,Activity,Logbook,TrashBox} from './todo';
 import {User} from './user';
 import { todoModel as TodoSchema } from "../model/todoSchema";
 import { todaysModel as TodaySchema } from "../model/todaysSchema";
-import { inboxModel as inboxSchema } from "../model/inboxSchema";
-import { projectModel as ProjectSchema } from "../model/projectSchema";
+import { IInboxSchema, inboxModel as inboxSchema } from "../model/inboxSchema";
+import { IProjectSchema, projectModel as ProjectSchema } from "../model/projectSchema";
 import { activityModel as ActivitySchema } from "../model/activitySchema";
 import { logbookModel as LogbookSchema } from "../model/logbookSchema";
 import { trashBoxModel as TrashBoxSchema } from "../model/trashBoxSchema";
@@ -14,11 +16,11 @@ import { trashBoxModel as TrashBoxSchema } from "../model/trashBoxSchema";
 // const TodaysSchema = require("../model/todaysSchema");
 // const LogbookSchema = require("../model/logbookSchema");
 // const ActivitySchema = require("../model/activitySchema");
-import {userModel as UserSchema} from '../model/userSchema';
+import {userModel as UserSchema,IUserSchema} from '../model/userSchema';
 import { Document } from 'mongoose';
 import { Request } from 'express';
 
-interface userInputsData {
+export interface userInputsData {
   name:string,
   email:string,password:string
 }
@@ -73,7 +75,7 @@ class UserSignupRoutesLogic {
     // return new User();
   }
 
-  static parseReqBodyFieldOfUserData(req:Request) {
+  static parseReqBodyFieldOfUserData(req: Request) {
     const { name, email, password } = req.body;
     const userInputsData = {
       name,
@@ -85,9 +87,9 @@ class UserSignupRoutesLogic {
 
   static setUserInputsDataToUserSchemaInstance(
     userInputsData: userInputsData,
-    userSchemaInstance: Document,
+    userSchemaInstance: IUserSchema,
     userClassInstance: User
-  ):Document {
+  ) {
     userClassInstance.name = userInputsData.name;
     userClassInstance.email = userInputsData.email;
     userClassInstance.password = userInputsData.password;
@@ -104,10 +106,10 @@ class UserSignupRoutesLogic {
   }
 
   static setTodoSchemaIdToUserSchema(
-    todoSchemaInstance: Document,
-    userSchemaInstance: Document
+    todoSchemaInstance: ITodoSchema,
+    userSchemaInstance: IUserSchema
   ): Document {
-    const updatedUserSchemaInstance: Document = User.setTodoIdToUserSchema(
+    const updatedUserSchemaInstance = User.setTodoIdToUserSchema(
       userSchemaInstance,
       [todoSchemaInstance]
     );
@@ -115,8 +117,8 @@ class UserSignupRoutesLogic {
   }
 
   static setUserIdToTodoSchema(
-    todoSchemaInstance: Document,
-    userSchemaInstance: Document
+    todoSchemaInstance: ITodoSchema,
+    userSchemaInstance: IUserSchema
   ) {
     const updatedTodoSchemaInstance = Todo.setUserIdToTodoSchema(
       todoSchemaInstance,
@@ -131,8 +133,8 @@ class UserSignupRoutesLogic {
   }
 
   static setTodaysSchemaIdToUserSchemaInstance(
-    todaySchemaInstance: Document,
-    userSchemaInstance: Document
+    todaySchemaInstance: ITodaysSchema,
+    userSchemaInstance: IUserSchema
   ) {
     const updatedUserSchemaInstance = User.setTodayIdToUserSchema(
       userSchemaInstance,
@@ -142,8 +144,8 @@ class UserSignupRoutesLogic {
   }
 
   static setUserIdToTodaysSchema(
-    userSchemaInstance: Document,
-    todaySchemaInstance: Document
+    userSchemaInstance: IUserSchema,
+    todaySchemaInstance: ITodaysSchema
   ) {
     const updatedTodaySchemaInstance = Today.setUserIdToTodaySchema(
       todaySchemaInstance,
@@ -158,8 +160,8 @@ class UserSignupRoutesLogic {
   }
 
   static setInboxSchemaIdToUserSchemaInstance(
-    inboxSchemaInstance: Document,
-    userSchemaInstance: Document
+    inboxSchemaInstance: IInboxSchema,
+    userSchemaInstance: IUserSchema
   ) {
     const updatedUserSchemaInstance = User.setInboxIdToUserSchema(
       userSchemaInstance,
@@ -169,8 +171,8 @@ class UserSignupRoutesLogic {
   }
 
   static setUserIdToInboxSchema(
-    userSchemaInstance: Document,
-    inboxSchemaInstance: Document
+    userSchemaInstance: IUserSchema,
+    inboxSchemaInstance: IInboxSchema
   ) {
     const updatedInboxSchemaInstance = Inbox.setUserIdToInboxSchema(
       inboxSchemaInstance,
@@ -185,8 +187,8 @@ class UserSignupRoutesLogic {
   }
 
   static setProjectSchemaIdToUserSchemaInstance(
-    projectSchemaInstance: Document,
-    userSchemaInstance: Document
+    projectSchemaInstance: IProjectSchema,
+    userSchemaInstance: IUserSchema
   ) {
     const updatedUserSchemaInstance = User.setProjectIdToUserSchema(
       userSchemaInstance,

@@ -605,7 +605,7 @@ var Project = /** @class */ (function () {
         projectSchemaInstance.notes = projectInstance.notes;
         projectSchemaInstance.isDone = projectInstance.isDone;
         projectSchemaInstance.dateCreated = projectInstance.dateCreated;
-        projectSchemaInstance.deadline = projectInstance.deadLine;
+        projectSchemaInstance.deadLine = projectInstance.deadLine;
         projectSchemaInstance.scheduledDate = projectInstance.scheduledDate;
         projectSchemaInstance.progressStatus = projectInstance.progressStatus;
         return projectSchemaInstance;
@@ -785,7 +785,7 @@ var Activity = /** @class */ (function () {
             activityInstance.accomplishedCount;
         activitySchemaInstance.productivityScore =
             activityInstance.productivityScore;
-        activitySchemaInstance.isInRow = activityInstance.isInRow;
+        activitySchemaInstance.isInRow = activityInstance.isInRowState;
         activitySchemaInstance.inRowDuration = activityInstance.inRowDuration;
         activitySchemaInstance.longestInRowDuration =
             activityInstance.longestInRowDuration;

@@ -108,7 +108,7 @@ var User = /** @class */ (function () {
         return this.trashBox;
     };
     User.prototype.setActivity = function (activity) {
-        this.activity = activity;
+        this.activity = activity.id;
         return this.activity;
     };
     User.prototype.checkPasswordEquity = function () {

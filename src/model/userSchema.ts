@@ -1,6 +1,21 @@
-import mongoose from "mongoose";
+
+import mongoose, { Document, ObjectId } from "mongoose";
 
 const Schema = mongoose.Schema;
+
+export interface IUserSchema extends Document {
+  name:string;
+  email:string;
+  password:string;
+  todo:ObjectId[];
+  inbox:ObjectId;
+  today:ObjectId;
+  project:ObjectId;
+  logbook:ObjectId;
+  trashBox:ObjectId;
+  activity:ObjectId;
+  lastLoggedIns:Date[]
+}
 
 const userSchema = new Schema({
   name: { type: String, required: true },
