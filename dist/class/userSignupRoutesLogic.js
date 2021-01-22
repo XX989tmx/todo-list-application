@@ -69,9 +69,13 @@ var UserSignupRoutesLogic = /** @class */ (function () {
         // project schema instance のIdを　User　Schema　Instanceにセット
         var updatedUserSchemaInstance5 = UserSignupRoutesLogic.setProjectSchemaIdToUserSchemaInstance(projectSchemaInstance, updatedUserSchemaInstance4);
         // user id を project schema にセット
+        var updatedProjectSchemaInstance = UserSignupRoutesLogic.setUserSchemaIdToProjectSchema(updatedUserSchemaInstance5, projectSchemaInstance);
         // logbook schema instance をInitialize
+        var logbookSchemaInstance = UserSignupRoutesLogic.initializeLogbookSchemaInstance();
         // logbook schema instance のIdを　User　Schema　Instanceにセット
+        var updatedUserSchemaInstance6 = UserSignupRoutesLogic.setLogbookSchemaIdToUserSchemaId(logbookSchemaInstance, updatedUserSchemaInstance5);
         // user id を　logbook schema にセット
+        var updatedLogbookSchemaInstance = UserSignupRoutesLogic.setUserSchemaIdToLogbookSchema(updatedUserSchemaInstance6, logbookSchemaInstance);
         // trashBox Schema Instance をInitialize
         // trashBox Schema Instance のIdを　UserSchema　Instanceにセット
         // user id を　trashBox Schema にセット
@@ -156,6 +160,22 @@ var UserSignupRoutesLogic = /** @class */ (function () {
     UserSignupRoutesLogic.setProjectSchemaIdToUserSchemaInstance = function (projectSchemaInstance, userSchemaInstance) {
         var updatedUserSchemaInstance = user_1.User.setProjectIdToUserSchema(userSchemaInstance, projectSchemaInstance);
         return updatedUserSchemaInstance;
+    };
+    UserSignupRoutesLogic.setUserSchemaIdToProjectSchema = function (userSchemaInstance, projectSchemaInstance) {
+        var updatedProjectSchemaInstance = todo_1.Project.setUserIdToProjectSchema(projectSchemaInstance, userSchemaInstance);
+        return updatedProjectSchemaInstance;
+    };
+    UserSignupRoutesLogic.initializeLogbookSchemaInstance = function () {
+        var logbookSchemaInstance = todo_1.Logbook.createLogbookSchemaInstance();
+        return logbookSchemaInstance;
+    };
+    UserSignupRoutesLogic.setLogbookSchemaIdToUserSchemaId = function (logbookSchemaInstance, userSchemaInstance) {
+        var updatedUserSchemaInstance = user_1.User.setLogbookIdToUserSchema(logbookSchemaInstance, userSchemaInstance);
+        return updatedUserSchemaInstance;
+    };
+    UserSignupRoutesLogic.setUserSchemaIdToLogbookSchema = function (userSchemaInstance, logbookSchemaInstance) {
+        var updatedLogbookSchemaInstance = todo_1.Logbook.setUserIdToLogbookSchema(logbookSchemaInstance, userSchemaInstance);
+        return updatedLogbookSchemaInstance;
     };
     return UserSignupRoutesLogic;
 }());

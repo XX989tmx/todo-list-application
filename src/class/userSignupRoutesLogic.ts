@@ -1,3 +1,4 @@
+import { ILogbookSchema } from "./../model/logbookSchema";
 import { ITodoSchema } from "./../model/todoSchema";
 import { ITodaysSchema } from "./../model/todaysSchema";
 import axios from "axios";
@@ -135,9 +136,22 @@ class UserSignupRoutesLogic {
       updatedUserSchemaInstance4
     );
     // user id を project schema にセット
+    const updatedProjectSchemaInstance = UserSignupRoutesLogic.setUserSchemaIdToProjectSchema(
+      updatedUserSchemaInstance5,
+      projectSchemaInstance
+    );
     // logbook schema instance をInitialize
+    const logbookSchemaInstance = UserSignupRoutesLogic.initializeLogbookSchemaInstance();
     // logbook schema instance のIdを　User　Schema　Instanceにセット
+    const updatedUserSchemaInstance6 = UserSignupRoutesLogic.setLogbookSchemaIdToUserSchemaId(
+      logbookSchemaInstance,
+      updatedUserSchemaInstance5
+    );
     // user id を　logbook schema にセット
+    const updatedLogbookSchemaInstance = UserSignupRoutesLogic.setUserSchemaIdToLogbookSchema(
+      updatedUserSchemaInstance6,
+      logbookSchemaInstance
+    );
     // trashBox Schema Instance をInitialize
     // trashBox Schema Instance のIdを　UserSchema　Instanceにセット
     // user id を　trashBox Schema にセット
@@ -285,5 +299,43 @@ class UserSignupRoutesLogic {
       projectSchemaInstance
     );
     return updatedUserSchemaInstance;
+  }
+
+  static setUserSchemaIdToProjectSchema(
+    userSchemaInstance: IUserSchema | any,
+    projectSchemaInstance: IProjectSchema | any
+  ) {
+    const updatedProjectSchemaInstance = Project.setUserIdToProjectSchema(
+      projectSchemaInstance,
+      userSchemaInstance
+    );
+    return updatedProjectSchemaInstance;
+  }
+
+  static initializeLogbookSchemaInstance() {
+    const logbookSchemaInstance = Logbook.createLogbookSchemaInstance();
+    return logbookSchemaInstance;
+  }
+
+  static setLogbookSchemaIdToUserSchemaId(
+    logbookSchemaInstance: ILogbookSchema | any,
+    userSchemaInstance: IUserSchema | any
+  ) {
+    const updatedUserSchemaInstance = User.setLogbookIdToUserSchema(
+      logbookSchemaInstance,
+      userSchemaInstance
+    );
+    return updatedUserSchemaInstance;
+  }
+
+  static setUserSchemaIdToLogbookSchema(
+    userSchemaInstance: IUserSchema | any,
+    logbookSchemaInstance: ILogbookSchema | any
+  ) {
+    const updatedLogbookSchemaInstance = Logbook.setUserIdToLogbookSchema(
+      logbookSchemaInstance,
+      userSchemaInstance
+    );
+    return updatedLogbookSchemaInstance;
   }
 }
