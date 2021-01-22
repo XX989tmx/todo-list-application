@@ -10,7 +10,7 @@ var todoSchema = new Schema({
     title: { type: String },
     notes: { type: String },
     priority: { type: Number },
-    dateCreated: { type: Date, required: true },
+    dateCreated: { type: Date },
     scheduledDate: { type: Date },
     deadline: { type: Date },
     isDone: { type: Boolean },

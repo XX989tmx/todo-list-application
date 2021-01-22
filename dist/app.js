@@ -39,11 +39,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var userSignupRoutesLogic_1 = require("./class/userSignupRoutesLogic");
 var express_1 = __importDefault(require("express"));
 var mongoose_1 = __importDefault(require("mongoose"));
-var passport_1 = __importDefault(require("passport"));
 var cookie_parser_1 = __importDefault(require("cookie-parser"));
-var express_session_1 = __importDefault(require("express-session"));
 var body_parser_1 = __importDefault(require("body-parser"));
 var path_1 = __importDefault(require("path"));
 // const database = require("../utils/database");
@@ -56,10 +55,11 @@ app.set("view engine", "ejs");
 app.set("views", path_1.default.join(__dirname, "views"));
 app.use(express_1.default.static(__dirname + "/public"));
 app.use(cookie_parser_1.default());
+app.use(body_parser_1.default.json());
 app.use(body_parser_1.default.urlencoded({ extended: false }));
-app.use(express_session_1.default({ secret: "secret" }));
-app.use(passport_1.default.initialize());
-app.use(passport_1.default.session());
+// app.use(expressSession({ secret: "secret" }));
+// app.use(passport.initialize());
+// app.use(passport.session());
 app.get("/inbox", function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
     var inbox;
     return __generator(this, function (_a) {
@@ -122,24 +122,30 @@ app.delete("/deleteTodo", function (req, res, next) { return __awaiter(void 0, v
         return [2 /*return*/];
     });
 }); });
-app.post("/user/signup", passport_1.default.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: "/user/signup",
-    failureFlash: "サインアップに失敗しました",
-    successFlash: "サインアップに成功しました",
-}), function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+app.post("/user/signup", 
+// passport.authenticate("local", {
+//   successRedirect: "/",
+//   failureRedirect: "/user/signup",
+//   failureFlash: "サインアップに失敗しました",
+//   successFlash: "サインアップに成功しました",
+// }),
+function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var SignupLogic;
     return __generator(this, function (_a) {
-        // singup
-        res.redirect("/user/" + "req.user.username");
+        SignupLogic = new userSignupRoutesLogic_1.UserSignupRoutesLogic();
+        SignupLogic.signup(req);
+        res.status(200).json({ res: "signup succeed" });
         return [2 /*return*/];
     });
 }); });
-app.post("/user/login", passport_1.default.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: "/user/login",
-    failureFlash: "ログインに失敗しました",
-    successFlash: "ログインに成功しました",
-}), function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+app.post("/user/login", 
+// passport.authenticate("local", {
+//   successRedirect: "/",
+//   failureRedirect: "/user/login",
+//   failureFlash: "ログインに失敗しました",
+//   successFlash: "ログインに成功しました",
+// }),
+function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         // login
         res.redirect("/user/" + "req.user.username");

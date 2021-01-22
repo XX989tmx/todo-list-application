@@ -38,7 +38,7 @@ export interface userInputsData {
   password: string;
 }
 
-class UserSignupRoutesLogic {
+export class UserSignupRoutesLogic {
   // User　Schema　インスタンスをInitialize
   // User class instance を initialize
   // req body からUser field をOBD
@@ -77,7 +77,7 @@ class UserSignupRoutesLogic {
   // activity schema を保存
   // user schema を保存
 
-  signup(req: Request) {
+  async signup(req: Request) {
     // User　Schema　インスタンスをInitialize
     const userSchemaInstance:
       | IUserSchema
@@ -98,6 +98,8 @@ class UserSignupRoutesLogic {
 
     // todo schema instance を initialize
     const todoSchemaInstance = UserSignupRoutesLogic.initializeTodoSchemaInstance();
+    console.log(todoSchemaInstance);
+
     // user id をTodoSchemaにセット
 
     const updatedUserSchemaInstance = UserSignupRoutesLogic.setTodoSchemaIdToUserSchema(
@@ -178,49 +180,47 @@ class UserSignupRoutesLogic {
       activitySchemaInstance,
       updatedUserSchemaInstance8
     );
+    console.log("todo");
+
+    console.log(todoSchemaInstance);
+    console.log("inbox");
+    console.log(updatedInboxSchemaInstance);
+    console.log("today");
+
+    console.log(todaySchemaInstance);
+    console.log("logbook");
+
+    console.log(updatedLogbookSchemaInstance);
+    console.log("trashbox");
+
+    console.log(updatedTrashBoxSchemaInstance);
+    console.log("activity");
+
+    console.log(updatedActivitySchemaInstance);
+    console.log("user");
+
+    console.log(updatedUserSchemaInstance8);
+
     // 各スキーマをデータベースに保存
     // todo schema を保存
-    Todo.saveTodoSchemaToDatabase(todoSchemaInstance)
-      .then((result) => {})
-      .catch((err) => {
-        console.log(err);
-      });
+    await Todo.saveTodoSchemaToDatabase(todoSchemaInstance);
     // inbox schema を保存
-    Inbox.saveInboxSchemaToDatabase(updatedInboxSchemaInstance)
-      .then((result) => {})
-      .catch((err) => {
-        console.log(err);
-      });
+    await Inbox.saveInboxSchemaToDatabase(updatedInboxSchemaInstance);
+
     // today schemaを保存
-    Today.saveTodaySchemaToDatabase(todaySchemaInstance)
-      .then((result) => {})
-      .catch((err) => {
-        console.log(err);
-      });
+    await Today.saveTodaySchemaToDatabase(todaySchemaInstance);
+
     // logbook schema を保存
-    Logbook.saveLogbookSchemaToDatabase(updatedLogbookSchemaInstance)
-      .then((result) => {})
-      .catch((err) => {
-        console.log(err);
-      });
+    await Logbook.saveLogbookSchemaToDatabase(updatedLogbookSchemaInstance);
+
     // trashBox schema を保存
-    TrashBox.saveTrashBoxSchemaToDatabase(updatedTrashBoxSchemaInstance)
-      .then((result) => {})
-      .catch((err) => {
-        console.log(err);
-      });
+    await TrashBox.saveTrashBoxSchemaToDatabase(updatedTrashBoxSchemaInstance);
+
     // activity schema を保存
-    Activity.saveActivitySchemaToDatabase(updatedActivitySchemaInstance)
-      .then((result) => {})
-      .catch((err) => {
-        console.log(err);
-      });
+    await Activity.saveActivitySchemaToDatabase(updatedActivitySchemaInstance);
+
     // user schema を保存
-    User.saveUserSchemaToDatabase(updatedUserSchemaInstance8)
-      .then((result) => {})
-      .catch((err) => {
-        console.log(err);
-      });
+    await User.saveUserSchemaToDatabase(updatedUserSchemaInstance8);
   }
 
   static initializeUserSchemaInstance() {

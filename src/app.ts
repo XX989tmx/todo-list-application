@@ -1,3 +1,4 @@
+import { UserSignupRoutesLogic } from './class/userSignupRoutesLogic';
 import express from "express";
 import mongoose from "mongoose";
 import passport from "passport";
@@ -28,10 +29,11 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.static(__dirname + "/public"));
 app.use(cookieParser());
+app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(expressSession({ secret: "secret" }));
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(expressSession({ secret: "secret" }));
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 app.get("/inbox", async (req: Request, res: Response, next: NextFunction) => {
   // get todo data from database
@@ -56,6 +58,8 @@ app.get("/inbox", async (req: Request, res: Response, next: NextFunction) => {
     new Todo("todo2", "note2", 2, new Date(), new Date(), null),
     new Todo("todo3", "note3", 1, new Date(), new Date(), null),
   ];
+
+  
 
   // pass inbox data
   res.render("inbox", { inbox });
@@ -106,26 +110,29 @@ app.delete("/deleteTodo", async (req, res, next) => {
 
 app.post(
   "/user/signup",
-  passport.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: "/user/signup",
-    failureFlash: "サインアップに失敗しました",
-    successFlash: "サインアップに成功しました",
-  }),
-  async (req, res, next) => {
+  // passport.authenticate("local", {
+  //   successRedirect: "/",
+  //   failureRedirect: "/user/signup",
+  //   failureFlash: "サインアップに失敗しました",
+  //   successFlash: "サインアップに成功しました",
+  // }),
+  async (req:Request, res:Response, next:NextFunction) => {
     // singup
-    res.redirect("/user/" + "req.user.username");
+    const SignupLogic = new UserSignupRoutesLogic();
+    SignupLogic.signup(req)
+
+    res.status(200).json({ res: "signup succeed" });
   }
 );
 
 app.post(
   "/user/login",
-  passport.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: "/user/login",
-    failureFlash: "ログインに失敗しました",
-    successFlash: "ログインに成功しました",
-  }),
+  // passport.authenticate("local", {
+  //   successRedirect: "/",
+  //   failureRedirect: "/user/login",
+  //   failureFlash: "ログインに失敗しました",
+  //   successFlash: "ログインに成功しました",
+  // }),
   async (req, res, next) => {
     // login
     res.redirect("/user/" + "req.user.username");

@@ -146,7 +146,7 @@ export class Todo implements TodoInterface {
       title: null,
       notes: null,
       priority: null,
-      dateCreated: null,
+      dateCreated: new Date(),
       scheduledDate: null,
       deadline: null,
       isDone: null,

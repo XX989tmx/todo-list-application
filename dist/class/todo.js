@@ -136,7 +136,7 @@ var Todo = /** @class */ (function () {
             title: null,
             notes: null,
             priority: null,
-            dateCreated: null,
+            dateCreated: new Date(),
             scheduledDate: null,
             deadline: null,
             isDone: null,
