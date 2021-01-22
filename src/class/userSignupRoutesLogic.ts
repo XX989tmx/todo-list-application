@@ -153,19 +153,74 @@ class UserSignupRoutesLogic {
       logbookSchemaInstance
     );
     // trashBox Schema Instance をInitialize
+    const trashBoxSchemaInstance = TrashBox.createTrashBoxSchemaInstance();
     // trashBox Schema Instance のIdを　UserSchema　Instanceにセット
+    const updatedUserSchemaInstance7 = User.setTrashBoxIdToUserSchema(
+      updatedUserSchemaInstance6,
+      trashBoxSchemaInstance
+    );
+
     // user id を　trashBox Schema にセット
+    const updatedTrashBoxSchemaInstance = TrashBox.setUserIdToTrashBoxSchema(
+      trashBoxSchemaInstance,
+      updatedUserSchemaInstance7
+    );
     // activity schema instance をInitialize
+    const activitySchemaInstance = Activity.createActivitySchemaInstance();
     // activity schema Instance のIdを　User　Schema　Instanceにセット
+    const updatedUserSchemaInstance8 = User.setActivityIdToUserSchema(
+      updatedUserSchemaInstance7,
+      activitySchemaInstance
+    );
+
     // user id を　activity schema にセット
-    //
+    const updatedActivitySchemaInstance = Activity.setUserIdToActivitySchema(
+      activitySchemaInstance,
+      updatedUserSchemaInstance8
+    );
+    // 各スキーマをデータベースに保存
     // todo schema を保存
+    Todo.saveTodoSchemaToDatabase(todoSchemaInstance)
+      .then((result) => {})
+      .catch((err) => {
+        console.log(err);
+      });
     // inbox schema を保存
+    Inbox.saveInboxSchemaToDatabase(updatedInboxSchemaInstance)
+      .then((result) => {})
+      .catch((err) => {
+        console.log(err);
+      });
     // today schemaを保存
+    Today.saveTodaySchemaToDatabase(todaySchemaInstance)
+      .then((result) => {})
+      .catch((err) => {
+        console.log(err);
+      });
     // logbook schema を保存
+    Logbook.saveLogbookSchemaToDatabase(updatedLogbookSchemaInstance)
+      .then((result) => {})
+      .catch((err) => {
+        console.log(err);
+      });
     // trashBox schema を保存
+    TrashBox.saveTrashBoxSchemaToDatabase(updatedTrashBoxSchemaInstance)
+      .then((result) => {})
+      .catch((err) => {
+        console.log(err);
+      });
     // activity schema を保存
+    Activity.saveActivitySchemaToDatabase(updatedActivitySchemaInstance)
+      .then((result) => {})
+      .catch((err) => {
+        console.log(err);
+      });
     // user schema を保存
+    User.saveUserSchemaToDatabase(updatedUserSchemaInstance8)
+      .then((result) => {})
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   static initializeUserSchemaInstance() {

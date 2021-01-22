@@ -77,19 +77,60 @@ var UserSignupRoutesLogic = /** @class */ (function () {
         // user id を　logbook schema にセット
         var updatedLogbookSchemaInstance = UserSignupRoutesLogic.setUserSchemaIdToLogbookSchema(updatedUserSchemaInstance6, logbookSchemaInstance);
         // trashBox Schema Instance をInitialize
+        var trashBoxSchemaInstance = todo_1.TrashBox.createTrashBoxSchemaInstance();
         // trashBox Schema Instance のIdを　UserSchema　Instanceにセット
+        var updatedUserSchemaInstance7 = user_1.User.setTrashBoxIdToUserSchema(updatedUserSchemaInstance6, trashBoxSchemaInstance);
         // user id を　trashBox Schema にセット
+        var updatedTrashBoxSchemaInstance = todo_1.TrashBox.setUserIdToTrashBoxSchema(trashBoxSchemaInstance, updatedUserSchemaInstance7);
         // activity schema instance をInitialize
+        var activitySchemaInstance = todo_1.Activity.createActivitySchemaInstance();
         // activity schema Instance のIdを　User　Schema　Instanceにセット
+        var updatedUserSchemaInstance8 = user_1.User.setActivityIdToUserSchema(updatedUserSchemaInstance7, activitySchemaInstance);
         // user id を　activity schema にセット
-        //
+        var updatedActivitySchemaInstance = todo_1.Activity.setUserIdToActivitySchema(activitySchemaInstance, updatedUserSchemaInstance8);
+        // 各スキーマをデータベースに保存
         // todo schema を保存
+        todo_1.Todo.saveTodoSchemaToDatabase(todoSchemaInstance)
+            .then(function (result) { })
+            .catch(function (err) {
+            console.log(err);
+        });
         // inbox schema を保存
+        todo_1.Inbox.saveInboxSchemaToDatabase(updatedInboxSchemaInstance)
+            .then(function (result) { })
+            .catch(function (err) {
+            console.log(err);
+        });
         // today schemaを保存
+        todo_1.Today.saveTodaySchemaToDatabase(todaySchemaInstance)
+            .then(function (result) { })
+            .catch(function (err) {
+            console.log(err);
+        });
         // logbook schema を保存
+        todo_1.Logbook.saveLogbookSchemaToDatabase(updatedLogbookSchemaInstance)
+            .then(function (result) { })
+            .catch(function (err) {
+            console.log(err);
+        });
         // trashBox schema を保存
+        todo_1.TrashBox.saveTrashBoxSchemaToDatabase(updatedTrashBoxSchemaInstance)
+            .then(function (result) { })
+            .catch(function (err) {
+            console.log(err);
+        });
         // activity schema を保存
+        todo_1.Activity.saveActivitySchemaToDatabase(updatedActivitySchemaInstance)
+            .then(function (result) { })
+            .catch(function (err) {
+            console.log(err);
+        });
         // user schema を保存
+        user_1.User.saveUserSchemaToDatabase(updatedUserSchemaInstance8)
+            .then(function (result) { })
+            .catch(function (err) {
+            console.log(err);
+        });
     };
     UserSignupRoutesLogic.initializeUserSchemaInstance = function () {
         var userSchemaInstance = user_1.User.createUserSchema();

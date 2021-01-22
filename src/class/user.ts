@@ -1,15 +1,15 @@
-import { Todo } from './todo';
+import { Todo } from "./todo";
 
-import {userModel as userSchema,IUserSchema} from '../model/userSchema';
-import { ObjectID } from 'bson';
-import { Document, MongooseDocument } from 'mongoose';
-import { IActivitySchema } from '../model/activitySchema';
-import { ITrashBoxSchema } from '../model/trashBoxSchema';
-import { ILogbookSchema } from '../model/logbookSchema';
-import { IProjectSchema } from '../model/projectSchema';
-import { ITodaysSchema } from '../model/todaysSchema';
-import { IInboxSchema } from '../model/inboxSchema';
-import { ITodoSchema } from '../model/todoSchema';
+import { userModel as userSchema, IUserSchema } from "../model/userSchema";
+import { ObjectID } from "bson";
+import { Document, MongooseDocument } from "mongoose";
+import { IActivitySchema } from "../model/activitySchema";
+import { ITrashBoxSchema } from "../model/trashBoxSchema";
+import { ILogbookSchema } from "../model/logbookSchema";
+import { IProjectSchema } from "../model/projectSchema";
+import { ITodaysSchema } from "../model/todaysSchema";
+import { IInboxSchema } from "../model/inboxSchema";
+import { ITodoSchema } from "../model/todoSchema";
 
 export class User {
   id: string;
@@ -81,56 +81,56 @@ export class User {
     this.lastLoggedIns = this.setLastLoggedIns(userDoc);
   }
 
-  setId(id:string) {
+  setId(id: string) {
     this.id = id;
     return this.id;
   }
 
-  setName(name:string) {
+  setName(name: string) {
     this.name = name;
     return this.name;
   }
-  setEmail(email:string) {
+  setEmail(email: string) {
     this.email = email;
     return this.email;
   }
 
-  setPassword(password:string) {
+  setPassword(password: string) {
     this.password = password;
     return password;
   }
 
-  setConfirmPassword(confirmPassword:string) {
+  setConfirmPassword(confirmPassword: string) {
     this.confirmPassword = confirmPassword;
     return this.confirmPassword;
   }
 
-  setTodo(todo:ITodoSchema) {
+  setTodo(todo: ITodoSchema) {
     this.todo.push(todo);
     return this.todo;
   }
 
-  setInbox(inbox:IInboxSchema) {
+  setInbox(inbox: IInboxSchema) {
     this.inbox = inbox.id;
     return this.inbox;
   }
 
-  setToday(today:ITodaysSchema) {
+  setToday(today: ITodaysSchema) {
     this.today = today.id;
     return this.today;
   }
 
-  setLogbook(logbook:ILogbookSchema) {
+  setLogbook(logbook: ILogbookSchema) {
     this.logbook = logbook.id;
     return this.logbook;
   }
 
-  setTrashBox(trashBox:ITrashBoxSchema) {
+  setTrashBox(trashBox: ITrashBoxSchema) {
     this.trashBox = trashBox.id;
     return this.trashBox;
   }
 
-  setActivity(activity:IActivitySchema) {
+  setActivity(activity: IActivitySchema) {
     this.activity = activity.id;
     return this.activity;
   }
@@ -143,7 +143,7 @@ export class User {
     }
   }
 
-  isEmailUnique(email:string, users:User[]) {
+  isEmailUnique(email: string, users: User[]) {
     let found = false;
     for (let i = 0; i < users.length; i++) {
       if (email.toString() === users[i].email) {
@@ -157,7 +157,7 @@ export class User {
     }
   }
 
-  setLastLoggedIns(userDoc:IUserSchema) {
+  setLastLoggedIns(userDoc: IUserSchema) {
     const lastLogin = userDoc ? userDoc.lastLoggedIns : [];
     this.lastLoggedIns = lastLogin;
     let now = new Date();
@@ -186,7 +186,7 @@ export class User {
     return userSchemaInstance;
   }
   //userSchemaインスタンスにuserインスタンスデータをセットする処理. refでつなぐ他のスキーマId等のフィールドは除く、userSchemaに固有のデータアトリビュートのみをセット(lastLoggedInsにはEmptyArrをセット)。他はNull setUserSchema()
-  static setUserSchema(userSchemaInstance: IUserSchema, userInstance:User) {
+  static setUserSchema(userSchemaInstance: IUserSchema, userInstance: User) {
     try {
       userSchemaInstance.name = userInstance.name;
       userSchemaInstance.email = userInstance.email;
@@ -203,7 +203,7 @@ export class User {
   // - -userSchemaインスタンスにtodoIdをセットする処理 setTodoIdToUserSchema(todoId);
   static setTodoIdToUserSchema(
     userSchemaInstance: IUserSchema,
-    todoSchemaInstanceArr:ITodoSchema[]
+    todoSchemaInstanceArr: ITodoSchema[]
   ) {
     // signup時に少なくとも一つはTodoSchemaを作成保存する必要がある。サンプルTodoを強制作成保存する。
     for (let i = 0; i < todoSchemaInstanceArr.length; i++) {
@@ -216,7 +216,7 @@ export class User {
   // -userSchemaインスタンスにinboxIdをセットする処理 setInboxIdToUserSchema(inboxId)
   static setInboxIdToUserSchema(
     userSchemaInstance: IUserSchema,
-    inboxSchemaInstance:IInboxSchema
+    inboxSchemaInstance: IInboxSchema
   ) {
     userSchemaInstance.inbox = inboxSchemaInstance._id;
     return userSchemaInstance;
@@ -224,7 +224,7 @@ export class User {
   // -userSchemaインスタンスにtodayIdをセットする処理　setTodayIdToUserSchema(todayId)
   static setTodayIdToUserSchema(
     userSchemaInstance: IUserSchema,
-    todaySchemaInstance:ITodaysSchema
+    todaySchemaInstance: ITodaysSchema
   ) {
     userSchemaInstance.today = todaySchemaInstance._id;
     return userSchemaInstance;
@@ -233,7 +233,7 @@ export class User {
   //　　setProjectIdToUserSchema(projectId)
   static setProjectIdToUserSchema(
     userSchemaInstance: IUserSchema,
-    projectSchemaInstance:IProjectSchema
+    projectSchemaInstance: IProjectSchema
   ) {
     userSchemaInstance.project = projectSchemaInstance._id;
     return userSchemaInstance;
@@ -241,30 +241,30 @@ export class User {
   // -userSchemaインスタンスにlogbookIdをセットする処理　setLogbookIdToUserSchema(logbookId)
   static setLogbookIdToUserSchema(
     userSchemaInstance: IUserSchema,
-    logbookSchemaInstance:ILogbookSchema
+    logbookSchemaInstance: ILogbookSchema
   ) {
     userSchemaInstance.logbook = logbookSchemaInstance._id;
     return userSchemaInstance;
   }
   // -userSchemaインスタンスにtrashBoxIdをセットする処理　setTrashBoxIdToUserSchema(trashBoxId)
   static setTrashBoxIdToUserSchema(
-    userSchemaInstance: IUserSchema,
-    trashBoxSchemaInstance:ITrashBoxSchema
+    userSchemaInstance: IUserSchema | any,
+    trashBoxSchemaInstance: ITrashBoxSchema | any
   ) {
     userSchemaInstance.trashBox = trashBoxSchemaInstance._id;
     return userSchemaInstance;
   }
   // -userSchemaインスタンスにactivityIdをセットする処理　setActivityIdToUserSchema(activityId)
   static setActivityIdToUserSchema(
-    userSchemaInstance: IUserSchema,
-    activitySchemaInstance:IActivitySchema
+    userSchemaInstance: IUserSchema | any,
+    activitySchemaInstance: IActivitySchema | any
   ) {
     userSchemaInstance.activity = activitySchemaInstance._id;
     return userSchemaInstance;
   }
 
   // -userSchemaインスタンス（mongooseDocument)をデータベースに保存する処理 saveUserSchemaToDatabase() {userSchema.save()}
-  static async saveUserSchemaToDatabase(userSchemaInstance:IUserSchema) {
+  static async saveUserSchemaToDatabase(userSchemaInstance: IUserSchema|Document<any>) {
     try {
       await userSchemaInstance.save();
     } catch (error) {
@@ -284,5 +284,3 @@ export class User {
     // get userDoc from database;
   }
 }
-
-
