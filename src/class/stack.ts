@@ -1,4 +1,8 @@
-export class Stack {
+
+export interface StackInterface {
+    values: any[]
+}
+export class Stack implements StackInterface {
   values: any[];
   constructor() {
     this.values = [];

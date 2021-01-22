@@ -26,18 +26,18 @@ export class User {
   lastLoggedIns: Date[];
 
   constructor(
-    userId,
-    name,
-    email,
-    password,
-    confirmPassword,
-    todo,
-    inbox,
-    today,
-    logbook,
-    trashBox,
-    activity,
-    lastLoggedIns
+    userId?,
+    name?,
+    email?,
+    password?,
+    confirmPassword?,
+    todo?,
+    inbox?,
+    today?,
+    logbook?,
+    trashBox?,
+    activity?,
+    lastLoggedIns?
   ) {
     this.id = userId ? userId : null;
     this.name = name ? name : null;
@@ -175,13 +175,13 @@ export class User {
       name: null,
       email: null,
       password: null,
-      todo: null,
+      todo: [],
       inbox: null,
       today: null,
       logbook: null,
       trashBox: null,
       activity: null,
-      lastLoggedIns: null,
+      lastLoggedIns: [],
     });
     return userSchemaInstance;
   }

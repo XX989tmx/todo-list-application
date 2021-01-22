@@ -150,13 +150,13 @@ var User = /** @class */ (function () {
             name: null,
             email: null,
             password: null,
-            todo: null,
+            todo: [],
             inbox: null,
             today: null,
             logbook: null,
             trashBox: null,
             activity: null,
-            lastLoggedIns: null,
+            lastLoggedIns: [],
         });
         return userSchemaInstance;
     };

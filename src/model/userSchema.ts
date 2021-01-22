@@ -4,17 +4,17 @@ import mongoose, { Document, ObjectId } from "mongoose";
 const Schema = mongoose.Schema;
 
 export interface IUserSchema extends Document {
-  name:string;
-  email:string;
-  password:string;
-  todo:ObjectId[];
-  inbox:ObjectId;
-  today:ObjectId;
-  project:ObjectId;
-  logbook:ObjectId;
-  trashBox:ObjectId;
-  activity:ObjectId;
-  lastLoggedIns:Date[]
+  name: string | null;
+  email: string | null;
+  password: string | null;
+  todo: ObjectId[] | any[];
+  inbox: ObjectId | null;
+  today: ObjectId | null;
+  project: ObjectId | null;
+  logbook: ObjectId | null;
+  trashBox: ObjectId | null;
+  activity: ObjectId | null;
+  lastLoggedIns: Date[] | any[];
 }
 
 const userSchema = new Schema({

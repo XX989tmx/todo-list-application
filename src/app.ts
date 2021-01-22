@@ -17,6 +17,7 @@ import {
   TrashBox,
   Logbook,
 } from "./class/todo";
+import { NextFunction, Request, Response } from "express-serve-static-core";
 
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
@@ -32,7 +33,7 @@ app.use(expressSession({ secret: "secret" }));
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get("/inbox", async (req, res, next) => {
+app.get("/inbox", async (req: Request, res: Response, next: NextFunction) => {
   // get todo data from database
 
   //   // initialize todo class
@@ -52,7 +53,7 @@ app.get("/inbox", async (req, res, next) => {
   //   console.log(inbox);
   let inbox = [
     new Todo("todo1", "note11111111", 3, new Date(), new Date(), null),
-    new Todo("todo2", "note2", 2, new Date(), new Date(),  null),
+    new Todo("todo2", "note2", 2, new Date(), new Date(), null),
     new Todo("todo3", "note3", 1, new Date(), new Date(), null),
   ];
 

@@ -38,13 +38,63 @@ var UserSignupRoutesLogic = /** @class */ (function () {
     // trashBox schema を保存
     // activity schema を保存
     // user schema を保存
-    UserSignupRoutesLogic.signup = function () { };
+    UserSignupRoutesLogic.prototype.signup = function (req) {
+        // User　Schema　インスタンスをInitialize
+        var userSchemaInstance = UserSignupRoutesLogic.initializeUserSchemaInstance();
+        // User class instance を initialize
+        var userClassInstance = UserSignupRoutesLogic.initializeUserClassInstance();
+        // req body からUser field をOBD
+        var userInputsData = UserSignupRoutesLogic.parseReqBodyFieldOfUserData(req);
+        // req body のUserDataを元に、User　Class　Instanceにデータをセットする。
+        UserSignupRoutesLogic.setUserInputsDataToUserSchemaInstance(userInputsData, userSchemaInstance, userClassInstance);
+        // todoIdをUser　Schema　インスタンスにセット（Nullかダミーデータ）
+        // todo schema instance を initialize
+        var todoSchemaInstance = UserSignupRoutesLogic.initializeTodoSchemaInstance();
+        // user id をTodoSchemaにセット
+        var updatedUserSchemaInstance = UserSignupRoutesLogic.setTodoSchemaIdToUserSchema(todoSchemaInstance, userSchemaInstance);
+        // today schema instance をInitialize
+        var todaySchemaInstance = UserSignupRoutesLogic.initializeTodaySchemaInstance();
+        // today schema instance のIdを、User　Schema　Instanceにセット
+        var updatedUserSchemaInstance2 = UserSignupRoutesLogic.setTodaysSchemaIdToUserSchemaInstance(todaySchemaInstance, updatedUserSchemaInstance);
+        // user id をToday　Schemaにセット
+        var updatedUserSchemaInstance3 = UserSignupRoutesLogic.setUserIdToTodaysSchema(todaySchemaInstance, updatedUserSchemaInstance2);
+        // inbox schema instance をInitialize
+        var inboxSchemaInstance = UserSignupRoutesLogic.initializeInboxSchemaInstance();
+        // inbox schema instance のIdを　User　Schema　Instanceにセット
+        var updatedUserSchemaInstance4 = UserSignupRoutesLogic.setInboxSchemaIdToUserSchemaInstance(inboxSchemaInstance, updatedUserSchemaInstance3);
+        // user id を inbox schema にセット
+        var updatedInboxSchemaInstance = UserSignupRoutesLogic.setUserIdToInboxSchema(updatedUserSchemaInstance4, inboxSchemaInstance);
+        // project schema instance をInitialize
+        var projectSchemaInstance = UserSignupRoutesLogic.initializeProjectSchemaInstance();
+        // project schema instance のIdを　User　Schema　Instanceにセット
+        var updatedUserSchemaInstance5 = UserSignupRoutesLogic.setProjectSchemaIdToUserSchemaInstance(projectSchemaInstance, updatedUserSchemaInstance4);
+        // user id を project schema にセット
+        // logbook schema instance をInitialize
+        // logbook schema instance のIdを　User　Schema　Instanceにセット
+        // user id を　logbook schema にセット
+        // trashBox Schema Instance をInitialize
+        // trashBox Schema Instance のIdを　UserSchema　Instanceにセット
+        // user id を　trashBox Schema にセット
+        // activity schema instance をInitialize
+        // activity schema Instance のIdを　User　Schema　Instanceにセット
+        // user id を　activity schema にセット
+        //
+        // todo schema を保存
+        // inbox schema を保存
+        // today schemaを保存
+        // logbook schema を保存
+        // trashBox schema を保存
+        // activity schema を保存
+        // user schema を保存
+    };
     UserSignupRoutesLogic.initializeUserSchemaInstance = function () {
         var userSchemaInstance = user_1.User.createUserSchema();
         return userSchemaInstance;
     };
     UserSignupRoutesLogic.initializeUserClassInstance = function () {
         // return new User();
+        var userClassInstance = new user_1.User();
+        return userClassInstance;
     };
     UserSignupRoutesLogic.parseReqBodyFieldOfUserData = function (req) {
         var _a = req.body, name = _a.name, email = _a.email, password = _a.password;
@@ -55,7 +105,8 @@ var UserSignupRoutesLogic = /** @class */ (function () {
         };
         return userInputsData;
     };
-    UserSignupRoutesLogic.setUserInputsDataToUserSchemaInstance = function (userInputsData, userSchemaInstance, userClassInstance) {
+    UserSignupRoutesLogic.setUserInputsDataToUserSchemaInstance = function (userInputsData, userSchemaInstance, // any は全てDocument<any>に変更,
+    userClassInstance) {
         userClassInstance.name = userInputsData.name;
         userClassInstance.email = userInputsData.email;
         userClassInstance.password = userInputsData.password;

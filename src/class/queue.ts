@@ -1,15 +1,18 @@
-export class Queue {
-    values : any[]
-    constructor() {
-        this.values = []
-    }
+export interface QueueInterface {
+  values: any[];
+}
+export class Queue implements QueueInterface {
+  values: any[];
+  constructor() {
+    this.values = [];
+  }
 
-    enqueue(val) {
-        this.values.push(val);
-        return this 
-    }
+  enqueue(val) {
+    this.values.push(val);
+    return this;
+  }
 
-    dequeue() {
-        return this.values.shift();
-    }
+  dequeue() {
+    return this.values.shift();
+  }
 }
