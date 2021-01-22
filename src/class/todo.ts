@@ -311,8 +311,8 @@ export class Today implements TodayInterface {
   }
   // - TodaySchemaインスタンスにuserIdを保存する処理 setUserIdToTodaySchema(userId)
   static setUserIdToTodaySchema(
-    todaySchemaInstance: ITodaysSchema,
-    userSchemaInstance: IUserSchema
+    todaySchemaInstance: ITodaysSchema|any,
+    userSchemaInstance: IUserSchema|any
   ) {
     todaySchemaInstance.userId = userSchemaInstance._id;
     return todaySchemaInstance;
@@ -428,8 +428,8 @@ export class Inbox {
   }
   // - InboxSchemaインスタンスにuserIdを保存する処理 setUserIdToInboxSchema(userId)
   static setUserIdToInboxSchema(
-    inboxSchemaInstance: IInboxSchema,
-    userSchemaInstance: IUserSchema
+    inboxSchemaInstance: IInboxSchema|any,
+    userSchemaInstance: IUserSchema|any
   ) {
     inboxSchemaInstance.userId = userSchemaInstance._id;
     return inboxSchemaInstance;
@@ -632,8 +632,8 @@ export class Project {
   }
   // - ProjectSchemaインスタンスにuserIdを保存する処理 setUserIdToProjectSchema(userId)
   static setUserIdToProjectSchema(
-    projectSchemaInstance: IProjectSchema,
-    userSchemaInstance: IUserSchema
+    projectSchemaInstance: IProjectSchema|any,
+    userSchemaInstance: IUserSchema|any
   ) {
     projectSchemaInstance.userId = userSchemaInstance._id;
     return projectSchemaInstance;
@@ -948,8 +948,8 @@ export class Logbook {
   }
   // - LogbookSchemaインスタンスにuserIdを保存する処理 setUserIdToLogbookSchema(userId)
   static setUserIdToLogbookSchema(
-    logbookSchemaInstance: ILogbookSchema,
-    userSchemaInstance: IUserSchema
+    logbookSchemaInstance: ILogbookSchema|any,
+    userSchemaInstance: IUserSchema|any
   ) {
     logbookSchemaInstance.userId = userSchemaInstance._id;
     return logbookSchemaInstance;

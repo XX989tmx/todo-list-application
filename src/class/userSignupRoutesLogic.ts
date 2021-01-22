@@ -79,17 +79,15 @@ export class UserSignupRoutesLogic {
 
   async signup(req: Request) {
     // User　Schema　インスタンスをInitialize
-    const userSchemaInstance:
-      | IUserSchema
-      | Document<any> = UserSignupRoutesLogic.initializeUserSchemaInstance();
+    const userSchemaInstance = User.createUserSchema();
     // User class instance を initialize
-    const userClassInstance = UserSignupRoutesLogic.initializeUserClassInstance();
+    const userClassInstance = new User();
     // req body からUser field をOBD
     const userInputsData = UserSignupRoutesLogic.parseReqBodyFieldOfUserData(
       req
     );
     // req body のUserDataを元に、User　Class　Instanceにデータをセットする。
-    UserSignupRoutesLogic.setUserInputsDataToUserSchemaInstance(
+   const updatedUserSchemaInstance = UserSignupRoutesLogic.setUserInputsDataToUserSchemaInstance(
       userInputsData,
       userSchemaInstance,
       userClassInstance
@@ -97,63 +95,47 @@ export class UserSignupRoutesLogic {
     // todoIdをUser　Schema　インスタンスにセット（Nullかダミーデータ）
 
     // todo schema instance を initialize
-    const todoSchemaInstance = UserSignupRoutesLogic.initializeTodoSchemaInstance();
+    const todoSchemaInstance = Todo.createTodoSchemaInstance();
     console.log(todoSchemaInstance);
 
     // user id をTodoSchemaにセット
 
-    const updatedUserSchemaInstance = UserSignupRoutesLogic.setTodoSchemaIdToUserSchema(
+    const updatedUserSchemaInstance2 = UserSignupRoutesLogic.setTodoSchemaIdToUserSchema(
       todoSchemaInstance,
       userSchemaInstance
     );
+
+
     // today schema instance をInitialize
-    const todaySchemaInstance = UserSignupRoutesLogic.initializeTodaySchemaInstance();
+    const todaySchemaInstance = Today.createTodaySchemaInstance();
     // today schema instance のIdを、User　Schema　Instanceにセット
-    const updatedUserSchemaInstance2 = UserSignupRoutesLogic.setTodaysSchemaIdToUserSchemaInstance(
-      todaySchemaInstance,
-      updatedUserSchemaInstance
-    );
+    const updatedUserSchemaInstance3 = User.setTodayIdToUserSchema(updatedUserSchemaInstance2,todaySchemaInstance)
     // user id をToday　Schemaにセット
-    const updatedUserSchemaInstance3 = UserSignupRoutesLogic.setUserIdToTodaysSchema(
-      todaySchemaInstance,
-      updatedUserSchemaInstance2
-    );
+    const updatedTodaySchema = Today.setUserIdToTodaySchema(todaySchemaInstance,updatedUserSchemaInstance3);
     // inbox schema instance をInitialize
-    const inboxSchemaInstance = UserSignupRoutesLogic.initializeInboxSchemaInstance();
+    const inboxSchemaInstance = Inbox.createInboxSchemaInstance();
     // inbox schema instance のIdを　User　Schema　Instanceにセット
-    const updatedUserSchemaInstance4 = UserSignupRoutesLogic.setInboxSchemaIdToUserSchemaInstance(
-      inboxSchemaInstance,
-      updatedUserSchemaInstance3
-    );
+    const updatedUserSchemaInstance4 = User.setInboxIdToUserSchema(updatedUserSchemaInstance3,inboxSchemaInstance)
     // user id を inbox schema にセット
-    const updatedInboxSchemaInstance = UserSignupRoutesLogic.setUserIdToInboxSchema(
-      updatedUserSchemaInstance4,
-      inboxSchemaInstance
-    );
+    const updatedInboxSchemaInstance = Inbox.setUserIdToInboxSchema(inboxSchemaInstance,updatedUserSchemaInstance4)
+    //
+    //
     // project schema instance をInitialize
-    const projectSchemaInstance = UserSignupRoutesLogic.initializeProjectSchemaInstance();
+    const projectSchemaInstance = Project.createProjectSchemaInstance()
     // project schema instance のIdを　User　Schema　Instanceにセット
-    const updatedUserSchemaInstance5 = UserSignupRoutesLogic.setProjectSchemaIdToUserSchemaInstance(
-      projectSchemaInstance,
-      updatedUserSchemaInstance4
-    );
+    const updatedUserSchemaInstance5 = User.setProjectIdToUserSchema(updatedUserSchemaInstance4,projectSchemaInstance)
     // user id を project schema にセット
-    const updatedProjectSchemaInstance = UserSignupRoutesLogic.setUserSchemaIdToProjectSchema(
-      updatedUserSchemaInstance5,
-      projectSchemaInstance
-    );
+    const updatedProjectSchemaInstance = Project.setUserIdToProjectSchema(projectSchemaInstance,updatedUserSchemaInstance5)
+    //
+    //
     // logbook schema instance をInitialize
-    const logbookSchemaInstance = UserSignupRoutesLogic.initializeLogbookSchemaInstance();
+    const logbookSchemaInstance = Logbook.createLogbookSchemaInstance();
     // logbook schema instance のIdを　User　Schema　Instanceにセット
-    const updatedUserSchemaInstance6 = UserSignupRoutesLogic.setLogbookSchemaIdToUserSchemaId(
-      logbookSchemaInstance,
-      updatedUserSchemaInstance5
-    );
+    const updatedUserSchemaInstance6 = User.setLogbookIdToUserSchema(updatedUserSchemaInstance5,logbookSchemaInstance);
     // user id を　logbook schema にセット
-    const updatedLogbookSchemaInstance = UserSignupRoutesLogic.setUserSchemaIdToLogbookSchema(
-      updatedUserSchemaInstance6,
-      logbookSchemaInstance
-    );
+    const updatedLogbookSchemaInstance = Logbook.setUserIdToLogbookSchema(logbookSchemaInstance,updatedUserSchemaInstance5)
+    //
+    //
     // trashBox Schema Instance をInitialize
     const trashBoxSchemaInstance = TrashBox.createTrashBoxSchemaInstance();
     // trashBox Schema Instance のIdを　UserSchema　Instanceにセット

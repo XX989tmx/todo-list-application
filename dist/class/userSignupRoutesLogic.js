@@ -77,30 +77,29 @@ var UserSignupRoutesLogic = /** @class */ (function () {
     // user schema を保存
     UserSignupRoutesLogic.prototype.signup = function (req) {
         return __awaiter(this, void 0, void 0, function () {
-            var userSchemaInstance, userClassInstance, userInputsData, todoSchemaInstance, updatedUserSchemaInstance, todaySchemaInstance, updatedUserSchemaInstance2, updatedUserSchemaInstance3, inboxSchemaInstance, updatedUserSchemaInstance4, updatedInboxSchemaInstance, projectSchemaInstance, updatedUserSchemaInstance5, updatedProjectSchemaInstance, logbookSchemaInstance, updatedUserSchemaInstance6, updatedLogbookSchemaInstance, trashBoxSchemaInstance, updatedUserSchemaInstance7, updatedTrashBoxSchemaInstance, activitySchemaInstance, updatedUserSchemaInstance8, updatedActivitySchemaInstance;
+            var userSchemaInstance, userClassInstance, userInputsData, updatedUserSchemaInstance, todoSchemaInstance, updatedUserSchemaInstance2, todaySchemaInstance, updatedUserSchemaInstance3, updatedTodaySchema, inboxSchemaInstance, updatedUserSchemaInstance4, updatedInboxSchemaInstance, projectSchemaInstance, updatedUserSchemaInstance5, updatedProjectSchemaInstance, logbookSchemaInstance, updatedUserSchemaInstance6, updatedLogbookSchemaInstance, trashBoxSchemaInstance, updatedUserSchemaInstance7, updatedTrashBoxSchemaInstance, activitySchemaInstance, updatedUserSchemaInstance8, updatedActivitySchemaInstance;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        userSchemaInstance = UserSignupRoutesLogic.initializeUserSchemaInstance();
-                        userClassInstance = UserSignupRoutesLogic.initializeUserClassInstance();
+                        userSchemaInstance = user_1.User.createUserSchema();
+                        userClassInstance = new user_1.User();
                         userInputsData = UserSignupRoutesLogic.parseReqBodyFieldOfUserData(req);
-                        // req body のUserDataを元に、User　Class　Instanceにデータをセットする。
-                        UserSignupRoutesLogic.setUserInputsDataToUserSchemaInstance(userInputsData, userSchemaInstance, userClassInstance);
-                        todoSchemaInstance = UserSignupRoutesLogic.initializeTodoSchemaInstance();
+                        updatedUserSchemaInstance = UserSignupRoutesLogic.setUserInputsDataToUserSchemaInstance(userInputsData, userSchemaInstance, userClassInstance);
+                        todoSchemaInstance = todo_1.Todo.createTodoSchemaInstance();
                         console.log(todoSchemaInstance);
-                        updatedUserSchemaInstance = UserSignupRoutesLogic.setTodoSchemaIdToUserSchema(todoSchemaInstance, userSchemaInstance);
-                        todaySchemaInstance = UserSignupRoutesLogic.initializeTodaySchemaInstance();
-                        updatedUserSchemaInstance2 = UserSignupRoutesLogic.setTodaysSchemaIdToUserSchemaInstance(todaySchemaInstance, updatedUserSchemaInstance);
-                        updatedUserSchemaInstance3 = UserSignupRoutesLogic.setUserIdToTodaysSchema(todaySchemaInstance, updatedUserSchemaInstance2);
-                        inboxSchemaInstance = UserSignupRoutesLogic.initializeInboxSchemaInstance();
-                        updatedUserSchemaInstance4 = UserSignupRoutesLogic.setInboxSchemaIdToUserSchemaInstance(inboxSchemaInstance, updatedUserSchemaInstance3);
-                        updatedInboxSchemaInstance = UserSignupRoutesLogic.setUserIdToInboxSchema(updatedUserSchemaInstance4, inboxSchemaInstance);
-                        projectSchemaInstance = UserSignupRoutesLogic.initializeProjectSchemaInstance();
-                        updatedUserSchemaInstance5 = UserSignupRoutesLogic.setProjectSchemaIdToUserSchemaInstance(projectSchemaInstance, updatedUserSchemaInstance4);
-                        updatedProjectSchemaInstance = UserSignupRoutesLogic.setUserSchemaIdToProjectSchema(updatedUserSchemaInstance5, projectSchemaInstance);
-                        logbookSchemaInstance = UserSignupRoutesLogic.initializeLogbookSchemaInstance();
-                        updatedUserSchemaInstance6 = UserSignupRoutesLogic.setLogbookSchemaIdToUserSchemaId(logbookSchemaInstance, updatedUserSchemaInstance5);
-                        updatedLogbookSchemaInstance = UserSignupRoutesLogic.setUserSchemaIdToLogbookSchema(updatedUserSchemaInstance6, logbookSchemaInstance);
+                        updatedUserSchemaInstance2 = UserSignupRoutesLogic.setTodoSchemaIdToUserSchema(todoSchemaInstance, userSchemaInstance);
+                        todaySchemaInstance = todo_1.Today.createTodaySchemaInstance();
+                        updatedUserSchemaInstance3 = user_1.User.setTodayIdToUserSchema(updatedUserSchemaInstance2, todaySchemaInstance);
+                        updatedTodaySchema = todo_1.Today.setUserIdToTodaySchema(todaySchemaInstance, updatedUserSchemaInstance3);
+                        inboxSchemaInstance = todo_1.Inbox.createInboxSchemaInstance();
+                        updatedUserSchemaInstance4 = user_1.User.setInboxIdToUserSchema(updatedUserSchemaInstance3, inboxSchemaInstance);
+                        updatedInboxSchemaInstance = todo_1.Inbox.setUserIdToInboxSchema(inboxSchemaInstance, updatedUserSchemaInstance4);
+                        projectSchemaInstance = todo_1.Project.createProjectSchemaInstance();
+                        updatedUserSchemaInstance5 = user_1.User.setProjectIdToUserSchema(updatedUserSchemaInstance4, projectSchemaInstance);
+                        updatedProjectSchemaInstance = todo_1.Project.setUserIdToProjectSchema(projectSchemaInstance, updatedUserSchemaInstance5);
+                        logbookSchemaInstance = todo_1.Logbook.createLogbookSchemaInstance();
+                        updatedUserSchemaInstance6 = user_1.User.setLogbookIdToUserSchema(updatedUserSchemaInstance5, logbookSchemaInstance);
+                        updatedLogbookSchemaInstance = todo_1.Logbook.setUserIdToLogbookSchema(logbookSchemaInstance, updatedUserSchemaInstance5);
                         trashBoxSchemaInstance = todo_1.TrashBox.createTrashBoxSchemaInstance();
                         updatedUserSchemaInstance7 = user_1.User.setTrashBoxIdToUserSchema(updatedUserSchemaInstance6, trashBoxSchemaInstance);
                         updatedTrashBoxSchemaInstance = todo_1.TrashBox.setUserIdToTrashBoxSchema(trashBoxSchemaInstance, updatedUserSchemaInstance7);

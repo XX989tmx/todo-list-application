@@ -215,16 +215,16 @@ export class User {
   }
   // -userSchemaインスタンスにinboxIdをセットする処理 setInboxIdToUserSchema(inboxId)
   static setInboxIdToUserSchema(
-    userSchemaInstance: IUserSchema,
-    inboxSchemaInstance: IInboxSchema
+    userSchemaInstance: IUserSchema | any,
+    inboxSchemaInstance: IInboxSchema | any
   ) {
     userSchemaInstance.inbox = inboxSchemaInstance._id;
     return userSchemaInstance;
   }
   // -userSchemaインスタンスにtodayIdをセットする処理　setTodayIdToUserSchema(todayId)
   static setTodayIdToUserSchema(
-    userSchemaInstance: IUserSchema,
-    todaySchemaInstance: ITodaysSchema
+    userSchemaInstance: IUserSchema | any,
+    todaySchemaInstance: ITodaysSchema | any
   ) {
     userSchemaInstance.today = todaySchemaInstance._id;
     return userSchemaInstance;
@@ -232,16 +232,16 @@ export class User {
   // -userSchemaインスタンスにproject idをセットする処理
   //　　setProjectIdToUserSchema(projectId)
   static setProjectIdToUserSchema(
-    userSchemaInstance: IUserSchema,
-    projectSchemaInstance: IProjectSchema
+    userSchemaInstance: IUserSchema|any,
+    projectSchemaInstance: IProjectSchema|any
   ) {
     userSchemaInstance.project = projectSchemaInstance._id;
     return userSchemaInstance;
   }
   // -userSchemaインスタンスにlogbookIdをセットする処理　setLogbookIdToUserSchema(logbookId)
   static setLogbookIdToUserSchema(
-    userSchemaInstance: IUserSchema,
-    logbookSchemaInstance: ILogbookSchema
+    userSchemaInstance: IUserSchema|any,
+    logbookSchemaInstance: ILogbookSchema|any
   ) {
     userSchemaInstance.logbook = logbookSchemaInstance._id;
     return userSchemaInstance;
