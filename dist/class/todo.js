@@ -223,16 +223,6 @@ var Todo = /** @class */ (function () {
     return Todo;
 }());
 exports.Todo = Todo;
-// todo.set("12345","todo", "buy milk", "2021-1-23", "2021-2-23");
-// console.log(todo);
-// todo.completeTodo();
-// const todo2 = new Todo();
-// todo2.set("6789","todo2", "buy milk2", "2021-1-23", "2021-2-23");
-// console.log(todo);
-// todo.completeTodo();
-// console.log(todo);
-// const todo3 = new Todo();
-// console.log(todo3);
 var Today = /** @class */ (function () {
     function Today() {
         this.todaysList = [];

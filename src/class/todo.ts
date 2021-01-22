@@ -1,11 +1,11 @@
-import { ITodaysSchema } from './../model/todaysSchema';
-import { IInboxSchema } from './../model/inboxSchema';
-import { IProjectSchema } from './../model/projectSchema';
-import { ITodoSchema } from './../model/todoSchema';
-import { IActivitySchema } from './../model/activitySchema';
-import { ILogbookSchema } from './../model/logbookSchema';
-import { IUserSchema } from './../model/userSchema';
-import { ITrashBoxSchema } from './../model/trashBoxSchema';
+import { ITodaysSchema } from "./../model/todaysSchema";
+import { IInboxSchema } from "./../model/inboxSchema";
+import { IProjectSchema } from "./../model/projectSchema";
+import { ITodoSchema } from "./../model/todoSchema";
+import { IActivitySchema } from "./../model/activitySchema";
+import { ILogbookSchema } from "./../model/logbookSchema";
+import { IUserSchema } from "./../model/userSchema";
+import { ITrashBoxSchema } from "./../model/trashBoxSchema";
 import { v4 as uuidv4 } from "uuid";
 import { todoModel as TodoSchema } from "../model/todoSchema";
 import { todaysModel as TodaySchema } from "../model/todaysSchema";
@@ -15,7 +15,20 @@ import { activityModel as ActivitySchema } from "../model/activitySchema";
 import { logbookModel as LogbookSchema } from "../model/logbookSchema";
 import { trashBoxModel as TrashBoxSchema } from "../model/trashBoxSchema";
 
-export class Todo {
+export interface TodoInterface {
+  id: string;
+  title: string | null;
+  notes: string | null;
+  priority: number | null;
+  dateCreated: any;
+  scheduledDate: any;
+  deadline: any;
+  isDone: boolean | null;
+  userId: string | null;
+  dateCompleted: any;
+}
+
+export class Todo implements TodoInterface {
   // priority 1 , 2 ,3.  1 = lowest, 3 = highest
   id: any;
   title: string | null;
@@ -64,7 +77,7 @@ export class Todo {
     return this;
   }
 
-  setPriority(priority) {
+  setPriority(priority: number) {
     this.priority = priority;
     return this;
   }
@@ -73,32 +86,32 @@ export class Todo {
     return this.priority;
   }
 
-  setDeadline(deadLine) {
+  setDeadline(deadLine: Date) {
     this.deadline = deadLine;
     return this;
   }
 
-  setScheduledDate(scheduledDate) {
+  setScheduledDate(scheduledDate: Date) {
     this.scheduledDate = scheduledDate;
     return this;
   }
 
-  updateTitle(title) {
+  updateTitle(title: string) {
     this.title = title;
     return this;
   }
 
-  updateNotes(notes) {
+  updateNotes(notes: string) {
     this.notes = notes;
     return this;
   }
 
-  updateScheduledDate(scheduledDate) {
+  updateScheduledDate(scheduledDate: Date) {
     this.scheduledDate = scheduledDate;
     return this;
   }
 
-  updateDeadline(deadLine) {
+  updateDeadline(deadLine: Date) {
     this.deadline = deadLine;
     return this;
   }
@@ -141,7 +154,7 @@ export class Todo {
     return todoSchemaInstance;
   }
   // - todoSchemaインスタンスにTodoインスタンス（Class)関連のデータアトリビュートを保存する処理(userID以外)　setTodoSchema()
-  static setTodoSchema(todoSchemaInstance:ITodoSchema, todo:any) {
+  static setTodoSchema(todoSchemaInstance: ITodoSchema, todo: any) {
     todoSchemaInstance.title = todo.title;
     todoSchemaInstance.notes = todo.notes;
     todoSchemaInstance.priority = todo.priority;
@@ -153,12 +166,15 @@ export class Todo {
     return todoSchemaInstance;
   }
   // - todoSchemaインスタンスにuserIdを保存する処理 setUserIdToTodoSchema(userId)
-  static setUserIdToTodoSchema(todoSchemaInstance:ITodoSchema, userSchemaInstance:IUserSchema) {
+  static setUserIdToTodoSchema(
+    todoSchemaInstance: ITodoSchema,
+    userSchemaInstance: IUserSchema
+  ) {
     todoSchemaInstance.userId = userSchemaInstance._id;
     return todoSchemaInstance;
   }
   // - todoSchemaインスタンス(mongooseDocument)を保存する処理　　saveTodoSchemaToDatabase() {doc.save()}
-  static async saveTodoSchemaToDatabase(todoSchemaInstance:ITodoSchema) {
+  static async saveTodoSchemaToDatabase(todoSchemaInstance: ITodoSchema) {
     try {
       await todoSchemaInstance.save();
     } catch (error) {
@@ -166,7 +182,7 @@ export class Todo {
     }
   }
 
-  static async saveToDatabase(todo:Todo) {
+  static async saveToDatabase(todo: Todo) {
     // save specific todo item to database
     const createdTodoSchema = new TodoSchema({
       title: todo.title,
@@ -189,7 +205,7 @@ export class Todo {
     return this;
   }
 
-  setUserId(userId:string) {
+  setUserId(userId: string) {
     this.userId = userId;
     return this.userId;
   }
@@ -206,7 +222,12 @@ export class Todo {
 // const todo3 = new Todo();
 // console.log(todo3);
 
-export class Today {
+export interface TodayInterface {
+  todaysList:Todo[];
+  userId:string | null
+}
+
+export class Today implements TodayInterface{
   todaysList: Todo[];
   userId: string | null;
   constructor() {
@@ -218,7 +239,7 @@ export class Today {
     return this.todaysList;
   }
 
-  completeTodo(id: string): Todo {
+  completeTodo(id: string) {
     for (let i = 0; i < this.todaysList.length; i++) {
       if (
         this.todaysList[i].toString() === id.toString() &&
@@ -253,7 +274,7 @@ export class Today {
     return this.todaysList.length;
   }
 
-  getTodaysTodoFromAll(todoAll:any[]) {
+  getTodaysTodoFromAll(todoAll: any[]) {
     // todoAll = todoDoc[];
     // get todo matched with todays date or scheduled at today from outer list such as inbox or allTodo or schedule class.
     // 起動するごと実行し、todayにスケジュールされたTodoをTodaysListに入れる。
@@ -280,17 +301,23 @@ export class Today {
     return todaySchemaInstance;
   }
   // - TodaySchemaインスタンスにTodayインスタンス（Class)関連のデータアトリビュートを保存する処理(userID以外)　setTodaySchema()
-  static setTodaySchema(todaySchemaInstance:ITodaysSchema, todayInstance:any) {
+  static setTodaySchema(
+    todaySchemaInstance: ITodaysSchema,
+    todayInstance: any
+  ) {
     todaySchemaInstance.todaysList = todayInstance.todaysList;
     return todaySchemaInstance;
   }
   // - TodaySchemaインスタンスにuserIdを保存する処理 setUserIdToTodaySchema(userId)
-  static setUserIdToTodaySchema(todaySchemaInstance:ITodaysSchema, userSchemaInstance:IUserSchema) {
+  static setUserIdToTodaySchema(
+    todaySchemaInstance: ITodaysSchema,
+    userSchemaInstance: IUserSchema
+  ) {
     todaySchemaInstance.userId = userSchemaInstance._id;
     return todaySchemaInstance;
   }
   // - TodaySchemaインスタンス(mongooseDocument)を保存する処理　　saveTodaySchemaToDatabase() {doc.save()}
-  static async saveTodaySchemaToDatabase(todaySchemaInstance:ITodaysSchema) {
+  static async saveTodaySchemaToDatabase(todaySchemaInstance: ITodaysSchema) {
     try {
       await todaySchemaInstance.save();
     } catch (error) {
@@ -341,7 +368,7 @@ export class Inbox {
     return this;
   }
 
-  remove(id:string): Inbox {
+  remove(id: string): Inbox {
     const target = this.list.findIndex(
       (v) => v.id.toString() === id.toString()
     );
@@ -361,7 +388,7 @@ export class Inbox {
     return this.size;
   }
 
-  checkIsDone(id:string) {
+  checkIsDone(id: string) {
     let target;
     for (let i = 0; i < this.list.length; i++) {
       const todo = this.list[i];
@@ -374,7 +401,7 @@ export class Inbox {
     return false;
   }
 
-  removeCompletedTodo(id:string) {
+  removeCompletedTodo(id: string) {
     let idx = this.checkIsDone(id);
     console.log(idx);
     this.list = this.list.filter((v) => v.isDone !== true);
@@ -393,19 +420,22 @@ export class Inbox {
     return inboxSchemaInstance;
   }
   // - InboxSchemaインスタンスにInboxインスタンス（Class)関連のデータアトリビュートを保存する処理(userID以外)　setInboxSchema()
-  static setInboxSchema(inboxSchemaInstance:IInboxSchema, inboxInstance:any) {
+  static setInboxSchema(inboxSchemaInstance: IInboxSchema, inboxInstance: any) {
     inboxSchemaInstance.list = inboxInstance.list;
     inboxSchemaInstance.size = inboxInstance.size;
     return inboxSchemaInstance;
   }
   // - InboxSchemaインスタンスにuserIdを保存する処理 setUserIdToInboxSchema(userId)
-  static setUserIdToInboxSchema(inboxSchemaInstance:IInboxSchema, userSchemaInstance:IUserSchema) {
+  static setUserIdToInboxSchema(
+    inboxSchemaInstance: IInboxSchema,
+    userSchemaInstance: IUserSchema
+  ) {
     inboxSchemaInstance.userId = userSchemaInstance._id;
     return inboxSchemaInstance;
   }
   // - InboxSchemaインスタンス(mongooseDocument)を保存する処理　　saveInboxSchemaToDatabase() {doc.save()};
 
-  static async saveInboxSchemaToDatabase(inboxSchemaInstance:IInboxSchema) {
+  static async saveInboxSchemaToDatabase(inboxSchemaInstance: IInboxSchema) {
     try {
       await inboxSchemaInstance.save();
     } catch (err) {
@@ -413,7 +443,7 @@ export class Inbox {
     }
   }
 
-  static async saveInboxData(inboxInstance:Inbox) {
+  static async saveInboxData(inboxInstance: Inbox) {
     // save inbox data to database;
     const createdInboxSchema = new InboxSchema({
       list: inboxInstance.list,
@@ -429,7 +459,7 @@ export class Inbox {
     return createdInboxSchema;
   }
 
-  static async fetchInboxDataFromDatabase(inboxId:string) {
+  static async fetchInboxDataFromDatabase(inboxId: string) {
     // { userId:userId,
     //   inbox:[todoId]
     //   size: x
@@ -443,7 +473,7 @@ export class Inbox {
     return inboxData;
   }
 
-  setUserId(userId) {
+  setUserId(userId:string) {
     this.userId = userId;
     return userId;
   }
@@ -537,7 +567,7 @@ export class Project {
     return this;
   }
 
-  removeTodo(id:string): Project {
+  removeTodo(id: string): Project {
     const target = this.todoLists.findIndex(
       (v) => v.id.toString() === id.toString()
     );
@@ -549,7 +579,7 @@ export class Project {
     return this.deadLine;
   }
 
-  updateDeadline(deadLine:Date): Project {
+  updateDeadline(deadLine: Date): Project {
     this.deadLine = deadLine;
     return this;
   }
@@ -562,7 +592,7 @@ export class Project {
     return this.todoLists.length;
   }
 
-  setUserId(userId:string) {
+  setUserId(userId: string) {
     this.userId = userId;
     return userId;
   }
@@ -585,7 +615,7 @@ export class Project {
   }
   // - ProjectSchemaインスタンスにProjectインスタンス（Class)関連のデータアトリビュートを保存する処理(userID以外)　setProjectSchema()
   static setProjectSchema(
-    projectSchemaInstance:IProjectSchema,
+    projectSchemaInstance: IProjectSchema,
     projectInstance: any
   ) {
     projectSchemaInstance.todoLists = projectInstance.todoLists;
@@ -600,12 +630,17 @@ export class Project {
     return projectSchemaInstance;
   }
   // - ProjectSchemaインスタンスにuserIdを保存する処理 setUserIdToProjectSchema(userId)
-  static setUserIdToProjectSchema(projectSchemaInstance:IProjectSchema, userSchemaInstance:IUserSchema) {
+  static setUserIdToProjectSchema(
+    projectSchemaInstance: IProjectSchema,
+    userSchemaInstance: IUserSchema
+  ) {
     projectSchemaInstance.userId = userSchemaInstance._id;
     return projectSchemaInstance;
   }
   // - ProjectSchemaインスタンス(mongooseDocument)を保存する処理　　saveProjectSchemaToDatabase() {doc.save()}
-  static async saveProjectSchemaToDatabase(projectSchemaInstance:IProjectSchema) {
+  static async saveProjectSchemaToDatabase(
+    projectSchemaInstance: IProjectSchema
+  ) {
     try {
       await projectSchemaInstance.save();
     } catch (error) {
@@ -626,8 +661,8 @@ export class Activity {
   //!!! また、Activity Schemaだけでなく、activities schemaも追加する. user Schemaにrefをつける
   // !! 変更に従い、productivity scoreの集計ロジックのやり方と、配置するクラスに変更を加える必要があるかもしれない
 
-  id: string;
-  date: Date;
+  id: string | null;
+  date: Date | null;
   accomplishedTodo: Todo[];
   accomplishedCount: number;
   productivityScore: number;
@@ -662,7 +697,7 @@ export class Activity {
     return this;
   }
 
-  setAccomplishedTodo(todo:Todo) {
+  setAccomplishedTodo(todo: Todo) {
     this.accomplishedTodo.push(todo);
     return this.accomplishedTodo;
   }
@@ -690,7 +725,7 @@ export class Activity {
     return this.setProductivityScore();
   }
 
-  isInRow(todoDoc:Todo) {
+  isInRow(todoDoc: Todo) {
     const id = todoDoc.id;
     let oldToNewSortedArr: Todo[] = this.accomplishedTodo.sort(
       (a, b) => a.dateCompleted - b.dateCompleted
@@ -708,7 +743,7 @@ export class Activity {
     }
   }
 
-  getInRowDuration(todoDoc:Todo) {
+  getInRowDuration(todoDoc: Todo) {
     const id = todoDoc.id;
     let oldToNewSortedArr: Todo[] = this.accomplishedTodo.sort(
       (a, b) => a.dateCompleted - b.dateCompleted
@@ -731,7 +766,7 @@ export class Activity {
     return count;
   }
 
-  getLongestInRowDuration(todoDoc:Todo) {
+  getLongestInRowDuration(todoDoc: Todo) {
     const id = todoDoc.id;
     let oldToNewSortedArr = this.accomplishedTodo.sort(
       (a, b) => a.dateCompleted - b.dateCompleted
@@ -765,7 +800,7 @@ export class Activity {
     return this;
   }
 
-  setUserId(userId:string) {
+  setUserId(userId: string) {
     this.userId = userId;
     return this.userId;
   }
@@ -786,7 +821,10 @@ export class Activity {
     return activitySchemaInstance;
   }
   // - ActivitySchemaインスタンスにActivityインスタンス（Class)関連のデータアトリビュートを保存する処理(userID以外)　setActivitySchema()
-  static setActivitySchema(activitySchemaInstance:IActivitySchema, activityInstance:any) {
+  static setActivitySchema(
+    activitySchemaInstance: IActivitySchema,
+    activityInstance: any
+  ) {
     activitySchemaInstance.date = activityInstance.date;
     activitySchemaInstance.accomplishedTodo = activityInstance.accomplishedTodo;
     activitySchemaInstance.accomplishedCount =
@@ -801,12 +839,17 @@ export class Activity {
     return activitySchemaInstance;
   }
   // - ActivitySchemaインスタンスにuserIdを保存する処理 setUserIdToActivitySchema(userId)
-  static setUserIdToActivitySchema(activitySchemaInstance:IActivitySchema, userSchemaInstance:IUserSchema) {
+  static setUserIdToActivitySchema(
+    activitySchemaInstance: IActivitySchema,
+    userSchemaInstance: IUserSchema
+  ) {
     activitySchemaInstance.userId = userSchemaInstance._id;
     return activitySchemaInstance;
   }
   // - ActivitySchemaインスタンス(mongooseDocument)を保存する処理　　saveActivitySchemaToDatabase() {doc.save()}
-  static async saveActivitySchemaToDatabase(activitySchemaInstance:IActivitySchema) {
+  static async saveActivitySchemaToDatabase(
+    activitySchemaInstance: IActivitySchema
+  ) {
     try {
       await activitySchemaInstance.save();
     } catch (error) {
@@ -824,7 +867,7 @@ export class Logbook {
     this.size = 0;
   }
 
-  set(completedTodoList:Todo[]) {
+  set(completedTodoList: Todo[]) {
     this.list = completedTodoList;
     this.size = this.list.length;
     return this;
@@ -834,7 +877,7 @@ export class Logbook {
     return this;
   }
 
-  add(completedTodo:Todo) {
+  add(completedTodo: Todo) {
     this.list.push(completedTodo);
     this.size++;
     return this;
@@ -844,7 +887,7 @@ export class Logbook {
     let list = this.list;
     let res = {};
     let currentDate;
-    let completedTodo = [];
+    let completedTodo:Todo[] = [];
     for (let i = 0; i < list.length; i++) {
       const element = list[i];
       const nextElement = list[i + 1];
@@ -861,7 +904,7 @@ export class Logbook {
     return res;
   }
 
-  sortByDate(order:number) {
+  sortByDate(order: number) {
     // 0 ase 1 des
     let list = this.list;
     if (order === 0) {
@@ -894,18 +937,26 @@ export class Logbook {
     return logbookSchemaInstance;
   }
   // - LogbookSchemaインスタンスにLogbookインスタンス（Class)関連のデータアトリビュートを保存する処理(userID以外)　setLogbookSchema()
-  static setLogbookSchema(logbookSchemaInstance:ILogbookSchema, logbookInstance:any) {
+  static setLogbookSchema(
+    logbookSchemaInstance: ILogbookSchema,
+    logbookInstance: any
+  ) {
     logbookSchemaInstance.list = logbookInstance.list;
     logbookSchemaInstance.size = logbookInstance.size;
     return logbookSchemaInstance;
   }
   // - LogbookSchemaインスタンスにuserIdを保存する処理 setUserIdToLogbookSchema(userId)
-  static setUserIdToLogbookSchema(logbookSchemaInstance:ILogbookSchema, userSchemaInstance:IUserSchema) {
+  static setUserIdToLogbookSchema(
+    logbookSchemaInstance: ILogbookSchema,
+    userSchemaInstance: IUserSchema
+  ) {
     logbookSchemaInstance.userId = userSchemaInstance._id;
     return logbookSchemaInstance;
   }
   // - LogbookSchemaインスタンス(mongooseDocument)を保存する処理　　saveLogbookSchemaToDatabase() {doc.save()}
-  static async saveLogbookSchemaToDatabase(logbookSchemaInstance:ILogbookSchema) {
+  static async saveLogbookSchemaToDatabase(
+    logbookSchemaInstance: ILogbookSchema
+  ) {
     try {
       await logbookSchemaInstance.save();
     } catch (error) {
@@ -999,18 +1050,26 @@ export class TrashBox {
     return trashBoxSchemaInstance;
   }
   // - TrashBoxSchemaインスタンスにTrashBoxインスタンス（Class)関連のデータアトリビュートを保存する処理(userID以外)　setTrashBoxSchema()
-  static setTrashBoxSchema(trashBoxSchemaInstance:ITrashBoxSchema, trashBoxInstance:any) {
+  static setTrashBoxSchema(
+    trashBoxSchemaInstance: ITrashBoxSchema,
+    trashBoxInstance: any
+  ) {
     trashBoxSchemaInstance.list = trashBoxInstance.list;
     trashBoxSchemaInstance = trashBoxInstance.size;
     return trashBoxSchemaInstance;
   }
   // - TrashBoxSchemaインスタンスにuserIdを保存する処理 setUserIdToTrashBoxSchema(userId)
-  static setUserIdToTrashBoxSchema(trashBoxSchemaInstance:ITrashBoxSchema, userSchemaInstance:IUserSchema) {
+  static setUserIdToTrashBoxSchema(
+    trashBoxSchemaInstance: ITrashBoxSchema,
+    userSchemaInstance: IUserSchema
+  ) {
     trashBoxSchemaInstance.userId = userSchemaInstance._id;
     return trashBoxSchemaInstance;
   }
   // - TrashBoxSchemaインスタンス(mongooseDocument)を保存する処理　　saveTrashBoxSchemaToDatabase() {doc.save()}
-  static async saveTrashBoxSchemaToDatabase(trashBoxSchemaInstance:ITrashBoxSchema) {
+  static async saveTrashBoxSchemaToDatabase(
+    trashBoxSchemaInstance: ITrashBoxSchema
+  ) {
     try {
       await trashBoxSchemaInstance.save();
     } catch (error) {

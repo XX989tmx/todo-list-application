@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import expressSession from "express-session";
 import ejs from "ejs";
 import bodyParser from "body-parser";
+import path from "path";
 // const database = require("../utils/database");
 
 import {
@@ -23,7 +24,7 @@ if (process.env.NODE_ENV !== "production") {
 const app = express();
 
 app.set("view engine", "ejs");
-app.set("views", "./views");
+app.set("views", path.join(__dirname, "views"));
 app.use(express.static(__dirname + "/public"));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));

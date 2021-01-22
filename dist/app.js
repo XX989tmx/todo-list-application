@@ -45,6 +45,7 @@ var passport_1 = __importDefault(require("passport"));
 var cookie_parser_1 = __importDefault(require("cookie-parser"));
 var express_session_1 = __importDefault(require("express-session"));
 var body_parser_1 = __importDefault(require("body-parser"));
+var path_1 = __importDefault(require("path"));
 // const database = require("../utils/database");
 var todo_1 = require("./class/todo");
 if (process.env.NODE_ENV !== "production") {
@@ -52,7 +53,7 @@ if (process.env.NODE_ENV !== "production") {
 }
 var app = express_1.default();
 app.set("view engine", "ejs");
-app.set("views", "./views");
+app.set("views", path_1.default.join(__dirname, "views"));
 app.use(express_1.default.static(__dirname + "/public"));
 app.use(cookie_parser_1.default());
 app.use(body_parser_1.default.urlencoded({ extended: false }));
