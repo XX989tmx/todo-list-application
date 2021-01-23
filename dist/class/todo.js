@@ -246,7 +246,7 @@ var Today = /** @class */ (function () {
         return this;
     };
     Today.prototype.removeTodoFromToday = function (id) {
-        var target = this.todaysList.findIndex(function (v) { return v.id.toString() === id.toString(); });
+        var target = this.todaysList.findIndex(function (v) { return v._id.toString() === id.toString(); });
         this.todaysList.splice(target, 1);
         return this;
     };
@@ -483,28 +483,6 @@ var Inbox = /** @class */ (function () {
     return Inbox;
 }());
 exports.Inbox = Inbox;
-// const inbox = new Inbox();
-// console.log(inbox);
-// const inbox2 = new Inbox(
-//   [
-//     { title: "abc", notes: "gggg" },
-//     { title: "dadads", notes: "ggggg" },
-//   ],
-//   "user1"
-// );
-// console.log(inbox2);
-// inbox2.add(new Todo("77777", "77777"));
-// console.log(inbox2);
-// inbox.addNewTodo('abc123','gggg','now','now');
-// inbox.setUserId('eeee')
-// console.log(inbox);
-// inbox.add(todo);
-// inbox.add(todo2);
-// console.log(inbox);
-// inbox.removeCompletedTodo("12345");
-// console.log(inbox);
-// console.log(inbox.count);
-// console.log(inbox.getAll());
 var Project = /** @class */ (function () {
     function Project(title, notes, deadLine, scheduledDate, userId) {
         this.todoLists = [];
@@ -715,9 +693,11 @@ var Activity = /** @class */ (function () {
         var id = todoDoc.id;
         var oldToNewSortedArr = this.accomplishedTodo.sort(function (a, b) { return a.dateCompleted - b.dateCompleted; });
         var idxOfTargetDocId;
-        for (var i = 0; i < this.accomplishedTodo.length; i++) {
-            if (this.accomplishedTodo[i].id.toString() === id.toString()) {
-                idxOfTargetDocId = this.accomplishedTodo[i].id.toString();
+        if (id !== null) {
+            for (var i = 0; i < this.accomplishedTodo.length; i++) {
+                if (this.accomplishedTodo[i].id.toString() === id.toString()) {
+                    idxOfTargetDocId = this.accomplishedTodo[i].id.toString();
+                }
             }
         }
         var countArr = [];
@@ -931,6 +911,7 @@ var TrashBox = /** @class */ (function () {
         return this;
     };
     TrashBox.prototype.putBack = function (id, destName, destObj) {
+        //todo Today のtodaysListをlistに変更する。全てlistで一貫させる destObjをToday,Inbox,Project全てに対応できるように
         var targetTodo = this.find(id);
         var oldLength = destObj.list.length;
         switch (destName) {
@@ -956,9 +937,10 @@ var TrashBox = /** @class */ (function () {
         return this.list[target];
     };
     TrashBox.prototype.remove = function (id) {
-        this.list = this.list.filter(function (v) {
-            v.id.toString() !== id.toString();
+        var updated = this.list.filter(function (v) {
+            return v.id.toString() !== id.toString();
         });
+        this.list = updated;
         this.size--;
         return this;
     };

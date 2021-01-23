@@ -1,8 +1,8 @@
-import { Todo } from "./todo";
+import { Activity, Inbox, Logbook, Today, Todo, TrashBox } from "./todo";
 
 import { userModel as userSchema, IUserSchema } from "../model/userSchema";
 import { ObjectID } from "bson";
-import { Document, MongooseDocument } from "mongoose";
+import { Document, MongooseDocument, ObjectId } from "mongoose";
 import { IActivitySchema } from "../model/activitySchema";
 import { ITrashBoxSchema } from "../model/trashBoxSchema";
 import { ILogbookSchema } from "../model/logbookSchema";
@@ -11,19 +11,35 @@ import { ITodaysSchema } from "../model/todaysSchema";
 import { IInboxSchema } from "../model/inboxSchema";
 import { ITodoSchema } from "../model/todoSchema";
 
-export class User {
-  id: string;
-  name: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-  todo: any[];
-  inbox: any;
-  today: any;
-  logbook: any;
-  trashBox: any;
-  activity: any;
-  lastLoggedIns: Date[];
+export interface UserInterface {
+  id: string | null;
+  name: string | null;
+  email: string | null;
+  password: string | null;
+  confirmPassword: string | null;
+  todo: Todo[] | ITodoSchema[] | ObjectId[] | any[];
+  inbox: Inbox | IInboxSchema | ObjectId | string | null;
+  today: Today | ITodaysSchema | ObjectId | string | null;
+  logbook: Logbook | ILogbookSchema | ObjectId | string | null;
+  trashBox: TrashBox | ITrashBoxSchema | ObjectId | string | null;
+  activity: Activity | IActivitySchema | ObjectId | string | null;
+  lastLoggedIns: Date[] | any[];
+}
+export class User implements UserInterface {
+  id: string | null;
+  name: string | null;
+  email: string | null;
+  password: string | null;
+  confirmPassword: string | null;
+  todo: Todo[] | ITodoSchema[] | ObjectId[] | any[];
+  inbox: Inbox | IInboxSchema | ObjectId | string | null;
+  today: Today | ITodaysSchema | ObjectId | string | null;
+  logbook: Logbook | ILogbookSchema | ObjectId | string | null;
+  trashBox: TrashBox | ITrashBoxSchema | ObjectId | string | null;
+  activity: Activity | IActivitySchema | ObjectId | string | null;
+  lastLoggedIns: Date[] | any[];
+
+  static allUsersInDatabase : IUserSchema[];
 
   constructor(
     userId?,
@@ -136,17 +152,19 @@ export class User {
   }
 
   checkPasswordEquity() {
-    if (this.password.toString() === this.confirmPassword.toString()) {
-      return true;
-    } else {
-      return false;
+    if (this.password && this.confirmPassword) {
+      if (this.password.toString() === this.confirmPassword.toString()) {
+        return true;
+      } else {
+        return false;
+      }
     }
   }
 
-  isEmailUnique(email: string, users: User[]) {
+  isEmailUnique(email: string) {
     let found = false;
-    for (let i = 0; i < users.length; i++) {
-      if (email.toString() === users[i].email) {
+    for (let i = 0; i < User.allUsersInDatabase.length; i++) {
+      if (email.toString() === User.allUsersInDatabase[i].email) {
         found = true;
       }
     }
@@ -232,16 +250,16 @@ export class User {
   // -userSchemaインスタンスにproject idをセットする処理
   //　　setProjectIdToUserSchema(projectId)
   static setProjectIdToUserSchema(
-    userSchemaInstance: IUserSchema|any,
-    projectSchemaInstance: IProjectSchema|any
+    userSchemaInstance: IUserSchema | any,
+    projectSchemaInstance: IProjectSchema | any
   ) {
     userSchemaInstance.project = projectSchemaInstance._id;
     return userSchemaInstance;
   }
   // -userSchemaインスタンスにlogbookIdをセットする処理　setLogbookIdToUserSchema(logbookId)
   static setLogbookIdToUserSchema(
-    userSchemaInstance: IUserSchema|any,
-    logbookSchemaInstance: ILogbookSchema|any
+    userSchemaInstance: IUserSchema | any,
+    logbookSchemaInstance: ILogbookSchema | any
   ) {
     userSchemaInstance.logbook = logbookSchemaInstance._id;
     return userSchemaInstance;
@@ -264,7 +282,9 @@ export class User {
   }
 
   // -userSchemaインスタンス（mongooseDocument)をデータベースに保存する処理 saveUserSchemaToDatabase() {userSchema.save()}
-  static async saveUserSchemaToDatabase(userSchemaInstance: IUserSchema|Document<any>) {
+  static async saveUserSchemaToDatabase(
+    userSchemaInstance: IUserSchema | Document<any>
+  ) {
     try {
       await userSchemaInstance.save();
     } catch (error) {

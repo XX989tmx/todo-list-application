@@ -112,17 +112,19 @@ var User = /** @class */ (function () {
         return this.activity;
     };
     User.prototype.checkPasswordEquity = function () {
-        if (this.password.toString() === this.confirmPassword.toString()) {
-            return true;
-        }
-        else {
-            return false;
+        if (this.password && this.confirmPassword) {
+            if (this.password.toString() === this.confirmPassword.toString()) {
+                return true;
+            }
+            else {
+                return false;
+            }
         }
     };
-    User.prototype.isEmailUnique = function (email, users) {
+    User.prototype.isEmailUnique = function (email) {
         var found = false;
-        for (var i = 0; i < users.length; i++) {
-            if (email.toString() === users[i].email) {
+        for (var i = 0; i < User.allUsersInDatabase.length; i++) {
+            if (email.toString() === User.allUsersInDatabase[i].email) {
                 found = true;
             }
         }
