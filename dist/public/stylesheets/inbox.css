@@ -114,6 +114,7 @@ Body {
 
 .sidebar-text {
   padding-left: 7px;
+  
 }
 
 .sidebar-tab {
@@ -127,6 +128,7 @@ Body {
 
 .sidebar-tab-color-change a {
   color: white;
+  text-decoration: none;
 }
 
 .sidebar-tab-color-change:hover {
@@ -153,6 +155,10 @@ Body {
   background-color: #1a3269;
   height: 50px;
   width: 100%;
+}
+
+.inline-block {
+  display: inline-block;
 }
 /* .inbox-mainsection-heading {
     color: aqua;
