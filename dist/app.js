@@ -83,40 +83,16 @@ app.post("/createTodo/:userId", function (req, res, next) { return __awaiter(voi
                 // // initialize todo class
                 // const todo = new Todo(title, notes, priority, scheduledDate, deadline);
                 console.log(req.body);
-                // // initialize inbox class
-                // const inbox = new Inbox();
-                // get inbox data from database;
-                // initialize inbox class with inbox data;
-                // update inbox class with todo data; inbox.addNewTodo(title, notes, priority, scheduledDate, deadline)
-                // initialize user class
-                // save todo to database
-                // todo save
-                // user save
-                // save inbox to database
-                // inbox save
-                // user save
                 return [4 /*yield*/, createTodoRoutesLogic_1.CreateTodoRoutesLogic.create(req)];
             case 1:
-                // // initialize inbox class
-                // const inbox = new Inbox();
-                // get inbox data from database;
-                // initialize inbox class with inbox data;
-                // update inbox class with todo data; inbox.addNewTodo(title, notes, priority, scheduledDate, deadline)
-                // initialize user class
-                // save todo to database
-                // todo save
-                // user save
-                // save inbox to database
-                // inbox save
-                // user save
-                _b.sent();
-                inbox = [
-                    new todo_1.Todo("todo1", "note11111111", 3, new Date(), new Date(), null),
-                    new todo_1.Todo("todo2", "note2", 2, new Date(), new Date(), null),
-                    new todo_1.Todo("todo3", "note3", 1, new Date(), new Date(), null),
-                    new todo_1.Todo(title, notes, priority, scheduledDate, deadline, null),
-                ];
-                res.status(200).render("inbox", { inbox: inbox });
+                inbox = _b.sent();
+                // let inbox = [
+                //   new Todo("todo1", "note11111111", 3, new Date(), new Date(), null),
+                //   new Todo("todo2", "note2", 2, new Date(), new Date(), null),
+                //   new Todo("todo3", "note3", 1, new Date(), new Date(), null),
+                //   new Todo(title, notes, priority, scheduledDate, deadline, null),
+                // ];
+                res.status(200).render("inbox", { inbox: inbox.list });
                 return [2 /*return*/];
         }
     });

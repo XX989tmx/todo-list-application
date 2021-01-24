@@ -59,44 +59,48 @@ app.get("/inbox", async (req: Request, res: Response, next: NextFunction) => {
     new Todo("todo2", "note2", 2, new Date(), new Date(), null),
     new Todo("todo3", "note3", 1, new Date(), new Date(), null),
   ];
+  
 
   // pass inbox data
-  res.render("inbox", { inbox });
+  res.render("inbox",{inbox});
 });
 
-app.post("/createTodo/:userId", async (req:Request, res:Response, next:NextFunction) => {
-  const { title, notes, priority, scheduledDate, deadline } = req.body;
+app.post(
+  "/createTodo/:userId",
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { title, notes, priority, scheduledDate, deadline } = req.body;
 
-  // // initialize todo class
-  // const todo = new Todo(title, notes, priority, scheduledDate, deadline);
-  console.log(req.body);
+    // // initialize todo class
+    // const todo = new Todo(title, notes, priority, scheduledDate, deadline);
+    console.log(req.body);
 
-  // // initialize inbox class
-  // const inbox = new Inbox();
-  // get inbox data from database;
-  // initialize inbox class with inbox data;
-  // update inbox class with todo data; inbox.addNewTodo(title, notes, priority, scheduledDate, deadline)
-  // initialize user class
+    // // initialize inbox class
+    // const inbox = new Inbox();
+    // get inbox data from database;
+    // initialize inbox class with inbox data;
+    // update inbox class with todo data; inbox.addNewTodo(title, notes, priority, scheduledDate, deadline)
+    // initialize user class
 
-  // save todo to database
-  // todo save
-  // user save
-  // save inbox to database
-  // inbox save
-  // user save
+    // save todo to database
+    // todo save
+    // user save
+    // save inbox to database
+    // inbox save
+    // user save
 
-  await CreateTodoRoutesLogic.create(req);
+    const inbox = await CreateTodoRoutesLogic.create(req);
 
-  let inbox = [
-    new Todo("todo1", "note11111111", 3, new Date(), new Date(), null),
-    new Todo("todo2", "note2", 2, new Date(), new Date(), null),
-    new Todo("todo3", "note3", 1, new Date(), new Date(), null),
-    new Todo(title, notes, priority, scheduledDate, deadline, null),
-  ];
+    // let inbox = [
+    //   new Todo("todo1", "note11111111", 3, new Date(), new Date(), null),
+    //   new Todo("todo2", "note2", 2, new Date(), new Date(), null),
+    //   new Todo("todo3", "note3", 1, new Date(), new Date(), null),
+    //   new Todo(title, notes, priority, scheduledDate, deadline, null),
+    // ];
 
-  res.status(200).render("inbox", { inbox });
-  // res.status(302).redirect("/inbox");
-});
+    res.status(200).render("inbox", { inbox:inbox.list });
+    // res.status(302).redirect("/inbox");
+  }
+);
 
 app.patch("/updateTodo", async (req, res, next) => {
   const { title, notes, priority, scheduledDate, deadline } = req.body;

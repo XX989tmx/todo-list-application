@@ -144,7 +144,7 @@ export class CreateTodoRoutesLogic {
     await User.saveUserSchemaToDatabase(updatedUserData);
     // -inbox fieldについてはRefキーで参照する方式のため、手動更新不要。
     // inbox class instance をReturn
-    const inboxList = await InboxRoutesLogic.renderInbox(userId);
+    const inboxList:any = await InboxRoutesLogic.renderInbox(userId);
     console.log('inboxList');
     console.log(inboxList);
     
