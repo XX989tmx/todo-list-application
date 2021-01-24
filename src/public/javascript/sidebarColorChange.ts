@@ -6,6 +6,7 @@ switch (pathname) {
       alert("error");
     } else {
       sidebarInbox.style.backgroundColor = "#324f92";
+      sidebarInbox.style.borderLeft = "solid 3px #3178c6";
     }
     break;
   case "/today":
@@ -14,6 +15,7 @@ switch (pathname) {
       alert("error");
     } else {
       sidebarToday.style.backgroundColor = "#324f92";
+      sidebarToday.style.borderLeft = "solid 3px #3178c6";
     }
     break;
   case "/whatToDoNext":
@@ -22,6 +24,7 @@ switch (pathname) {
       alert("error");
     } else {
       sidebarWhatToDoNext.style.backgroundColor = "#324f92";
+      sidebarWhatToDoNext.style.borderLeft = "solid 3px #3178c6";
     }
 
     break;
@@ -31,6 +34,7 @@ switch (pathname) {
       alert("error");
     } else {
       sidebarLog.style.backgroundColor = "#324f92";
+      sidebarLog.style.borderLeft = "solid 3px #3178c6";
     }
 
     break;
@@ -40,6 +44,7 @@ switch (pathname) {
       alert("error");
     } else {
       sidebarTrashBox.style.backgroundColor = "#324f92";
+      sidebarTrashBox.style.borderLeft = "solid 3px #3178c6";
     }
 
     break;
