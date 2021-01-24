@@ -69,6 +69,8 @@ app.get("/inbox", function (req, res, next) { return __awaiter(void 0, void 0, v
             new todo_1.Todo("todo2", "note2", 2, new Date(), new Date(), null),
             new todo_1.Todo("todo3", "note3", 1, new Date(), new Date(), null),
         ];
+        // const userId = "600ac39664b8571ed5b8ef2b";
+        // const inbox = await InboxRoutesLogic.renderInbox(userId);
         // pass inbox data
         res.render("inbox", { inbox: inbox });
         return [2 /*return*/];

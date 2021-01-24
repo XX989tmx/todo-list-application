@@ -1,3 +1,4 @@
+import { InboxRoutesLogic } from "./class/inboxRoutesLogic";
 import { CreateTodoRoutesLogic } from "./class/createTodoRoutesLogic";
 import { UserSignupRoutesLogic } from "./class/userSignupRoutesLogic";
 import express from "express";
@@ -59,10 +60,10 @@ app.get("/inbox", async (req: Request, res: Response, next: NextFunction) => {
     new Todo("todo2", "note2", 2, new Date(), new Date(), null),
     new Todo("todo3", "note3", 1, new Date(), new Date(), null),
   ];
-  
-
+  // const userId = "600ac39664b8571ed5b8ef2b";
+  // const inbox = await InboxRoutesLogic.renderInbox(userId);
   // pass inbox data
-  res.render("inbox",{inbox});
+  res.render("inbox", { inbox: inbox });
 });
 
 app.post(
@@ -97,7 +98,7 @@ app.post(
     //   new Todo(title, notes, priority, scheduledDate, deadline, null),
     // ];
 
-    res.status(200).render("inbox", { inbox:inbox.list });
+    res.status(200).render("inbox", { inbox: inbox.list });
     // res.status(302).redirect("/inbox");
   }
 );

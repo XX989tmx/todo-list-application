@@ -58,7 +58,12 @@
                     <li id="todo-item-li" class="list-group-item todo-item">
                       <div class="todo-items row">
                         <div class="col-1">
-                          <input type="checkbox" name="" id="checkbox1" />
+                          <input
+                            class="todo-checkbox"
+                            type="checkbox"
+                            name=""
+                            id="<% todo.id %> "
+                          />
                         </div>
                         <div class="col-1" id="todo-priority">
                           <% if (todo.priority === 3) { %>
@@ -116,7 +121,7 @@
                           </svg>
                         </div>
                         <div
-                          id="delete-todo-button"
+                          id="<% todo.id %> "
                           class="col-1 delete-todo"
                           data-toggle="popover"
                           data-content="delete todo"
@@ -418,6 +423,118 @@
 
     <script>
       class Sidebar {}
+    </script>
+
+    <script>
+      // move to trash action
+      const deleteHeaders = new Headers();
+      deleteHeaders.append("Content-Type", "text/html");
+
+      const init2 = {
+        method: "DELETE",
+        headers: deleteHeaders,
+        mode: "cors",
+        cache: "default",
+      };
+
+      // let request = new Request("http://localhost:8080/deleteTodo");
+      const sendDeleteTodoRequest = async (request, init) => {
+        try {
+          await fetch(request, init);
+        } catch (error) {}
+      };
+      const deleteTodoIcons = document.querySelectorAll(".delete-todo");
+      console.log(deleteTodoIcons);
+      for (let i = 0; i < deleteTodoIcons.length; i++) {
+        const deleteTodoIcon = deleteTodoIcons[i];
+        const deleteTodoId = deleteTodoIcon.getAttribute("id");
+        let body = {
+          deleteTodoId,
+        };
+        deleteTodoIcon.addEventListener("click", async (params) => {
+          console.log("move to trash!");
+          console.log(deleteTodoId);
+          let request2 = new Request(
+            `http://localhost:8080/deleteTodo/${deleteTodoId}`
+          );
+          sendDeleteTodoRequest(request2, init2)
+            .then((response) => {
+              setTimeout(() => {
+                const liElement2 = deleteTodoIcon.parentElement.parentElement;
+
+                liElement2.remove();
+              }, 1500);
+
+              console.log(response);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        });
+      }
+    </script>
+
+    <script>
+      //complee todo request
+      let headers = new Headers();
+      headers.append("Content-Type", "text/html");
+
+      const init = {
+        method: "GET",
+        headers: headers,
+        mode: "cors",
+        cache: "default",
+      };
+
+      // let request = new Request("http://localhost:8080/completeTodo");
+      const sendCompleteTodoRequest = async (request, init) => {
+        let response;
+        try {
+          await fetch(request, init);
+        } catch (error) {}
+      };
+
+      const checkboxInputs = document.querySelectorAll(".todo-checkbox");
+      console.log(checkboxInputs);
+      for (let i = 0; i < checkboxInputs.length; i++) {
+        const input = checkboxInputs[i];
+        const inputId = input.getAttribute("id");
+        const isChecked = input.getAttribute("value");
+        console.log(isChecked);
+        const completedTodoId = inputId;
+        let body = {
+          completedTodoId,
+        };
+
+        console.log(inputId);
+        input.addEventListener("click", async () => {
+          console.log("12345");
+          console.log(inputId);
+          let request = new Request(
+            "http://localhost:8080/completeTodo/" + inputId
+          );
+          sendCompleteTodoRequest(request, init)
+            .then((result) => {
+              console.log(request);
+              setTimeout(() => {
+                const LiElement =
+                  input.parentElement.parentElement.parentElement;
+
+                LiElement.remove();
+              }, 1500);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        });
+      }
+      //
+      const todos = document.querySelectorAll(".todo-item");
+      console.log(todos);
+      for (let i = 0; i < todos.length; i++) {
+        const todoLiElement = todos[i];
+        const todoRow = todoLiElement.firstChild;
+      }
     </script>
 
     <script
