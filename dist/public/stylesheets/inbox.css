@@ -1,5 +1,5 @@
 .main {
-  margin-top: 30px;
+  margin-top: 5px;
 }
 
 .red {
@@ -7,15 +7,45 @@
 }
 .sidebar {
   min-height: 100vh;
+  background-color: #001138;
+  cursor: pointer;
+}
+/* .sidebar-setting {
+
+} */
+
+.sidebar-items {
+  padding: 30px 10px 30px 10px;
+  
 }
 
 .main-area {
   min-height: 100vh;
+  background-color: #e5eaef;
+  padding: 20px 30px 20px 30px
+}
+
+.main-area-inner {
+  background-color: rgb(245, 245, 245);
+  box-shadow: 10px 7px 7px grey;
+  min-height: 100vh;
+  padding: 10px;
+  border-radius: 1%;
+}
+
+.add-todo-button {
+  color: white;
+  background-color: #FF5720;
+};
+
+.todo-item {
+  margin-bottom: 5px;
+  box-shadow: 2px 2px 1px grey;
 }
 
 .margin-and-padding-0 {
-  margin: 0;
-  padding: 0;
+  margin-left: 0;
+  padding-left: 0;
 }
 
 .list-style-none {
@@ -29,6 +59,7 @@
 
 .todo-items {
   cursor: pointer;
+  
 }
 
 .backdrop {
@@ -63,14 +94,36 @@
   border: solid black 1px;
 }
 
+
 .sidebar-tab {
   list-style-type: none;
+}
+
+.sidebar-tab-color-change {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.sidebar-tab-color-change a {
+  color: white;
 }
 
 .sidebar-tab-color-change:hover {
   background-color: rgb(212, 212, 212);
 }
+.header-style {
+  background-color: #001e60;
+  height: 70px;
+  width: 100%;
+  z-index: 100;
+  box-shadow: 3px 2px 4px grey;
+}
 
+.footer-style {
+  background-color: #020406;
+  height: 120px;
+  width: 100%;
+}
 /* .inbox-mainsection-heading {
     color: aqua;
 } */

@@ -5,7 +5,7 @@ switch (pathname) {
     if (sidebarInbox === null) {
       alert("error");
     } else {
-      sidebarInbox.style.backgroundColor = "rgb(229, 229, 229)";
+      sidebarInbox.style.backgroundColor = "#324f92";
     }
     break;
   case "/today":
@@ -13,15 +13,15 @@ switch (pathname) {
     if (sidebarToday === null) {
       alert("error");
     } else {
-      sidebarToday.style.backgroundColor = "rgb(229, 229, 229)";
+      sidebarToday.style.backgroundColor = "#324f92";
     }
     break;
   case "/whatToDoNext":
     const sidebarWhatToDoNext = document.getElementById("sidebar-whatToDoNext");
     if (sidebarWhatToDoNext === null) {
-      alert('error')
+      alert("error");
     } else {
-      sidebarWhatToDoNext.style.backgroundColor = "rgb(229, 229, 229)";
+      sidebarWhatToDoNext.style.backgroundColor = "#324f92";
     }
 
     break;
@@ -30,7 +30,7 @@ switch (pathname) {
     if (sidebarLog === null) {
       alert("error");
     } else {
-      sidebarLog.style.backgroundColor = "rgb(229, 229, 229)";
+      sidebarLog.style.backgroundColor = "#324f92";
     }
 
     break;
@@ -39,7 +39,7 @@ switch (pathname) {
     if (sidebarTrashBox === null) {
       alert("error");
     } else {
-      sidebarTrashBox.style.backgroundColor = "rgb(229, 229, 229)";
+      sidebarTrashBox.style.backgroundColor = "#324f92";
     }
 
     break;

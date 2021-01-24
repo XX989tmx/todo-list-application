@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "run-script": "nodemon dist/app.js",
     "start": "node dist/app.js",
     "test": "jest"
   },

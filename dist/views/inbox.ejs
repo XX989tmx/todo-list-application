@@ -7,101 +7,219 @@
     <link href="/stylesheets/inbox.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
-    <header></header>
+    <%- include('./partials/_header.ejs') %> 
     <main class="main">
       <div class="container-md fluid">
         <div class="row">
           <!-- 以下はパーシャル化
              -->
 
-          <%- include('./partials/_sidebar.ejs') %> 
+          <%- include('./partials/_sidebar.ejs') %>
           <div class="main-area col-xs-9 col-sm-8 col-md-9">
             <!-- main section -->
-            <div class="row">
-              <div class="col">
-                <h3
-                  id="inbox-mainsection-heading"
-                  class="inbox-mainsection-heading"
-                >
-                  Inbox
-                </h3>
+            <div class="main-area-inner">
+              <div class="row">
+                <div class="col">
+                  <h3
+                    id="inbox-mainsection-heading"
+                    class="inbox-mainsection-heading"
+                  >
+                    Inbox
+                  </h3>
+                </div>
               </div>
-            </div>
-            <div id="main-section" class="main-section row">
-              <div class="col-12">
-                <ul class="margin-and-padding-0 list-style-none list-group">
-                  <% inbox.forEach(todo => { %>
+              <div id="main-section" class="main-section row">
+                <div class="col-12">
+                  <ul class="margin-and-padding-0 list-style-none list-group">
+                    <% inbox.forEach(todo => { %>
 
-                  <li id="todo-item-li" class="list-group-item">
-                    <div class="todo-items row">
-                      <div class="col-1">
-                        <input type="checkbox" name="" id="checkbox1" />
-                      </div>
-                      <div class="col-1" id="todo-priority">
-                        <span><%= todo.priority %> </span>
+                    <li id="todo-item-li" class="list-group-item todo-item">
+                      <div class="todo-items row">
+                        <div class="col-1">
+                          <input type="checkbox" name="" id="checkbox1" />
+                        </div>
+                        <div class="col-1" id="todo-priority">
+                          <span><%= todo.priority %> </span>
+                        </div>
+                        <div
+                          class="col-7"
+                          id="todo-item"
+                          data-toggle="collapse"
+                          data-target="#todo-item-collapse"
+                        >
+                          <span><%= todo.title %> </span>
+                        </div>
+                        <div class="drag-button col-1" id="drag-button">D</div>
+                        <div
+                          class="col-1"
+                          id="update-todo-button"
+                          data-toggle="modal"
+                          data-target="#update-todo-input-modal"
+                        >
+                          E
+                        </div>
+                        <div
+                          id="delete-todo-button"
+                          class="col-1 delete-todo"
+                          data-toggle="popover"
+                          data-content="delete todo"
+                          placement="right"
+                        >
+                          X
+                        </div>
                       </div>
                       <div
-                        class="col-7"
-                        id="todo-item"
-                        data-toggle="collapse"
-                        data-target="#todo-item-collapse"
+                        id="todo-item-collapse"
+                        class="todo-item-collapse collapse row"
                       >
-                        <span><%= todo.title %> </span>
+                        <div
+                          id="todo-item-collapse-contents"
+                          data-toggle="modal"
+                          data-target="#update-todo-input-modal"
+                        >
+                          <p>todo notes & deadline</p>
+                          <p><%= todo.notes %></p>
+                          <span><%= todo.deadline %> </span>
+                        </div>
                       </div>
-                      <div class="drag-button col-1" id="drag-button">D</div>
-                      <div
-                        class="col-1"
-                        id="update-todo-button"
-                        data-toggle="modal"
-                        data-target="#update-todo-input-modal"
-                      >
-                        E
-                      </div>
-                      <div
-                        id="delete-todo-button"
-                        class="col-1 delete-todo"
-                        data-toggle="popover"
-                        data-content="delete todo"
-                        placement="right"
-                      >
-                        X
+                    </li>
+                    <% }) %>
+                  </ul>
+                </div>
+                <div class="col-12">
+                  <div
+                    id="add-todo-button"
+                    data-toggle="modal"
+                    data-target="#todo-input-modal"
+                  >
+                   <button class="add-todo-button" type=""> add todo</button>
+                  </div>
+
+                  <!--　パーシャル化  -->
+                  <!-- input modal. add new todo modal -->
+                  <div id="todo-input-modal" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <div class="row">
+                            <div class="col-10">Add todo</div>
+                            <div class="col-2">
+                              <button
+                                type="submit"
+                                id="close-modal-button"
+                                data-dismiss="modal"
+                                class="btn btn-outline-dark"
+                              >
+                                close
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="modal-body">
+                          <form role="form">
+                            <div class="form-group">
+                              <label for="todo-input-title">todo name</label>
+                              <input
+                                class="form-control"
+                                id="todo-input-title"
+                                type="text"
+                                name=""
+                                value=""
+                                autofocus
+                              />
+                            </div>
+                            <div class="form-group">
+                              <label for="todo-input-notes">notes</label>
+                              <!-- <input
+                              class="modal-notes-input"
+                              id="todo-input-notes"
+                              type="textarea"
+                              name=""
+                              value=""
+                            /> -->
+
+                              <textarea
+                                class="form-control"
+                                rows="7"
+                                id="todo-input-notes"
+                                placeholder="notes"
+                              ></textarea>
+
+                              <!-- <textarea
+                              rows=""
+                              cols=""
+                              class="modal-notes-input"
+                              id="todo-input-notes"
+                            ></textarea> -->
+                            </div>
+                            <div class="form-group">
+                              <label for="priority-option">Priority:</label>
+                              <select class="form-control" id="priority-option">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                              </select>
+                            </div>
+                            <div class="form-group">
+                              <label for="todo-schedule">schedule</label>
+                              <input
+                                class="modal-input"
+                                id="todo-schedule"
+                                type="date"
+                                name=""
+                                id=""
+                                aria-label="schedule"
+                              />
+                            </div>
+                            <div class="form-group">
+                              <label for="todo-deadline">deadline</label>
+                              <input
+                                class="modal-input"
+                                id="todo-deadline"
+                                type="date"
+                                name=""
+                                id=""
+                                aria-label="deadline"
+                              />
+                            </div>
+
+                            <button
+                              id="submit-todo-inputs"
+                              type="submit"
+                              class="btn btn-success"
+                            >
+                              add
+                            </button>
+                          </form>
+                        </div>
+                        <div class="modal-footer">
+                          <button
+                            id="cancel-todo-input"
+                            type="submit"
+                            data-dismiss="modal"
+                            class="btn btn-outline-dark"
+                          >
+                            cancel
+                          </button>
+                        </div>
                       </div>
                     </div>
-                    <div
-                      id="todo-item-collapse"
-                      class="todo-item-collapse collapse row"
-                    >
-                      <div
-                        id="todo-item-collapse-contents"
-                        data-toggle="modal"
-                        data-target="#update-todo-input-modal"
-                      >
-                        <p>todo notes & deadline</p>
-                        <p><%= todo.notes %></p>
-                        <span><%= todo.deadline %> </span>
-                      </div>
-                    </div>
-                  </li>
-                  <% }) %>
-                </ul>
-              </div>
-              <div class="col-12">
-                <div
-                  id="add-todo-button"
-                  data-toggle="modal"
-                  data-target="#todo-input-modal"
-                >
-                  add todo
+                  </div>
+
+                  <a id="linkto-google" href="google.com" title="google"></a>
                 </div>
 
-                <!--　パーシャル化  -->
-                <!-- input modal. add new todo modal -->
-                <div id="todo-input-modal" class="modal fade" role="dialog">
+                <!-- update existing item modal -->
+                <div
+                  id="update-todo-input-modal"
+                  class="modal fade"
+                  role="dialog"
+                >
                   <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
                         <div class="row">
-                          <div class="col-10">Add todo</div>
+                          <div class="col-10">Update todo</div>
                           <div class="col-2">
                             <button
                               type="submit"
@@ -115,45 +233,43 @@
                         </div>
                       </div>
                       <div class="modal-body">
-                        <form role="form">
+                        <form id="update-todo-form" role="form">
                           <div class="form-group">
                             <label for="todo-input-title">todo name</label>
                             <input
                               class="form-control"
-                              id="todo-input-title"
+                              id="update-todo-input-title"
                               type="text"
                               name=""
                               value=""
+                              placeholder="to do"
                               autofocus
                             />
                           </div>
                           <div class="form-group">
                             <label for="todo-input-notes">notes</label>
-                            <!-- <input
-                              class="modal-notes-input"
-                              id="todo-input-notes"
-                              type="textarea"
-                              name=""
-                              value=""
-                            /> -->
-
                             <textarea
                               class="form-control"
                               rows="7"
-                              id="todo-input-notes"
+                              id="update-todo-input-notes"
                               placeholder="notes"
                             ></textarea>
-
                             <!-- <textarea
-                              rows=""
-                              cols=""
-                              class="modal-notes-input"
-                              id="todo-input-notes"
-                            ></textarea> -->
+                            rows=""
+                            cols=""
+                            class="modal-notes-input"
+                            id="update-todo-input-notes"
+                            placeholder="notes"
+                          ></textarea> -->
                           </div>
                           <div class="form-group">
-                            <label for="priority-option">Priority:</label>
-                            <select class="form-control" id="priority-option">
+                            <label for="update-priority-option"
+                              >Priority:</label
+                            >
+                            <select
+                              class="form-control"
+                              id="update-priority-option"
+                            >
                               <option>1</option>
                               <option>2</option>
                               <option>3</option>
@@ -163,7 +279,7 @@
                             <label for="todo-schedule">schedule</label>
                             <input
                               class="modal-input"
-                              id="todo-schedule"
+                              id="update-todo-schedule"
                               type="date"
                               name=""
                               id=""
@@ -174,7 +290,7 @@
                             <label for="todo-deadline">deadline</label>
                             <input
                               class="modal-input"
-                              id="todo-deadline"
+                              id="update-todo-deadline"
                               type="date"
                               name=""
                               id=""
@@ -183,11 +299,11 @@
                           </div>
 
                           <button
-                            id="submit-todo-inputs"
+                            id="update-todo-inputs"
                             type="submit"
                             class="btn btn-success"
                           >
-                            add
+                            Update
                           </button>
                         </form>
                       </div>
@@ -204,126 +320,15 @@
                     </div>
                   </div>
                 </div>
-
-                <a id="linkto-google" href="google.com" title="google"></a>
-              </div>
-
-              <!-- update existing item modal -->
-              <div
-                id="update-todo-input-modal"
-                class="modal fade"
-                role="dialog"
-              >
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <div class="row">
-                        <div class="col-10">Update todo</div>
-                        <div class="col-2">
-                          <button
-                            type="submit"
-                            id="close-modal-button"
-                            data-dismiss="modal"
-                            class="btn btn-outline-dark"
-                          >
-                            close
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="modal-body">
-                      <form id="update-todo-form" role="form">
-                        <div class="form-group">
-                          <label for="todo-input-title">todo name</label>
-                          <input
-                            class="form-control"
-                            id="update-todo-input-title"
-                            type="text"
-                            name=""
-                            value=""
-                            placeholder="to do"
-                            autofocus
-                          />
-                        </div>
-                        <div class="form-group">
-                          <label for="todo-input-notes">notes</label>
-                          <textarea
-                            class="form-control"
-                            rows="7"
-                            id="update-todo-input-notes"
-                            placeholder="notes"
-                          ></textarea>
-                          <!-- <textarea
-                            rows=""
-                            cols=""
-                            class="modal-notes-input"
-                            id="update-todo-input-notes"
-                            placeholder="notes"
-                          ></textarea> -->
-                        </div>
-                        <div class="form-group">
-                          <label for="update-priority-option">Priority:</label>
-                          <select
-                            class="form-control"
-                            id="update-priority-option"
-                          >
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                          </select>
-                        </div>
-                        <div class="form-group">
-                          <label for="todo-schedule">schedule</label>
-                          <input
-                            class="modal-input"
-                            id="update-todo-schedule"
-                            type="date"
-                            name=""
-                            id=""
-                            aria-label="schedule"
-                          />
-                        </div>
-                        <div class="form-group">
-                          <label for="todo-deadline">deadline</label>
-                          <input
-                            class="modal-input"
-                            id="update-todo-deadline"
-                            type="date"
-                            name=""
-                            id=""
-                            aria-label="deadline"
-                          />
-                        </div>
-
-                        <button
-                          id="update-todo-inputs"
-                          type="submit"
-                          class="btn btn-success"
-                        >
-                          Update
-                        </button>
-                      </form>
-                    </div>
-                    <div class="modal-footer">
-                      <button
-                        id="cancel-todo-input"
-                        type="submit"
-                        data-dismiss="modal"
-                        class="btn btn-outline-dark"
-                      >
-                        cancel
-                      </button>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
         </div>
         <div class="backdrop" id="backdrop"></div>
       </div>
+      
     </main>
-    <footer></footer>
+   
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script
       src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -345,9 +350,10 @@
       class Sidebar {}
     </script>
 
-   
-
-    <script type="text/javascript" src="/javascript/sidebarColorChange.js"></script>
+    <script
+      type="text/javascript"
+      src="/javascript/sidebarColorChange.js"
+    ></script>
     <script>
       // pop-over
       $(document).ready(function () {
