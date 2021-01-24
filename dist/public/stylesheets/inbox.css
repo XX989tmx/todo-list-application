@@ -160,9 +160,14 @@ Body {
 .inline-block {
   display: inline-block;
 }
-/* .inbox-mainsection-heading {
-    color: aqua;
-} */
+
+.inbox-mainsection-heading-area {
+  margin-left: 5px;
+}
+
+.inbox-mainsection-icon-area {
+  margin-left: 5px;
+}
 
 /* Popover
 .popover {

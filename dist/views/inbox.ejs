@@ -7,7 +7,7 @@
     <link href="/stylesheets/inbox.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
-    <%- include('./partials/_header.ejs') %> 
+    <%- include('./partials/_header.ejs') %>
     <main class="main">
       <div class="container-md fluid">
         <div class="row">
@@ -20,12 +20,34 @@
             <div class="main-area-inner">
               <div class="row">
                 <div class="col">
-                  <h3
-                    id="inbox-mainsection-heading"
-                    class="inbox-mainsection-heading"
-                  >
-                    Inbox
-                  </h3>
+                  <div>
+                    <div class="inline-block inbox-mainsection-icon-area">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        class="bi bi-stack"
+                        viewBox="0 0 16 16"
+                        style="height: 100%; width: 100%"
+                      >
+                        <path
+                          d="M14.12 10.163l1.715.858c.22.11.22.424 0 .534L8.267 15.34a.598.598 0 0 1-.534 0L.165 11.555a.299.299 0 0 1 0-.534l1.716-.858 5.317 2.659c.505.252 1.1.252 1.604 0l5.317-2.66zM7.733.063a.598.598 0 0 1 .534 0l7.568 3.784a.3.3 0 0 1 0 .535L8.267 8.165a.598.598 0 0 1-.534 0L.165 4.382a.299.299 0 0 1 0-.535L7.733.063z"
+                        />
+                        <path
+                          d="M14.12 6.576l1.715.858c.22.11.22.424 0 .534l-7.568 3.784a.598.598 0 0 1-.534 0L.165 7.968a.299.299 0 0 1 0-.534l1.716-.858 5.317 2.659c.505.252 1.1.252 1.604 0l5.317-2.659z"
+                        />
+                      </svg>
+                    </div>
+                    <div class="inline-block inbox-mainsection-heading-area">
+                      <h3
+                        id="inbox-mainsection-heading"
+                        class="inbox-mainsection-heading"
+                      >
+                        Inbox
+                      </h3>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div id="main-section" class="main-section row">
@@ -56,7 +78,22 @@
                           data-toggle="modal"
                           data-target="#update-todo-input-modal"
                         >
-                          E
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            fill="currentColor"
+                            class="bi bi-pencil-square"
+                            viewBox="0 0 16 16"
+                          >
+                            <path
+                              d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
+                            />
+                            <path
+                              fill-rule="evenodd"
+                              d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
+                            />
+                          </svg>
                         </div>
                         <div
                           id="delete-todo-button"
@@ -65,7 +102,21 @@
                           data-content="delete todo"
                           placement="right"
                         >
-                          X
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            fill="currentColor"
+                            class="bi bi-backspace"
+                            viewBox="0 0 16 16"
+                          >
+                            <path
+                              d="M5.83 5.146a.5.5 0 0 0 0 .708L7.975 8l-2.147 2.146a.5.5 0 0 0 .707.708l2.147-2.147 2.146 2.147a.5.5 0 0 0 .707-.708L9.39 8l2.146-2.146a.5.5 0 0 0-.707-.708L8.683 7.293 6.536 5.146a.5.5 0 0 0-.707 0z"
+                            />
+                            <path
+                              d="M13.683 1a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-7.08a2 2 0 0 1-1.519-.698L.241 8.65a1 1 0 0 1 0-1.302L5.084 1.7A2 2 0 0 1 6.603 1h7.08zm-7.08 1a1 1 0 0 0-.76.35L1 8l4.844 5.65a1 1 0 0 0 .759.35h7.08a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1h-7.08z"
+                            />
+                          </svg>
                         </div>
                       </div>
                       <div
@@ -92,7 +143,7 @@
                     data-toggle="modal"
                     data-target="#todo-input-modal"
                   >
-                   <button class="add-todo-button" type=""> add todo</button>
+                    <button class="add-todo-button" type="">add todo</button>
                   </div>
 
                   <!--　パーシャル化  -->
@@ -326,9 +377,8 @@
         </div>
         <div class="backdrop" id="backdrop"></div>
       </div>
-      
     </main>
-   <%- include('./partials/_footer.ejs') %> 
+    <%- include('./partials/_footer.ejs') %>
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script
       src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
