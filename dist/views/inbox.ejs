@@ -61,7 +61,14 @@
                           <input type="checkbox" name="" id="checkbox1" />
                         </div>
                         <div class="col-1" id="todo-priority">
-                          <span><%= todo.priority %> </span>
+                          <% if (todo.priority === 3) { %>
+                          <span class="priority3"><%= todo.priority %> </span>
+                          <% } else if (todo.priority === 2) { %>
+                          <span class="priority2"><%= todo.priority %> </span>
+                          <% } else { %>
+                          <span class="priority1"><%= todo.priority %> </span>
+
+                          <% } %>
                         </div>
                         <div
                           class="col-7"
@@ -71,7 +78,20 @@
                         >
                           <span><%= todo.title %> </span>
                         </div>
-                        <div class="drag-button col-1" id="drag-button">D</div>
+                        <div class="drag-button col-1" id="drag-button">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            fill="currentColor"
+                            class="bi bi-grip-vertical"
+                            viewBox="0 0 16 16"
+                          >
+                            <path
+                              d="M7 2a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zM7 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zM7 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-3 3a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-3 3a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"
+                            />
+                          </svg>
+                        </div>
                         <div
                           class="col-1"
                           id="update-todo-button"
