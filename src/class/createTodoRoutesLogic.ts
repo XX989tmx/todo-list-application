@@ -130,12 +130,26 @@ export class CreateTodoRoutesLogic {
     console.log(updatedInboxClassInstance);
 
     // -inbox data(databaseから読み出したInboxData)の各フィールドを、inbox class instanceのそれに更新する for n times: inboxData.x = inbox.x
+    const addedInboxData = Inbox.setInboxSchema(
+      inboxData,
+      updatedInboxClassInstance
+    );
+    console.log(addedInboxData);
+
     // -inbox schemaを保存 saveInboxSchemaToDatabase();
+    await Inbox.saveInboxSchemaToDatabase(addedInboxData);
     // user dataの更新保存処理
     //  -user dataのtodo fieldにTodo新規追加：todo schema instance をuser.todo にPush（）
     // -user dataを保存　　saveUserSchemaToDatabase();
+    await User.saveUserSchemaToDatabase(updatedUserData);
     // -inbox fieldについてはRefキーで参照する方式のため、手動更新不要。
     // inbox class instance をReturn
+    const inboxList = await InboxRoutesLogic.renderInbox(userId);
+    console.log('inboxList');
+    console.log(inboxList);
+    
+    
+    return inboxList;
   }
 
   static async createTodo(req) {

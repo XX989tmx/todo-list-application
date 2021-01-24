@@ -18,12 +18,18 @@ export class InboxRoutesLogic {
   static async renderInbox(userId: string) {
     //
     // -データベースからInboxデータを読み出す
+    let inbox;
     let inboxData;
     try {
-      inboxData = await InboxSchema.findById(userId);
+      inbox = await InboxSchema.find({ userId }).populate({
+        path: "list",
+        populate: { path: "todo" },
+      });
     } catch (error) {
       console.log(error);
     }
+    inboxData = inbox[0];
+
     let inboxDataSize = inboxData.length;
     // -　1Inbox class InstanceをInitializeする。
     // - Inbox Class InstanceにInboxデータをセットする。

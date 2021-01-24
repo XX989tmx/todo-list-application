@@ -55,20 +55,24 @@ var InboxRoutesLogic = /** @class */ (function () {
     // -　1Inbox class InstanceをInitializeする。2InboxClassInstanceに値をセットする。具体的には、listにResult配列をセット、sizeに
     InboxRoutesLogic.renderInbox = function (userId) {
         return __awaiter(this, void 0, void 0, function () {
-            var inboxData, error_1, inboxDataSize, inboxInstance, inboxList;
+            var inbox, inboxData, error_1, inboxDataSize, inboxInstance, inboxList;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, inboxSchema_1.inboxModel.findById(userId)];
+                        return [4 /*yield*/, inboxSchema_1.inboxModel.find({ userId: userId }).populate({
+                                path: "list",
+                                populate: { path: "todo" },
+                            })];
                     case 1:
-                        inboxData = _a.sent();
+                        inbox = _a.sent();
                         return [3 /*break*/, 3];
                     case 2:
                         error_1 = _a.sent();
                         console.log(error_1);
                         return [3 /*break*/, 3];
                     case 3:
+                        inboxData = inbox[0];
                         inboxDataSize = inboxData.length;
                         inboxInstance = new todo_1.Inbox(inboxData, userId);
                         inboxList = inboxInstance.list;

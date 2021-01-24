@@ -78,7 +78,7 @@ var CreateTodoRoutesLogic = /** @class */ (function () {
     // 2
     CreateTodoRoutesLogic.create = function (req) {
         return __awaiter(this, void 0, void 0, function () {
-            var userId, userData, inboxData, _a, title, notes, priority, scheduledDate, deadline, userClassInstance, inboxClassInstance, todoClassInstance, todoSchemaInstance, updatedTodoSchemaInstance, updatedTodoSchemaInstance2, updatedUserData, updatedInboxClassInstance;
+            var userId, userData, inboxData, _a, title, notes, priority, scheduledDate, deadline, userClassInstance, inboxClassInstance, todoClassInstance, todoSchemaInstance, updatedTodoSchemaInstance, updatedTodoSchemaInstance2, updatedUserData, updatedInboxClassInstance, addedInboxData, inboxList;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -118,7 +118,28 @@ var CreateTodoRoutesLogic = /** @class */ (function () {
                         _b.sent();
                         updatedInboxClassInstance = inboxClassInstance.add(updatedTodoSchemaInstance2);
                         console.log(updatedInboxClassInstance);
-                        return [2 /*return*/];
+                        addedInboxData = todo_1.Inbox.setInboxSchema(inboxData, updatedInboxClassInstance);
+                        console.log(addedInboxData);
+                        // -inbox schemaを保存 saveInboxSchemaToDatabase();
+                        return [4 /*yield*/, todo_1.Inbox.saveInboxSchemaToDatabase(addedInboxData)];
+                    case 4:
+                        // -inbox schemaを保存 saveInboxSchemaToDatabase();
+                        _b.sent();
+                        // user dataの更新保存処理
+                        //  -user dataのtodo fieldにTodo新規追加：todo schema instance をuser.todo にPush（）
+                        // -user dataを保存　　saveUserSchemaToDatabase();
+                        return [4 /*yield*/, user_1.User.saveUserSchemaToDatabase(updatedUserData)];
+                    case 5:
+                        // user dataの更新保存処理
+                        //  -user dataのtodo fieldにTodo新規追加：todo schema instance をuser.todo にPush（）
+                        // -user dataを保存　　saveUserSchemaToDatabase();
+                        _b.sent();
+                        return [4 /*yield*/, inboxRoutesLogic_1.InboxRoutesLogic.renderInbox(userId)];
+                    case 6:
+                        inboxList = _b.sent();
+                        console.log('inboxList');
+                        console.log(inboxList);
+                        return [2 /*return*/, inboxList];
                 }
             });
         });
