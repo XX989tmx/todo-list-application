@@ -302,5 +302,13 @@ export class User implements UserInterface {
 
   static async getUserFromDatabase(userId: string) {
     // get userDoc from database;
+    let userData;
+    try {
+      userData = await userSchema.findById(userId);
+    } catch (error) {
+      console.log(error);
+    }
+
+    return userData;
   }
 }

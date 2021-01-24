@@ -39,6 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var createTodoRoutesLogic_1 = require("./class/createTodoRoutesLogic");
 var userSignupRoutesLogic_1 = require("./class/userSignupRoutesLogic");
 var express_1 = __importDefault(require("express"));
 var mongoose_1 = __importDefault(require("mongoose"));
@@ -73,27 +74,51 @@ app.get("/inbox", function (req, res, next) { return __awaiter(void 0, void 0, v
         return [2 /*return*/];
     });
 }); });
-app.post("/createTodo", function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, title, notes, priority, scheduledDate, deadline;
+app.post("/createTodo/:userId", function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, title, notes, priority, scheduledDate, deadline, inbox;
     return __generator(this, function (_b) {
-        _a = req.body, title = _a.title, notes = _a.notes, priority = _a.priority, scheduledDate = _a.scheduledDate, deadline = _a.deadline;
-        // // initialize todo class
-        // const todo = new Todo(title, notes, priority, scheduledDate, deadline);
-        console.log(req.body);
-        // // initialize inbox class
-        // const inbox = new Inbox();
-        // get inbox data from database;
-        // initialize inbox class with inbox data;
-        // update inbox class with todo data; inbox.addNewTodo(title, notes, priority, scheduledDate, deadline)
-        // initialize user class
-        // save todo to database
-        // todo save
-        // user save
-        // save inbox to database
-        // inbox save
-        // user save
-        res.status(200).render("inbox");
-        return [2 /*return*/];
+        switch (_b.label) {
+            case 0:
+                _a = req.body, title = _a.title, notes = _a.notes, priority = _a.priority, scheduledDate = _a.scheduledDate, deadline = _a.deadline;
+                // // initialize todo class
+                // const todo = new Todo(title, notes, priority, scheduledDate, deadline);
+                console.log(req.body);
+                // // initialize inbox class
+                // const inbox = new Inbox();
+                // get inbox data from database;
+                // initialize inbox class with inbox data;
+                // update inbox class with todo data; inbox.addNewTodo(title, notes, priority, scheduledDate, deadline)
+                // initialize user class
+                // save todo to database
+                // todo save
+                // user save
+                // save inbox to database
+                // inbox save
+                // user save
+                return [4 /*yield*/, createTodoRoutesLogic_1.CreateTodoRoutesLogic.create(req)];
+            case 1:
+                // // initialize inbox class
+                // const inbox = new Inbox();
+                // get inbox data from database;
+                // initialize inbox class with inbox data;
+                // update inbox class with todo data; inbox.addNewTodo(title, notes, priority, scheduledDate, deadline)
+                // initialize user class
+                // save todo to database
+                // todo save
+                // user save
+                // save inbox to database
+                // inbox save
+                // user save
+                _b.sent();
+                inbox = [
+                    new todo_1.Todo("todo1", "note11111111", 3, new Date(), new Date(), null),
+                    new todo_1.Todo("todo2", "note2", 2, new Date(), new Date(), null),
+                    new todo_1.Todo("todo3", "note3", 1, new Date(), new Date(), null),
+                    new todo_1.Todo(title, notes, priority, scheduledDate, deadline, null),
+                ];
+                res.status(200).render("inbox", { inbox: inbox });
+                return [2 /*return*/];
+        }
     });
 }); });
 app.patch("/updateTodo", function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
@@ -124,7 +149,7 @@ app.delete("/deleteTodo", function (req, res, next) { return __awaiter(void 0, v
 }); });
 app.get("/activity", function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
-        res.status(200).render('activity');
+        res.status(200).render("activity");
         return [2 /*return*/];
     });
 }); });

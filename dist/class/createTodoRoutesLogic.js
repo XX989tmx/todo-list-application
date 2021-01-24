@@ -36,6 +36,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.CreateTodoRoutesLogic = void 0;
+var inboxRoutesLogic_1 = require("./inboxRoutesLogic");
 var user_1 = require("./user");
 // const UserSchema = require("../model/userSchema");
 // const InboxSchema = require("../model/inboxSchema");
@@ -73,13 +75,61 @@ var CreateTodoRoutesLogic = /** @class */ (function () {
     // -user dataを保存　　saveUserSchemaToDatabase();
     // -inbox fieldについてはRefキーで参照する方式のため、手動更新不要。
     // inbox class instance をReturn
+    // 2
+    CreateTodoRoutesLogic.create = function (req) {
+        return __awaiter(this, void 0, void 0, function () {
+            var userId, userData, inboxData, _a, title, notes, priority, scheduledDate, deadline, userClassInstance, inboxClassInstance, todoClassInstance, todoSchemaInstance, updatedTodoSchemaInstance, updatedTodoSchemaInstance2, updatedUserData, updatedInboxClassInstance;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        userId = req.params.userId;
+                        console.log(userId);
+                        return [4 /*yield*/, user_1.User.getUserFromDatabase(userId)];
+                    case 1:
+                        userData = _b.sent();
+                        console.log(userData);
+                        return [4 /*yield*/, todo_1.Inbox.fetchInboxDataFromDatabase(userId)];
+                    case 2:
+                        inboxData = _b.sent();
+                        console.log("inboxData");
+                        console.log(inboxData);
+                        _a = req.body, title = _a.title, notes = _a.notes, priority = _a.priority, scheduledDate = _a.scheduledDate, deadline = _a.deadline;
+                        userClassInstance = new user_1.User(userId, userData.name, userData.email, userData.password, userData.confirmPassword, userData.todo, userData.inbox, userData.today, userData.logbook, userData.trashBox, userData.activity, userData.lastLoggedIns);
+                        console.log(userClassInstance);
+                        inboxClassInstance = new todo_1.Inbox(inboxData.list, userId);
+                        console.log(inboxClassInstance);
+                        todoClassInstance = new todo_1.Todo(title, notes, priority, scheduledDate, deadline, userId);
+                        console.log(todoClassInstance);
+                        todoSchemaInstance = todo_1.Todo.createTodoSchemaInstance();
+                        updatedTodoSchemaInstance = todo_1.Todo.setTodoSchema(todoSchemaInstance, todoClassInstance);
+                        console.log("updated");
+                        console.log(updatedTodoSchemaInstance);
+                        updatedTodoSchemaInstance2 = todo_1.Todo.setUserIdToTodoSchema(updatedTodoSchemaInstance, userData);
+                        console.log("user id set");
+                        console.log(updatedTodoSchemaInstance2);
+                        updatedUserData = user_1.User.setTodoIdToUserSchema(userData, [
+                            updatedTodoSchemaInstance2,
+                        ]);
+                        console.log(updatedUserData);
+                        // - todo schema instanceをデータベースに保存: saveTodoSchemaToDatabase();
+                        return [4 /*yield*/, todo_1.Todo.saveTodoSchemaToDatabase(updatedTodoSchemaInstance2)];
+                    case 3:
+                        // - todo schema instanceをデータベースに保存: saveTodoSchemaToDatabase();
+                        _b.sent();
+                        updatedInboxClassInstance = inboxClassInstance.add(updatedTodoSchemaInstance2);
+                        console.log(updatedInboxClassInstance);
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
     CreateTodoRoutesLogic.createTodo = function (req) {
         return __awaiter(this, void 0, void 0, function () {
-            var userId, userData, inboxData, todoInputs, userClassInstance, inboxClassInstance, todoClassInstance, todoSchemaInstance, updatedTodoSchemaInstance, updatedInboxClassInstance, updatedInboxData, updatedUserData;
+            var userId, userData, inboxData, todoInputs, userClassInstance, inboxClassInstance, todoClassInstance, todoSchemaInstance, updatedTodoSchemaInstance, updatedTodoSchemaInstance2, updatedInboxClassInstance, updatedInboxData, updatedUserData, inboxList;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        userId = 'userId';
+                        userId = req.params.userId;
                         return [4 /*yield*/, this.readUserDataFromDatabase(userId)];
                     case 1:
                         userData = _a.sent();
@@ -90,7 +140,7 @@ var CreateTodoRoutesLogic = /** @class */ (function () {
                         return [4 /*yield*/, this.initializeUserClassInstance(userData)];
                     case 3:
                         userClassInstance = _a.sent();
-                        return [4 /*yield*/, this.initializeInboxClassInstance(inboxData)];
+                        return [4 /*yield*/, this.initializeInboxClassInstance(inboxData, userId)];
                     case 4:
                         inboxClassInstance = _a.sent();
                         return [4 /*yield*/, this.initializeTodoClassInstance(todoInputs, userId)];
@@ -98,14 +148,14 @@ var CreateTodoRoutesLogic = /** @class */ (function () {
                         todoClassInstance = _a.sent();
                         todoSchemaInstance = this.initializeTodoSchemaInstance();
                         updatedTodoSchemaInstance = this.setTodoSchemaInstance(todoSchemaInstance, todoClassInstance);
-                        // -userIdをtodo schema instanceにセット（UserIdをTodoSchemaに関連付け）:setUserIdToTodoSchema();
+                        updatedTodoSchemaInstance2 = todo_1.Todo.setUserIdToTodoSchema(updatedTodoSchemaInstance, userData);
                         // - todo schema instanceをデータベースに保存: saveTodoSchemaToDatabase();
-                        return [4 /*yield*/, this.saveTodoSchemaInstance(updatedTodoSchemaInstance)];
+                        return [4 /*yield*/, this.saveTodoSchemaInstance(updatedTodoSchemaInstance2)];
                     case 6:
-                        // -userIdをtodo schema instanceにセット（UserIdをTodoSchemaに関連付け）:setUserIdToTodoSchema();
                         // - todo schema instanceをデータベースに保存: saveTodoSchemaToDatabase();
                         _a.sent();
                         updatedInboxClassInstance = this.appendTodoSchemaToInboxClassInstance(inboxClassInstance, updatedTodoSchemaInstance);
+                        console.log(updatedInboxClassInstance);
                         updatedInboxData = this.updateInboxDataWithInboxClassInstance(inboxData, updatedInboxClassInstance);
                         // -inbox schemaを保存 saveInboxSchemaToDatabase();
                         return [4 /*yield*/, this.saveInboxSchemaDataToDatabase(updatedInboxData)];
@@ -118,9 +168,10 @@ var CreateTodoRoutesLogic = /** @class */ (function () {
                     case 8:
                         // -user dataを保存　　saveUserSchemaToDatabase();
                         _a.sent();
-                        // -inbox fieldについてはRefキーで参照する方式のため、手動更新不要。
-                        // inbox class instance をReturn
-                        return [2 /*return*/, updatedInboxClassInstance];
+                        return [4 /*yield*/, inboxRoutesLogic_1.InboxRoutesLogic.renderInbox(userId)];
+                    case 9:
+                        inboxList = _a.sent();
+                        return [2 /*return*/, inboxList];
                 }
             });
         });
@@ -155,6 +206,9 @@ var CreateTodoRoutesLogic = /** @class */ (function () {
                         return [4 /*yield*/, inboxSchema_1.inboxModel.findById(userId)];
                     case 1:
                         inboxData = _a.sent();
+                        if (!inboxData) {
+                            inboxData = todo_1.Inbox.createInboxSchemaInstance();
+                        }
                         return [3 /*break*/, 3];
                     case 2:
                         error_2 = _a.sent();
@@ -180,8 +234,8 @@ var CreateTodoRoutesLogic = /** @class */ (function () {
         var userInstance = new user_1.User(userData.userId, userData.name, userData.email, userData.password, userData.confirmPassword, userData.todo, userData.inbox, userData.today, userData.logbook, userData.trashBox, userData.activity, userData.lastLoggedIns);
         return userInstance;
     };
-    CreateTodoRoutesLogic.initializeInboxClassInstance = function (inboxData) {
-        var inboxInstance = new todo_1.Inbox(inboxData.list, inboxData.userId);
+    CreateTodoRoutesLogic.initializeInboxClassInstance = function (inboxData, userId) {
+        var inboxInstance = new todo_1.Inbox(inboxData.list, userId);
         return inboxInstance;
     };
     CreateTodoRoutesLogic.initializeTodoClassInstance = function (todoInputs, userId) {
@@ -271,3 +325,4 @@ var CreateTodoRoutesLogic = /** @class */ (function () {
     };
     return CreateTodoRoutesLogic;
 }());
+exports.CreateTodoRoutesLogic = CreateTodoRoutesLogic;

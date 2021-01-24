@@ -36,6 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.InboxRoutesLogic = void 0;
 // const mongoose = require('mongoose')
 // const InboxSchema = require('../model/inboxSchema')
 // const todo = require('./todo')
@@ -52,9 +53,9 @@ var InboxRoutesLogic = /** @class */ (function () {
     // -User ClassInstanceをInitialize ??
     // -Todoデータの配列をループでまわし、内部で、1Todo classクラスインスタンスをInitialize。2TodoClassInstanceに個々のTodoDataの値をセット（todoInstance.set(todoData)）。3Result配列をループ街に作成しておき、個々のTodoClassInstanceを各ループ毎にPush。4Result配列をReturnし、変数に入れる。
     // -　1Inbox class InstanceをInitializeする。2InboxClassInstanceに値をセットする。具体的には、listにResult配列をセット、sizeに
-    InboxRoutesLogic.prototype.renderInbox = function (userId) {
+    InboxRoutesLogic.renderInbox = function (userId) {
         return __awaiter(this, void 0, void 0, function () {
-            var inboxData, error_1, inboxDataSize, inboxInstance;
+            var inboxData, error_1, inboxDataSize, inboxInstance, inboxList;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -70,11 +71,13 @@ var InboxRoutesLogic = /** @class */ (function () {
                     case 3:
                         inboxDataSize = inboxData.length;
                         inboxInstance = new todo_1.Inbox(inboxData, userId);
+                        inboxList = inboxInstance.list;
                         // -Inbox Class InstanceをResとして返す。
-                        return [2 /*return*/, inboxInstance];
+                        return [2 /*return*/, inboxList];
                 }
             });
         });
     };
     return InboxRoutesLogic;
 }());
+exports.InboxRoutesLogic = InboxRoutesLogic;

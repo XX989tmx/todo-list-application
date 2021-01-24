@@ -1,4 +1,5 @@
-import { UserSignupRoutesLogic } from './class/userSignupRoutesLogic';
+import { CreateTodoRoutesLogic } from "./class/createTodoRoutesLogic";
+import { UserSignupRoutesLogic } from "./class/userSignupRoutesLogic";
 import express from "express";
 import mongoose from "mongoose";
 import passport from "passport";
@@ -29,7 +30,7 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.static(__dirname + "/public"));
 app.use(cookieParser());
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 // app.use(expressSession({ secret: "secret" }));
 // app.use(passport.initialize());
@@ -59,13 +60,11 @@ app.get("/inbox", async (req: Request, res: Response, next: NextFunction) => {
     new Todo("todo3", "note3", 1, new Date(), new Date(), null),
   ];
 
-  
-
   // pass inbox data
   res.render("inbox", { inbox });
 });
 
-app.post("/createTodo", async (req, res, next) => {
+app.post("/createTodo/:userId", async (req:Request, res:Response, next:NextFunction) => {
   const { title, notes, priority, scheduledDate, deadline } = req.body;
 
   // // initialize todo class
@@ -86,7 +85,16 @@ app.post("/createTodo", async (req, res, next) => {
   // inbox save
   // user save
 
-  res.status(200).render("inbox");
+  await CreateTodoRoutesLogic.create(req);
+
+  let inbox = [
+    new Todo("todo1", "note11111111", 3, new Date(), new Date(), null),
+    new Todo("todo2", "note2", 2, new Date(), new Date(), null),
+    new Todo("todo3", "note3", 1, new Date(), new Date(), null),
+    new Todo(title, notes, priority, scheduledDate, deadline, null),
+  ];
+
+  res.status(200).render("inbox", { inbox });
   // res.status(302).redirect("/inbox");
 });
 
@@ -108,9 +116,12 @@ app.delete("/deleteTodo", async (req, res, next) => {
   // delete todo doc permanently
 });
 
-app.get("/activity",async(req:Request,res:Response,next:NextFunction) => {
-  res.status(200).render('activity');
-})
+app.get(
+  "/activity",
+  async (req: Request, res: Response, next: NextFunction) => {
+    res.status(200).render("activity");
+  }
+);
 
 app.post(
   "/user/signup",
@@ -120,10 +131,10 @@ app.post(
   //   failureFlash: "サインアップに失敗しました",
   //   successFlash: "サインアップに成功しました",
   // }),
-  async (req:Request, res:Response, next:NextFunction) => {
+  async (req: Request, res: Response, next: NextFunction) => {
     // singup
     const SignupLogic = new UserSignupRoutesLogic();
-    SignupLogic.signup(req)
+    SignupLogic.signup(req);
 
     res.status(200).json({ res: "signup succeed" });
   }

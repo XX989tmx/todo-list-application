@@ -253,8 +253,21 @@ var User = /** @class */ (function () {
     };
     User.getUserFromDatabase = function (userId) {
         return __awaiter(this, void 0, void 0, function () {
+            var userData, error_2;
             return __generator(this, function (_a) {
-                return [2 /*return*/];
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, userSchema_1.userModel.findById(userId)];
+                    case 1:
+                        userData = _a.sent();
+                        return [3 /*break*/, 3];
+                    case 2:
+                        error_2 = _a.sent();
+                        console.log(error_2);
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/, userData];
+                }
             });
         });
     };

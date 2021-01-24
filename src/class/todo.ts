@@ -155,7 +155,7 @@ export class Todo implements TodoInterface {
     return todoSchemaInstance;
   }
   // - todoSchemaインスタンスにTodoインスタンス（Class)関連のデータアトリビュートを保存する処理(userID以外)　setTodoSchema()
-  static setTodoSchema(todoSchemaInstance: ITodoSchema, todo: any) {
+  static setTodoSchema(todoSchemaInstance: ITodoSchema|any, todo: any) {
     todoSchemaInstance.title = todo.title;
     todoSchemaInstance.notes = todo.notes;
     todoSchemaInstance.priority = todo.priority;
@@ -168,14 +168,15 @@ export class Todo implements TodoInterface {
   }
   // - todoSchemaインスタンスにuserIdを保存する処理 setUserIdToTodoSchema(userId)
   static setUserIdToTodoSchema(
-    todoSchemaInstance: ITodoSchema,
-    userSchemaInstance: IUserSchema
+    todoSchemaInstance: ITodoSchema|any,
+    userSchemaInstance: IUserSchema|any
   ) {
     todoSchemaInstance.userId = userSchemaInstance._id;
     return todoSchemaInstance;
   }
   // - todoSchemaインスタンス(mongooseDocument)を保存する処理　　saveTodoSchemaToDatabase() {doc.save()}
   static async saveTodoSchemaToDatabase(todoSchemaInstance: ITodoSchema | any) {
+    
     try {
       await todoSchemaInstance.save();
     } catch (error) {
@@ -352,7 +353,7 @@ export class Inbox implements InboxInterface {
   list: Todo[] | ITodoSchema[] | any[];
   size: number;
   userId: ObjectId | IUserSchema | string | null;
-  constructor(listData, userId) {
+  constructor(listData:any[], userId) {
     this.list = listData ? listData : [];
     this.size = listData ? listData.length : 0;
     this.userId = userId ? userId : null;
@@ -468,18 +469,19 @@ export class Inbox implements InboxInterface {
     return createdInboxSchema;
   }
 
-  static async fetchInboxDataFromDatabase(inboxId: string) {
+  static async fetchInboxDataFromDatabase(userId:string) {
     // { userId:userId,
     //   inbox:[todoId]
     //   size: x
     // {
     let inboxData;
     try {
-      inboxData = await InboxSchema.findById(inboxId);
+      inboxData = await InboxSchema.find({userId});
     } catch (error) {
       console.log(error);
     }
-    return inboxData;
+    const res = inboxData[0]
+    return res;
   }
 
   setUserId(userId: string) {

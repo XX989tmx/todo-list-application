@@ -456,14 +456,14 @@ var Inbox = /** @class */ (function () {
             });
         });
     };
-    Inbox.fetchInboxDataFromDatabase = function (inboxId) {
+    Inbox.fetchInboxDataFromDatabase = function (userId) {
         return __awaiter(this, void 0, void 0, function () {
-            var inboxData, error_5;
+            var inboxData, error_5, res;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, inboxSchema_1.inboxModel.findById(inboxId)];
+                        return [4 /*yield*/, inboxSchema_1.inboxModel.find({ userId: userId })];
                     case 1:
                         inboxData = _a.sent();
                         return [3 /*break*/, 3];
@@ -471,7 +471,9 @@ var Inbox = /** @class */ (function () {
                         error_5 = _a.sent();
                         console.log(error_5);
                         return [3 /*break*/, 3];
-                    case 3: return [2 /*return*/, inboxData];
+                    case 3:
+                        res = inboxData[0];
+                        return [2 /*return*/, res];
                 }
             });
         });
