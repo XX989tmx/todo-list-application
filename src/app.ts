@@ -108,6 +108,10 @@ app.delete("/deleteTodo", async (req, res, next) => {
   // delete todo doc permanently
 });
 
+app.get("/activity",async(req:Request,res:Response,next:NextFunction) => {
+  res.status(200).render('activity');
+})
+
 app.post(
   "/user/signup",
   // passport.authenticate("local", {

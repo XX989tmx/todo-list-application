@@ -122,6 +122,12 @@ app.delete("/deleteTodo", function (req, res, next) { return __awaiter(void 0, v
         return [2 /*return*/];
     });
 }); });
+app.get("/activity", function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        res.status(200).render('activity');
+        return [2 /*return*/];
+    });
+}); });
 app.post("/user/signup", 
 // passport.authenticate("local", {
 //   successRedirect: "/",

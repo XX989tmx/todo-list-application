@@ -28,6 +28,16 @@ switch (pathname) {
     }
 
     break;
+  case "/activity":
+    const sidebarActivity = document.getElementById("sidebar-activity");
+    if (sidebarActivity === null) {
+      alert("error");
+    } else {
+      sidebarActivity.style.backgroundColor = "#324f92";
+      sidebarActivity.style.borderLeft = "solid 3px #3178c6";
+    }
+
+    break;
   case "/log":
     const sidebarLog = document.getElementById("sidebar-log");
     if (sidebarLog === null) {
