@@ -1,3 +1,4 @@
+import mongoDBSessionStore from "connect-mongodb-session";
 import { InboxRoutesLogic } from "./class/inboxRoutesLogic";
 import { CreateTodoRoutesLogic } from "./class/createTodoRoutesLogic";
 import { UserSignupRoutesLogic } from "./class/userSignupRoutesLogic";
@@ -9,6 +10,7 @@ import expressSession from "express-session";
 import ejs from "ejs";
 import bodyParser from "body-parser";
 import path from "path";
+
 // const database = require("../utils/database");
 
 import {
@@ -25,7 +27,13 @@ import { NextFunction, Request, Response } from "express-serve-static-core";
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
+
 const app = express();
+const MONGODB_URI = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0-7slh6.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
+const store = new mongoDBSessionStore({
+  uri: MONGODB_URI,
+  collection:'sessions'
+});
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -33,7 +41,14 @@ app.use(express.static(__dirname + "/public"));
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(expressSession({ secret: "secret" }));
+app.use(
+  expressSession({
+    secret: `${process.env.SESSION_SECRET}`,
+    resave: false,
+    saveUninitialized: false,
+    store: store,
+  })
+);
 // app.use(passport.initialize());
 // app.use(passport.session());
 
