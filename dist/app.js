@@ -39,6 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var inboxRoutesLogic_1 = require("./class/inboxRoutesLogic");
 var createTodoRoutesLogic_1 = require("./class/createTodoRoutesLogic");
 var userSignupRoutesLogic_1 = require("./class/userSignupRoutesLogic");
 var express_1 = __importDefault(require("express"));
@@ -52,31 +53,44 @@ if (process.env.NODE_ENV !== "production") {
     require("dotenv").config();
 }
 var app = express_1.default();
+var MONGODB_URI = "mongodb+srv://" + process.env.DB_USER + ":" + process.env.DB_PASSWORD + "@cluster0-7slh6.mongodb.net/" + process.env.DB_NAME + "?retryWrites=true&w=majority";
+// const store = new mongoDBSessionStore({
+//   uri: MONGODB_URI,
+//   collection: "sessions",
+// });
 app.set("view engine", "ejs");
 app.set("views", path_1.default.join(__dirname, "views"));
 app.use(express_1.default.static(__dirname + "/public"));
 app.use(cookie_parser_1.default());
+app.use(body_parser_1.default.urlencoded({ extended: true }));
 app.use(body_parser_1.default.json());
-app.use(body_parser_1.default.urlencoded({ extended: false }));
-// app.use(expressSession({ secret: "secret" }));
+// app.use(
+//   expressSession({
+//     secret: `${process.env.SESSION_SECRET}`,
+//     resave: false,
+//     saveUninitialized: false,
+//     store: store,
+//   })
+// );
 // app.use(passport.initialize());
 // app.use(passport.session());
 app.get("/inbox", function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var inbox;
+    var userId, inbox;
     return __generator(this, function (_a) {
-        inbox = [
-            new todo_1.Todo("todo1", "note11111111", 3, new Date(), new Date(), null),
-            new todo_1.Todo("todo2", "note2", 2, new Date(), new Date(), null),
-            new todo_1.Todo("todo3", "note3", 1, new Date(), new Date(), null),
-        ];
-        // const userId = "600ac39664b8571ed5b8ef2b";
-        // const inbox = await InboxRoutesLogic.renderInbox(userId);
-        // pass inbox data
-        res.render("inbox", { inbox: inbox });
-        return [2 /*return*/];
+        switch (_a.label) {
+            case 0:
+                userId = "600ac39664b8571ed5b8ef2b";
+                return [4 /*yield*/, inboxRoutesLogic_1.InboxRoutesLogic.renderInbox(userId)];
+            case 1:
+                inbox = _a.sent();
+                console.log(inbox);
+                // pass inbox data
+                res.status(200).render("inbox", { inbox: inbox.list });
+                return [2 /*return*/];
+        }
     });
 }); });
-app.post("/createTodo/:userId", function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+app.post("/createTodo", function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
     var _a, title, notes, priority, scheduledDate, deadline, inbox;
     return __generator(this, function (_b) {
         switch (_b.label) {
@@ -94,18 +108,26 @@ app.post("/createTodo/:userId", function (req, res, next) { return __awaiter(voi
                 //   new Todo("todo3", "note3", 1, new Date(), new Date(), null),
                 //   new Todo(title, notes, priority, scheduledDate, deadline, null),
                 // ];
-                res.status(200).render("inbox", { inbox: inbox.list });
+                // const addedTodo = inbox[inbox.length - 1];
+                res.redirect('/inbox');
                 return [2 /*return*/];
         }
     });
 }); });
 app.patch("/updateTodo", function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, title, notes, priority, scheduledDate, deadline, page;
+    var _a, title, notes, priority, scheduledDate, deadline, page, inbox;
     return __generator(this, function (_b) {
         _a = req.body, title = _a.title, notes = _a.notes, priority = _a.priority, scheduledDate = _a.scheduledDate, deadline = _a.deadline;
+        console.log(req.body);
         page = req.query.page;
+        inbox = [
+            new todo_1.Todo("todo1", "note11111111", 3, new Date(), new Date(), null),
+            new todo_1.Todo("todo2", "note2", 2, new Date(), new Date(), null),
+            new todo_1.Todo("todo3", "note3", 1, new Date(), new Date(), null),
+            new todo_1.Todo(title, notes, priority, scheduledDate, deadline, null),
+        ];
         // if page is inbox
-        res.status(200).render("inbox");
+        res.status(200).render("inbox", { inbox: inbox });
         return [2 /*return*/];
     });
 }); });

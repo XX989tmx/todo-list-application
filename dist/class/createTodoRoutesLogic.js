@@ -82,7 +82,7 @@ var CreateTodoRoutesLogic = /** @class */ (function () {
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        userId = req.params.userId;
+                        userId = "600ac39664b8571ed5b8ef2b";
                         console.log(userId);
                         return [4 /*yield*/, user_1.User.getUserFromDatabase(userId)];
                     case 1:
@@ -137,7 +137,7 @@ var CreateTodoRoutesLogic = /** @class */ (function () {
                         return [4 /*yield*/, inboxRoutesLogic_1.InboxRoutesLogic.renderInbox(userId)];
                     case 6:
                         inboxList = _b.sent();
-                        console.log('inboxList');
+                        console.log("inboxList");
                         console.log(inboxList);
                         return [2 /*return*/, inboxList];
                 }

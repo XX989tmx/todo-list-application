@@ -30,25 +30,25 @@ if (process.env.NODE_ENV !== "production") {
 
 const app = express();
 const MONGODB_URI = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0-7slh6.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
-const store = new mongoDBSessionStore({
-  uri: MONGODB_URI,
-  collection:'sessions'
-});
+// const store = new mongoDBSessionStore({
+//   uri: MONGODB_URI,
+//   collection: "sessions",
+// });
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.static(__dirname + "/public"));
 app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: true}));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(
-  expressSession({
-    secret: `${process.env.SESSION_SECRET}`,
-    resave: false,
-    saveUninitialized: false,
-    store: store,
-  })
-);
+// app.use(
+//   expressSession({
+//     secret: `${process.env.SESSION_SECRET}`,
+//     resave: false,
+//     saveUninitialized: false,
+//     store: store,
+//   })
+// );
 // app.use(passport.initialize());
 // app.use(passport.session());
 
@@ -70,19 +70,21 @@ app.get("/inbox", async (req: Request, res: Response, next: NextFunction) => {
 
   //   inbox.add(todo);
   //   console.log(inbox);
-  let inbox = [
-    new Todo("todo1", "note11111111", 3, new Date(), new Date(), null),
-    new Todo("todo2", "note2", 2, new Date(), new Date(), null),
-    new Todo("todo3", "note3", 1, new Date(), new Date(), null),
-  ];
-  // const userId = "600ac39664b8571ed5b8ef2b";
-  // const inbox = await InboxRoutesLogic.renderInbox(userId);
+  // let inbox = [
+  //   new Todo("todo1", "note11111111", 3, new Date(), new Date(), null),
+  //   new Todo("todo2", "note2", 2, new Date(), new Date(), null),
+  //   new Todo("todo3", "note3", 1, new Date(), new Date(), null),
+  // ];
+  const userId = "600ac39664b8571ed5b8ef2b";
+  const inbox:any = await InboxRoutesLogic.renderInbox(userId);
+  console.log(inbox);
+  
   // pass inbox data
-  res.render("inbox", { inbox: inbox });
+  res.status(200).render("inbox", { inbox: inbox.list });
 });
 
 app.post(
-  "/createTodo/:userId",
+  "/createTodo",
   async (req: Request, res: Response, next: NextFunction) => {
     const { title, notes, priority, scheduledDate, deadline } = req.body;
 
@@ -112,18 +114,29 @@ app.post(
     //   new Todo("todo3", "note3", 1, new Date(), new Date(), null),
     //   new Todo(title, notes, priority, scheduledDate, deadline, null),
     // ];
+    // const addedTodo = inbox[inbox.length - 1];
+    res.redirect('/inbox');
+    // res.status(200).render('inbox',{inbox})
 
-    res.status(200).render("inbox", { inbox: inbox.list });
+    // res.status(200).send({ m:1 });
     // res.status(302).redirect("/inbox");
   }
 );
 
 app.patch("/updateTodo", async (req, res, next) => {
   const { title, notes, priority, scheduledDate, deadline } = req.body;
-  const page = req.query.page;
 
+  console.log(req.body);
+
+  const page = req.query.page;
+  let inbox = [
+    new Todo("todo1", "note11111111", 3, new Date(), new Date(), null),
+    new Todo("todo2", "note2", 2, new Date(), new Date(), null),
+    new Todo("todo3", "note3", 1, new Date(), new Date(), null),
+    new Todo(title, notes, priority, scheduledDate, deadline, null),
+  ];
   // if page is inbox
-  res.status(200).render("inbox");
+  res.status(200).render("inbox", { inbox });
 });
 
 app.post("/completeTodo", async (req, res, next) => {

@@ -47,7 +47,8 @@ export class CreateTodoRoutesLogic {
   static async create(req) {
     // todoデータを新規作成保存し、User,InboxスキーマのTodoが関連する値を更新し、保存する。その後、Inboxデータを再度読み出し、Inboxページに渡しRerenderする。
     // -Userデータをデータベースから読み出す
-    const userId = req.params.userId;
+    // const userId = req.params.userId;
+    const userId = "600ac39664b8571ed5b8ef2b";
     console.log(userId);
 
     const userData = await User.getUserFromDatabase(userId);
@@ -144,11 +145,10 @@ export class CreateTodoRoutesLogic {
     await User.saveUserSchemaToDatabase(updatedUserData);
     // -inbox fieldについてはRefキーで参照する方式のため、手動更新不要。
     // inbox class instance をReturn
-    const inboxList:any = await InboxRoutesLogic.renderInbox(userId);
-    console.log('inboxList');
+    const inboxList: any = await InboxRoutesLogic.renderInbox(userId);
+    console.log("inboxList");
     console.log(inboxList);
-    
-    
+
     return inboxList;
   }
 
