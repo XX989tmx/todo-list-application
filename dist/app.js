@@ -109,7 +109,7 @@ app.post("/createTodo", function (req, res, next) { return __awaiter(void 0, voi
                 //   new Todo(title, notes, priority, scheduledDate, deadline, null),
                 // ];
                 // const addedTodo = inbox[inbox.length - 1];
-                res.redirect('/inbox');
+                res.redirect("/inbox");
                 return [2 /*return*/];
         }
     });
@@ -131,14 +131,21 @@ app.patch("/updateTodo", function (req, res, next) { return __awaiter(void 0, vo
         return [2 /*return*/];
     });
 }); });
-app.post("/completeTodo", function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+app.get("/completeTodo/:todoId", function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var completedTodoId;
     return __generator(this, function (_a) {
-        res.status(200).render("inbox");
+        completedTodoId = req.params.todoId;
+        console.log(completedTodoId);
+        res.status(200).json({ a: 2 });
         return [2 /*return*/];
     });
 }); });
-app.get("/moveToTrash", function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+app.get("/moveToTrash/:todoId", function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var movedToTrashTodoId;
     return __generator(this, function (_a) {
+        movedToTrashTodoId = req.params.todoId;
+        console.log(movedToTrashTodoId);
+        res.status(200).json({ a: 3 });
         return [2 /*return*/];
     });
 }); });

@@ -62,7 +62,7 @@
                             class="todo-checkbox"
                             type="checkbox"
                             name=""
-                            id="<% todo.id %> "
+                            id="<%- todo.id %> "
                           />
                         </div>
                         <div class="col-1" id="todo-priority">
@@ -81,7 +81,9 @@
                           data-toggle="collapse"
                           data-target="#todo-item-collapse"
                         >
-                          <span value="<% todo.title %> "><%= todo.title %> </span>
+                          <span value="<% todo.title %> "
+                            ><%= todo.title %>
+                          </span>
                         </div>
                         <div class="drag-button col-1" id="drag-button">
                           <svg
@@ -121,7 +123,7 @@
                           </svg>
                         </div>
                         <div
-                          id="<% todo.id %> "
+                          id="<%- todo.id %> "
                           class="col-1 delete-todo"
                           data-toggle="popover"
                           data-content="delete todo"
@@ -143,19 +145,19 @@
                             />
                           </svg>
                         </div>
-                      </div>
-                      <div
-                        id="todo-item-collapse"
-                        class="todo-item-collapse collapse row"
-                      >
                         <div
-                          id="todo-item-collapse-contents"
-                          data-toggle="modal"
-                          data-target="#update-todo-input-modal"
+                          id="todo-item-collapse"
+                          class="todo-item-collapse collapse row"
                         >
-                          <p>todo notes & deadline</p>
-                          <p><%= todo.notes %></p>
-                          <span><%= todo.deadline %> </span>
+                          <div
+                            id="todo-item-collapse-contents"
+                            data-toggle="modal"
+                            data-target="#update-todo-input-modal"
+                          >
+                            <p>todo notes & deadline</p>
+                            <p><%= todo.notes %></p>
+                            <span><%= todo.deadline %> </span>
+                          </div>
                         </div>
                       </div>
                     </li>
@@ -451,53 +453,7 @@
       class Sidebar {}
     </script>
 
-    <script>
-      const updateTodoModalTriggerButtons = document.querySelectorAll(
-        ".update-todo-modal-trigger-button"
-      );
-      console.log(updateTodoModalTriggerButtons);
-      for (let i = 0; i < updateTodoModalTriggerButtons.length; i++) {
-        const updateTodoModalTriggerButton = updateTodoModalTriggerButtons[i];
-        updateTodoModalTriggerButton.addEventListener("click", (event) => {
-          const targetTodoId = updateTodoModalTriggerButton.getAttribute("id");
-          console.log(targetTodoId);
-          const todoItemsDiv = updateTodoModalTriggerButton.parentElement;
-          console.log(todoItemsDiv);
-          const childNodesOfTodoItemsDiv = todoItemsDiv.childNodes;
-          console.log(childNodesOfTodoItemsDiv);
-          const priority = childNodesOfTodoItemsDiv[1].childNodes[1].value;
-          console.log('--');
-          console.log(childNodesOfTodoItemsDiv[2].firstChild);
-          const title = childNodesOfTodoItemsDiv[2].childNodes[0].value;
-          const notesAndDeadlinesGrandparentDiv = childNodesOfTodoItemsDiv[6];
-          const notes =
-            notesAndDeadlinesGrandparentDiv.childNodes[0].childNodes[1].value;
-          const deadline =
-            notesAndDeadlinesGrandparentDiv.childNodes[0].childNodes[2].value;
-          // update todo modal の各フィールドに既存の値をセット.
-          const updateModalForm = document.getElementById("update-todo-form");
-          const updateModalFormChilds = updateModalForm.childElementCount;
-          // id set
-          const todoIdInput = updateModalFormChilds[0].childNodes[0];
-          todoIdInput.value = targetTodoId;
-          // title set
-          const todoTitleInput = updateModalFormChilds[1].childNodes[1];
-          todoTitleInput.value = title;
-          // notes set
-          const todoNotesInput = updateModalFormChilds[3].childNodes[1];
-          todoNotesInput.value = notes;
-          // set priority
-          const todoPrioritySelect = updateModalFormChilds[4].childNodes[1];
-          todoPrioritySelect.value = priority;
-          // set scheduledDate
-          const todoScheduledDateInput = updateModalFormChilds[5].childNodes[1];
-          //  todoScheduledDateInput.value =
-          // set deadline
-          const todoDeadlineInput = updateModalFormChilds[6].childNodes[1];
-          todoDeadlineInput.value = deadline;
-        });
-      }
-    </script>
+    <script src="/javascript/updateTodoBtnTriggerAction.js"></script>
 
     <script>
       window.addEventListener("load", (event) => {
@@ -532,6 +488,7 @@
         } catch (error) {}
       };
       const deleteTodoIcons = document.querySelectorAll(".delete-todo");
+      console.log("!delete todo icons !");
       console.log(deleteTodoIcons);
       for (let i = 0; i < deleteTodoIcons.length; i++) {
         const deleteTodoIcon = deleteTodoIcons[i];
@@ -542,22 +499,31 @@
         deleteTodoIcon.addEventListener("click", async (params) => {
           console.log("move to trash!");
           console.log(deleteTodoId);
-          let request2 = new Request(
-            `http://localhost:8080/deleteTodo/${deleteTodoId}`
-          );
-          sendDeleteTodoRequest(request2, init2)
-            .then((response) => {
-              setTimeout(() => {
-                const liElement2 = deleteTodoIcon.parentElement.parentElement;
-
-                liElement2.remove();
-              }, 1500);
-
-              console.log(response);
+          url = "http://localhost:8080/moveToTrash/" + deleteTodoId;
+          fetch(url)
+            .then((result) => {
+              const liElement2 = deleteTodoIcon.parentElement.parentElement;
+              liElement2.remove();
             })
             .catch((err) => {
               console.log(err);
             });
+          // let request2 = new Request(
+          //   `http://localhost:8080/deleteTodo/${deleteTodoId}`
+          // );
+          // sendDeleteTodoRequest(request2, init2)
+          //   .then((response) => {
+          //     setTimeout(() => {
+          //       const liElement2 = deleteTodoIcon.parentElement.parentElement;
+
+          //       liElement2.remove();
+          //     }, 1500);
+
+          //     console.log(response);
+          //   })
+          //   .catch((err) => {
+          //     console.log(err);
+          //   });
         });
       }
     </script>
@@ -586,6 +552,8 @@
       console.log(checkboxInputs);
       for (let i = 0; i < checkboxInputs.length; i++) {
         const input = checkboxInputs[i];
+        console.log("input");
+        console.log(input);
         const inputId = input.getAttribute("id");
         const isChecked = input.getAttribute("value");
         console.log(isChecked);
@@ -598,12 +566,9 @@
         input.addEventListener("click", async () => {
           console.log("12345");
           console.log(inputId);
-          let request = new Request(
-            "http://localhost:8080/completeTodo/" + inputId
-          );
-          sendCompleteTodoRequest(request, init)
+          url = "http://localhost:8080/completeTodo/" + inputId;
+          fetch(url)
             .then((result) => {
-              console.log(request);
               setTimeout(() => {
                 const LiElement =
                   input.parentElement.parentElement.parentElement;
@@ -614,6 +579,22 @@
             .catch((err) => {
               console.log(err);
             });
+          // let request = new Request(
+          //   "http://localhost:8080/completeTodo/" + inputId
+          // );
+          // sendCompleteTodoRequest(request, init)
+          //   .then((result) => {
+          //     console.log(request);
+          //     setTimeout(() => {
+          //       const LiElement =
+          //         input.parentElement.parentElement.parentElement;
+
+          //       LiElement.remove();
+          //     }, 1500);
+          //   })
+          //   .catch((err) => {
+          //     console.log(err);
+          //   });
         });
       }
       //

@@ -39,7 +39,7 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.static(__dirname + "/public"));
 app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 // app.use(
 //   expressSession({
@@ -76,9 +76,9 @@ app.get("/inbox", async (req: Request, res: Response, next: NextFunction) => {
   //   new Todo("todo3", "note3", 1, new Date(), new Date(), null),
   // ];
   const userId = "600ac39664b8571ed5b8ef2b";
-  const inbox:any = await InboxRoutesLogic.renderInbox(userId);
+  const inbox: any = await InboxRoutesLogic.renderInbox(userId);
   console.log(inbox);
-  
+
   // pass inbox data
   res.status(200).render("inbox", { inbox: inbox.list });
 });
@@ -115,7 +115,7 @@ app.post(
     //   new Todo(title, notes, priority, scheduledDate, deadline, null),
     // ];
     // const addedTodo = inbox[inbox.length - 1];
-    res.redirect('/inbox');
+    res.redirect("/inbox");
     // res.status(200).render('inbox',{inbox})
 
     // res.status(200).send({ m:1 });
@@ -139,10 +139,18 @@ app.patch("/updateTodo", async (req, res, next) => {
   res.status(200).render("inbox", { inbox });
 });
 
-app.post("/completeTodo", async (req, res, next) => {
-  res.status(200).render("inbox");
+app.get("/completeTodo/:todoId", async (req, res, next) => {
+  const completedTodoId = req.params.todoId;
+  console.log(completedTodoId);
+
+  res.status(200).json({ a: 2 });
 });
-app.get("/moveToTrash", async (req, res, next) => {
+app.get("/moveToTrash/:todoId", async (req, res, next) => {
+  const movedToTrashTodoId = req.params.todoId;
+  console.log(movedToTrashTodoId);
+
+  res.status(200).json({ a: 3 });
+
   // move todo into trashBox class
 });
 app.delete("/deleteTodo", async (req, res, next) => {
