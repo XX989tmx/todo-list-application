@@ -57,7 +57,7 @@
                   >
                     <% inbox.forEach(todo => { %>
 
-                    <li id="todo-item-li" class="list-group-item todo-item">
+                    <li id="todo-item-li" class="list-group-item todo-item <%= todo.priority === 1 ? "todoColorPriority1" : todo.priority === 2 ? "todoColorPriority2" : "todoColorPriority3" %> ">
                       <div class="todo-items row">
                         <div class="col-1">
                           <input
@@ -275,7 +275,7 @@
                             </div>
 
                             <button
-                              id="submit-todo-inputs"
+                              id="submit-addNewTodo-todo-inputs"
                               type="submit"
                               class="btn btn-success"
                             >
@@ -325,7 +325,7 @@
                       </div>
                       <div class="modal-body">
                         <form
-                          action="/updateTodo"
+                          action="/updateTodo/:targetTodoId"
                           method="POST"
                           id="update-todo-form"
                           role="form"
@@ -334,7 +334,7 @@
                             <input
                               id="todoId"
                               type=""
-                              name=""
+                              name="target-todo-id"
                               value=""
                               style="display: none"
                             />
@@ -346,7 +346,7 @@
                               class="form-control"
                               id="update-todo-input-title"
                               type="text"
-                              name=""
+                              name="title"
                               value=""
                               placeholder="to do"
                               autofocus
@@ -358,6 +358,7 @@
                               class="form-control"
                               rows="7"
                               id="update-todo-input-notes"
+                              name="notes"
                               placeholder="notes"
                             ></textarea>
                             <!-- <textarea
@@ -375,6 +376,7 @@
                             <select
                               class="form-control"
                               id="update-priority-option"
+                              name="priority"
                             >
                               <option>1</option>
                               <option>2</option>
@@ -387,7 +389,7 @@
                               class="modal-input"
                               id="update-todo-schedule"
                               type="date"
-                              name=""
+                              name="scheduledDate"
                               id=""
                               aria-label="schedule"
                             />
@@ -398,7 +400,7 @@
                               class="modal-input"
                               id="update-todo-deadline"
                               type="date"
-                              name=""
+                              name="deadline"
                               id=""
                               aria-label="deadline"
                             />
@@ -479,7 +481,7 @@
         console.log(todoItemLi);
 
         setTimeout(() => {
-          todoItemsLi[i].style.backgroundColor = "rgb(239, 241, 242)";
+          todoItemsLi[i].style.backgroundColor = "rgb(252, 252, 252)";
         }, 700);
       }
     </script>
@@ -883,16 +885,16 @@
               },
             });
 
-            $("#submit-todo-inputs").on({
-              submit: function () {
-                // post to backend url; ajax
-                // event.preventDefault();
-                // var xhr = new XMLHttpRequest();
-                // xhr.open("POST", "http://localhost:8080/createTodo", true);
-                // xhr.setRequestHeader("Content-Type", "application/json");
-                // xhr.send(JSON.stringify(body));
-              },
-            });
+            // $("#submit-todo-inputs").on({
+            //   submit: function () {
+            //     // post to backend url; ajax
+            //     // event.preventDefault();
+            //     // var xhr = new XMLHttpRequest();
+            //     // xhr.open("POST", "http://localhost:8080/createTodo", true);
+            //     // xhr.setRequestHeader("Content-Type", "application/json");
+            //     // xhr.send(JSON.stringify(body));
+            //   },
+            // });
 
             $("#close-modal-button").on({
               click: function () {
@@ -992,9 +994,9 @@
               },
             });
 
-            $("#update-todo-form").on({
-              submit: function (event) {},
-            });
+            // $("#update-todo-form").on({
+            //   submit: function (event) {},
+            // });
           });
         }
 

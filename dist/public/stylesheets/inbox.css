@@ -193,6 +193,18 @@ Body {
   opacity: 0.4;
 }
 
+.todoColorPriority1 {
+  border-left: 6px solid rgb(34, 160, 34);
+}
+
+.todoColorPriority2 {
+  border-left: 6px solid rgb(255, 208, 0);
+}
+
+.todoColorPriority3 {
+  border-left: 6px solid rgb(224, 37, 37);
+}
+
 /* Popover
 .popover {
   border: 2px dotted red;

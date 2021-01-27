@@ -114,11 +114,21 @@ app.post("/createTodo", function (req, res, next) { return __awaiter(void 0, voi
         }
     });
 }); });
-app.patch("/updateTodo", function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, title, notes, priority, scheduledDate, deadline, page, inbox;
+app.post("/updateTodo/:targetTodoId", function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, title, notes, priority, scheduledDate, deadline, targetTodoId, page, inbox;
     return __generator(this, function (_b) {
         _a = req.body, title = _a.title, notes = _a.notes, priority = _a.priority, scheduledDate = _a.scheduledDate, deadline = _a.deadline;
+        targetTodoId = req.params.targetTodoId;
+        console.log(targetTodoId);
         console.log(req.body);
+        console.log({
+            title: title,
+            notes: notes,
+            priority: priority,
+            scheduledDate: scheduledDate,
+            deadline: deadline,
+            targetTodoId: targetTodoId,
+        });
         page = req.query.page;
         inbox = [
             new todo_1.Todo("todo1", "note11111111", 3, new Date(), new Date(), null),

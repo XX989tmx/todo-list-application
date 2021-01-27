@@ -123,10 +123,22 @@ app.post(
   }
 );
 
-app.patch("/updateTodo", async (req, res, next) => {
+app.post("/updateTodo/:targetTodoId", async (req, res, next) => {
   const { title, notes, priority, scheduledDate, deadline } = req.body;
+  const targetTodoId = req.params.targetTodoId;
+  console.log(targetTodoId);
+
 
   console.log(req.body);
+  console.log({
+    title,
+    notes,
+    priority,
+    scheduledDate,
+    deadline,
+    targetTodoId,
+  });
+  
 
   const page = req.query.page;
   let inbox = [
