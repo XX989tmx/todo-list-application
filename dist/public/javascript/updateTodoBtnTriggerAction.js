@@ -35,9 +35,120 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var updateTodoModalTriggerButtons = document.querySelectorAll(".update-todo-modal-trigger-button");
-console.log("update");
-console.log(updateTodoModalTriggerButtons);
+var MODAL_TRIGGER_BUTTON_CLASS = ".update-todo-modal-trigger-button";
+var MODAL_TITLE_INPUT_ID = "update-todo-input-title";
+var MODAL_NOTES_INPUT_ID = "update-todo-input-notes";
+var MODAL_PRIORITY_INPUT_ID = "update-priority-option";
+var MODAL_SCHEDULED_DATE_INPUT_ID = "update-todo-schedule";
+var MODAL_DEADLINE_INPUT_ID = "update-todo-deadline";
+var MODAL_SUBMIT_BUTTON_ID = "update-todo-inputs";
+var METHOD = "POST";
+var UpdateTodoSubmit = /** @class */ (function () {
+    function UpdateTodoSubmit(modalTriggerButtonId, modalInputId, modalNotesId, modalPriorityOptionId, modalTodoScheduledDateId, modalDeadlineId, modalSubmitButtonId, httpMethod, url) {
+        (this.modalTriggerButtonId = modalTriggerButtonId),
+            (this.modalInputId = modalInputId),
+            (this.modalNotesId = modalNotesId),
+            (this.modalPriorityOptionId = modalPriorityOptionId),
+            (this.modalTodoScheduledDateId = modalTodoScheduledDateId),
+            (this.modalDeadlineId = modalDeadlineId);
+        (this.modalSubmitButtonId = modalSubmitButtonId),
+            (this.httpMethod = httpMethod);
+        this.url = url;
+    }
+    UpdateTodoSubmit.prototype.getModalTriggerButtonElement = function () {
+        return document.querySelectorAll(this.modalTriggerButtonId);
+    };
+    UpdateTodoSubmit.prototype.getTodoIdOfActionTarget = function () {
+        var todoModalTriggerButtons = this.getModalTriggerButtonElement();
+        var _loop_1 = function (i) {
+            var todoModalTriggerButton = todoModalTriggerButtons[i];
+            todoModalTriggerButton.addEventListener("click", function (event) {
+                UpdateTodoSubmit.targetTodoId = todoModalTriggerButton.getAttribute("id");
+                // console.log(targetTodoId);
+            });
+        };
+        for (var i = 0; i < todoModalTriggerButtons.length; i++) {
+            _loop_1(i);
+        }
+    };
+    UpdateTodoSubmit.prototype.setTitleFieldInModal = function () {
+        var titleInputElement = document.getElementById(this.modalInputId);
+        titleInputElement === null || titleInputElement === void 0 ? void 0 : titleInputElement.addEventListener("change", function (event) {
+            UpdateTodoSubmit.updatedTitle = event.target.value;
+        });
+    };
+    UpdateTodoSubmit.prototype.setNotesFieldInModal = function () {
+        var notesInputElement = document.getElementById(this.modalNotesId);
+        notesInputElement === null || notesInputElement === void 0 ? void 0 : notesInputElement.addEventListener("change", function (event) {
+            UpdateTodoSubmit.updatedNotes = event.target.value;
+            console.log("etv");
+            console.log(UpdateTodoSubmit.updatedNotes);
+        });
+    };
+    UpdateTodoSubmit.prototype.setPriorityFieldInModal = function () {
+        var priorityInputElement = document.getElementById(this.modalPriorityOptionId);
+        priorityInputElement === null || priorityInputElement === void 0 ? void 0 : priorityInputElement.addEventListener("change", function (event) {
+            UpdateTodoSubmit.updatedPriority = event.target.value;
+        });
+    };
+    UpdateTodoSubmit.prototype.setScheduledDateInModal = function () {
+        var scheduledDateInputElement = document.getElementById(this.modalTodoScheduledDateId);
+        scheduledDateInputElement === null || scheduledDateInputElement === void 0 ? void 0 : scheduledDateInputElement.addEventListener("change", function (event) {
+            UpdateTodoSubmit.updatedScheduledDate = event.target.value;
+        });
+    };
+    UpdateTodoSubmit.prototype.setDeadlineInModal = function () {
+        var deadlineInputElement = document.getElementById(this.modalDeadlineId);
+        deadlineInputElement === null || deadlineInputElement === void 0 ? void 0 : deadlineInputElement.addEventListener("change", function (event) {
+            UpdateTodoSubmit.body = event.target.value;
+        });
+    };
+    UpdateTodoSubmit.prototype.setBody = function () {
+        UpdateTodoSubmit.body = {
+            todoId: UpdateTodoSubmit.targetTodoId,
+            title: UpdateTodoSubmit.updatedTitle,
+            notes: UpdateTodoSubmit.updatedNotes,
+            priority: UpdateTodoSubmit.updatedPriority,
+            scheduledDate: UpdateTodoSubmit.updatedScheduledDate,
+            deadline: UpdateTodoSubmit.updatedDeadline,
+        };
+    };
+    UpdateTodoSubmit.prototype.setFullUrl = function () {
+        UpdateTodoSubmit.fullUrl = this.url + UpdateTodoSubmit.targetTodoId;
+    };
+    UpdateTodoSubmit.prototype.getFormSubmitElement = function () {
+        return document.getElementById(this.modalSubmitButtonId);
+    };
+    UpdateTodoSubmit.prototype.sendHttpRequest = function () {
+        var _this = this;
+        var submitButton = this.getFormSubmitElement();
+        submitButton === null || submitButton === void 0 ? void 0 : submitButton.addEventListener("submit", function (event) { return __awaiter(_this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                // event.preventDefault();
+                fetch(UpdateTodoSubmit.fullUrl, {
+                    method: this.httpMethod,
+                    body: JSON.stringify(UpdateTodoSubmit.body),
+                })
+                    .then(function (response) {
+                    console.log("res");
+                    response.json();
+                })
+                    .catch(function (err) { });
+                return [2 /*return*/];
+            });
+        }); });
+    };
+    UpdateTodoSubmit.targetTodoId = "";
+    UpdateTodoSubmit.updatedTitle = "";
+    UpdateTodoSubmit.updatedNotes = "";
+    UpdateTodoSubmit.updatedPriority = "";
+    UpdateTodoSubmit.updatedScheduledDate = "";
+    UpdateTodoSubmit.updatedDeadline = "";
+    UpdateTodoSubmit.fullUrl = "";
+    return UpdateTodoSubmit;
+}());
+// console.log("update");
+// console.log(updateTodoModalTriggerButtons);
 // let targetTodoId: string;
 // for (let i = 0; i < updateTodoModalTriggerButtons.length; i++) {
 //   const updateTodoTriggerBtn = updateTodoModalTriggerButtons[i];
@@ -57,113 +168,110 @@ console.log(updateTodoModalTriggerButtons);
 //   formData.append("todoId", targetTodoId);
 //   console.log(formData);
 // });
-var targetTodoId;
-var _loop_1 = function (i) {
-    var updateTodoModalTriggerButton = updateTodoModalTriggerButtons[i];
-    updateTodoModalTriggerButton.addEventListener("click", function (event) {
-        targetTodoId = updateTodoModalTriggerButton.getAttribute("id");
-        console.log(targetTodoId);
-        // const todoItemsDiv = updateTodoModalTriggerButton.parentElement;
-        // console.log(todoItemsDiv);
-        // const childNodesOfTodoItemsDiv = todoItemsDiv.childNodes;
-        // console.log(childNodesOfTodoItemsDiv);
-        // const priorityDiv = childNodesOfTodoItemsDiv[3];
-        // const priority = priorityDiv.childNodes[1].textContent;
-        // console.log(priority);
-        // console.log("--");
-        // console.log(childNodesOfTodoItemsDiv);
-        // const titleDiv = childNodesOfTodoItemsDiv[5];
-        // const title = titleDiv.childNodes[1].textContent;
-        // console.log(titleDiv.childNodes[1].textContent);
-        // const notesAndDeadlinesGrandparentDiv = childNodesOfTodoItemsDiv[6];
-        // const notes =
-        //   notesAndDeadlinesGrandparentDiv.childNodes[0].childNodes[1].value;
-        // const deadline =
-        //   notesAndDeadlinesGrandparentDiv.childNodes[0].childNodes[2].value;
-        // // update todo modal の各フィールドに既存の値をセット.
-        // const updateModalForm = document.getElementById("update-todo-form");
-        // const updateModalFormChilds = updateModalForm.childElementCount;
-        // // id set
-        // const todoIdInput = updateModalFormChilds[0].childNodes[0];
-        // todoIdInput.value = targetTodoId;
-        // // title set
-        // const todoTitleInput = updateModalFormChilds[1].childNodes[1];
-        // todoTitleInput.value = title;
-        // // notes set
-        // const todoNotesInput = updateModalFormChilds[3].childNodes[1];
-        // todoNotesInput.value = notes;
-        // // set priority
-        // const todoPrioritySelect = updateModalFormChilds[4].childNodes[1];
-        // todoPrioritySelect.value = priority;
-        // // set scheduledDate
-        // const todoScheduledDateInput = updateModalFormChilds[5].childNodes[1];
-        // //  todoScheduledDateInput.value =
-        // // set deadline
-        // const todoDeadlineInput = updateModalFormChilds[6].childNodes[1];
-        // todoDeadlineInput.value = deadline;
-    });
-};
-for (var i = 0; i < updateTodoModalTriggerButtons.length; i++) {
-    _loop_1(i);
-}
-var updateTitleInput = document.getElementById("update-todo-input-title");
-var updatedTitle;
-updateTitleInput === null || updateTitleInput === void 0 ? void 0 : updateTitleInput.addEventListener('change', function (event) {
-    updatedTitle = event.target.value;
-    console.log('etv');
-    console.log(updatedTitle);
-});
-var updatedNotes;
-var updateNotesInput = document.getElementById("update-todo-input-notes");
-updateNotesInput === null || updateNotesInput === void 0 ? void 0 : updateNotesInput.addEventListener("change", function (event) {
-    updatedNotes = event.target.value;
-    console.log("etv");
-    console.log(updatedNotes);
-});
-var updatedPriority;
-var updatePriorityInput = document.getElementById("update-priority-option");
-updatePriorityInput === null || updatePriorityInput === void 0 ? void 0 : updatePriorityInput.addEventListener("change", function (event) {
-    updatedPriority = event.target.value;
-    console.log("etv");
-    console.log(updatedPriority);
-});
-var updatedScheduledDate;
-var updateScheduledDate = document.getElementById("update-todo-schedule");
-updateScheduledDate === null || updateScheduledDate === void 0 ? void 0 : updateScheduledDate.addEventListener("change", function (event) {
-    updatedScheduledDate = event.target.value;
-    console.log("etv");
-    console.log(updatedScheduledDate);
-});
-var updatedDeadline;
-var updateDeadline = document.getElementById("update-todo-deadline");
-updateDeadline === null || updateDeadline === void 0 ? void 0 : updateDeadline.addEventListener("change", function (event) {
-    updatedDeadline = event.target.value;
-    console.log("etv");
-    console.log(updatedDeadline);
-});
-var submitUpdateTodoButton = document.getElementById("update-todo-inputs");
-submitUpdateTodoButton === null || submitUpdateTodoButton === void 0 ? void 0 : submitUpdateTodoButton.addEventListener('submit', function (event) { return __awaiter(void 0, void 0, void 0, function () {
-    var body, url;
-    return __generator(this, function (_a) {
-        body = {
-            todoId: targetTodoId,
-            title: updatedTitle,
-            notes: updatedNotes,
-            priority: updatedPriority,
-            scheduledDate: updatedScheduledDate,
-            deadline: updatedDeadline,
-        };
-        console.log("body");
-        console.log(body);
-        url = "http://localhost:8080/updateTodo/" + targetTodoId;
-        fetch(url, {
-            method: "POST",
-            body: JSON.stringify(body)
-        }).then(function (response) {
-            console.log('res');
-            response.json();
-        }).catch(function (err) {
-        });
-        return [2 /*return*/];
-    });
-}); });
+// let targetTodoId: string = "";
+// for (let i = 0; i < updateTodoModalTriggerButtons.length; i++) {
+//   const updateTodoModalTriggerButton = updateTodoModalTriggerButtons[i];
+//   updateTodoModalTriggerButton.addEventListener("click", (event) => {
+//     targetTodoId = updateTodoModalTriggerButton.getAttribute("id");
+//     console.log(targetTodoId);
+// const todoItemsDiv = updateTodoModalTriggerButton.parentElement;
+// console.log(todoItemsDiv);
+// const childNodesOfTodoItemsDiv = todoItemsDiv.childNodes;
+// console.log(childNodesOfTodoItemsDiv);
+// const priorityDiv = childNodesOfTodoItemsDiv[3];
+// const priority = priorityDiv.childNodes[1].textContent;
+// console.log(priority);
+// console.log("--");
+// console.log(childNodesOfTodoItemsDiv);
+// const titleDiv = childNodesOfTodoItemsDiv[5];
+// const title = titleDiv.childNodes[1].textContent;
+// console.log(titleDiv.childNodes[1].textContent);
+// const notesAndDeadlinesGrandparentDiv = childNodesOfTodoItemsDiv[6];
+// const notes =
+//   notesAndDeadlinesGrandparentDiv.childNodes[0].childNodes[1].value;
+// const deadline =
+//   notesAndDeadlinesGrandparentDiv.childNodes[0].childNodes[2].value;
+// // update todo modal の各フィールドに既存の値をセット.
+// const updateModalForm = document.getElementById("update-todo-form");
+// const updateModalFormChilds = updateModalForm.childElementCount;
+// // id set
+// const todoIdInput = updateModalFormChilds[0].childNodes[0];
+// todoIdInput.value = targetTodoId;
+// // title set
+// const todoTitleInput = updateModalFormChilds[1].childNodes[1];
+// todoTitleInput.value = title;
+// // notes set
+// const todoNotesInput = updateModalFormChilds[3].childNodes[1];
+// todoNotesInput.value = notes;
+// // set priority
+// const todoPrioritySelect = updateModalFormChilds[4].childNodes[1];
+// todoPrioritySelect.value = priority;
+// // set scheduledDate
+// const todoScheduledDateInput = updateModalFormChilds[5].childNodes[1];
+// //  todoScheduledDateInput.value =
+// // set deadline
+// const todoDeadlineInput = updateModalFormChilds[6].childNodes[1];
+// todoDeadlineInput.value = deadline;
+//   });
+// }
+// const updateTitleInput = document.getElementById(MODAL_TITLE_INPUT_ID);
+// let updatedTitle: string | any;
+// updateTitleInput?.addEventListener("change", (event: Event) => {
+//   updatedTitle = event.target.value;
+//   console.log("etv");
+//   console.log(updatedTitle);
+// });
+// let updatedNotes: string | any;
+// const updateNotesInput = document.getElementById(MODAL_NOTES_INPUT_ID);
+// updateNotesInput?.addEventListener("change", (event) => {
+//   updatedNotes = event.target.value;
+//   console.log("etv");
+//   console.log(updatedNotes);
+// });
+// let updatedPriority: string | any;
+// const updatePriorityInput = document.getElementById(MODAL_PRIORITY_INPUT_ID);
+// updatePriorityInput?.addEventListener("change", (event) => {
+//   updatedPriority = event.target.value;
+//   console.log("etv");
+//   console.log(updatedPriority);
+// });
+// let updatedScheduledDate: string | any;
+// const updateScheduledDate = document.getElementById(
+//   MODAL_SCHEDULED_DATE_INPUT_ID
+// );
+// updateScheduledDate?.addEventListener("change", (event) => {
+//   updatedScheduledDate = event.target.value;
+//   console.log("etv");
+//   console.log(updatedScheduledDate);
+// });
+// let updatedDeadline: string | any;
+// const updateDeadline = document.getElementById(MODAL_DEADLINE_INPUT_ID);
+// updateDeadline?.addEventListener("change", (event) => {
+//   updatedDeadline = event.target.value;
+//   console.log("etv");
+//   console.log(updatedDeadline);
+// });
+// const submitUpdateTodoButton = document.getElementById(MODAL_SUBMIT_BUTTON_ID);
+// submitUpdateTodoButton?.addEventListener("submit", async (event) => {
+//   // event.preventDefault();
+//   let body = {
+//     todoId: targetTodoId,
+//     title: updatedTitle,
+//     notes: updatedNotes,
+//     priority: updatedPriority,
+//     scheduledDate: updatedScheduledDate,
+//     deadline: updatedDeadline,
+//   };
+//   console.log("body");
+//   console.log(body);
+//   const url = `http://localhost:8080/updateTodo/${targetTodoId}`;
+//   fetch(url, {
+//     method: "POST",
+//     body: JSON.stringify(body),
+//   })
+//     .then((response) => {
+//       console.log("res");
+//       response.json();
+//     })
+//     .catch((err) => {});
+// });

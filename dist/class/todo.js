@@ -485,6 +485,34 @@ var Inbox = /** @class */ (function () {
     return Inbox;
 }());
 exports.Inbox = Inbox;
+// const inbox = new Inbox();
+// console.log(inbox);
+// const inbox2 = new Inbox(
+//   [
+//     { title: "abc", notes: "gggg" },
+//     { title: "dadads", notes: "ggggg" },
+//   ],
+//   "user1"
+// );
+// console.log(inbox2);
+// inbox2.add(new Todo("77777", "77777"));
+// console.log(inbox2);
+// inbox.addNewTodo('abc123','gggg','now','now');
+// inbox.setUserId('eeee')
+// console.log(inbox);
+// inbox.add(todo);
+// inbox.add(todo2);
+// console.log(inbox);
+// inbox.removeCompletedTodo("12345");
+// console.log(inbox);
+// console.log(inbox.count);
+// console.log(inbox.getAll());
+//複数の Project class instance をストアする。 Projectスキーマをデータベースから呼び出した際、スキーマ達をストアする。
+var ProjectLists = /** @class */ (function () {
+    function ProjectLists() {
+    }
+    return ProjectLists;
+}());
 var Project = /** @class */ (function () {
     function Project(title, notes, deadLine, scheduledDate, userId) {
         this.todoLists = [];
@@ -609,6 +637,12 @@ var Project = /** @class */ (function () {
     return Project;
 }());
 exports.Project = Project;
+// todo 複数のActivity class instanceをストアする。データベースから複数のActivityスキーマを呼び出した際は、それをストアする。ここにActivityClassのメソッドをループでかけてもいいし、ActivityListクラスにメソッドを追加してもいい。データベースへの保存も同様。　ActivityListうクラスの状態をスキーマにセットしデータベースに保存するメソッドを追加する。
+var ActivityList = /** @class */ (function () {
+    function ActivityList() {
+    }
+    return ActivityList;
+}());
 var Activity = /** @class */ (function () {
     function Activity() {
         this.id = null;

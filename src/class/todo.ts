@@ -514,6 +514,9 @@ export class Inbox implements InboxInterface {
 // console.log(inbox.count);
 // console.log(inbox.getAll());
 
+//複数の Project class instance をストアする。 Projectスキーマをデータベースから呼び出した際、スキーマ達をストアする。
+class ProjectLists {}
+
 export interface ProjectInterface {
   todoLists: Todo[] | ITodoSchema[] | any[];
   title: string | null;
@@ -672,6 +675,9 @@ export class Project {
   }
 }
 
+// todo 複数のActivity class instanceをストアする。データベースから複数のActivityスキーマを呼び出した際は、それをストアする。ここにActivityClassのメソッドをループでかけてもいいし、ActivityListクラスにメソッドを追加してもいい。データベースへの保存も同様。　ActivityListうクラスの状態をスキーマにセットしデータベースに保存するメソッドを追加する。
+class ActivityList {}
+
 export interface ActivityInterface {
   id: ObjectId | IUserSchema | string | null;
   date: Date | any;
@@ -685,6 +691,7 @@ export interface ActivityInterface {
 }
 
 export class Activity implements ActivityInterface {
+  // 1日1Activityインスタンス（スキーマ）の関係性。それぞれの集合についてはActivityList,ActivitySchemaListで管理する。TodoとTodolistの関係とほぼ同様
   // 毎日計測
   // productivity scoreはクライアント側で色の濃度と連動
   // productivity score 基準
