@@ -288,6 +288,7 @@ var Todo = /** @class */ (function () {
                         return [4 /*yield*/, todoSchema_1.todoModel.findById(todoId)];
                     case 1:
                         todoSchema = _a.sent();
+                        Todo.TodoSchema = todoSchema;
                         return [3 /*break*/, 3];
                     case 2:
                         error_5 = _a.sent();
@@ -298,6 +299,26 @@ var Todo = /** @class */ (function () {
                             console.log("error");
                         }
                         return [2 /*return*/, todoSchema];
+                }
+            });
+        });
+    };
+    Todo.save = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var error_6;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, Todo.TodoSchema.save()];
+                    case 1:
+                        _a.sent();
+                        return [3 /*break*/, 3];
+                    case 2:
+                        error_6 = _a.sent();
+                        console.log(error_6);
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
                 }
             });
         });
@@ -376,7 +397,7 @@ var Today = /** @class */ (function () {
     // - TodaySchemaインスタンス(mongooseDocument)を保存する処理　　saveTodaySchemaToDatabase() {doc.save()}
     Today.saveTodaySchemaToDatabase = function (todaySchemaInstance) {
         return __awaiter(this, void 0, void 0, function () {
-            var error_6;
+            var error_7;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -386,21 +407,17 @@ var Today = /** @class */ (function () {
                         _a.sent();
                         return [3 /*break*/, 3];
                     case 2:
-                        error_6 = _a.sent();
-                        console.log(error_6);
+                        error_7 = _a.sent();
+                        console.log(error_7);
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
             });
         });
     };
-    Today.save = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                return [2 /*return*/];
-            });
-        });
-    };
+    // static async save() {
+    //   // save todaysList to database;
+    // }
     Today.getTodaysList = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
@@ -411,6 +428,47 @@ var Today = /** @class */ (function () {
     Today.prototype.setUserId = function (userId) {
         this.userId = userId;
         return this.userId;
+    };
+    Today.getTodaySchemaFromDatabase = function (userId) {
+        return __awaiter(this, void 0, void 0, function () {
+            var todaySchema, error_8;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, todaysSchema_1.todaysModel.findOne({ userId: userId })];
+                    case 1:
+                        todaySchema = _a.sent();
+                        Today.TodaySchema = todaySchema;
+                        return [3 /*break*/, 3];
+                    case 2:
+                        error_8 = _a.sent();
+                        console.log(error_8);
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/, todaySchema];
+                }
+            });
+        });
+    };
+    Today.save = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var error_9;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, Today.TodaySchema.save()];
+                    case 1:
+                        _a.sent();
+                        return [3 /*break*/, 3];
+                    case 2:
+                        error_9 = _a.sent();
+                        console.log(error_9);
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
     };
     return Today;
 }());
@@ -513,7 +571,7 @@ var Inbox = /** @class */ (function () {
     };
     Inbox.saveInboxData = function (inboxInstance) {
         return __awaiter(this, void 0, void 0, function () {
-            var createdInboxSchema, error_7;
+            var createdInboxSchema, error_10;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -530,8 +588,8 @@ var Inbox = /** @class */ (function () {
                         _a.sent();
                         return [3 /*break*/, 4];
                     case 3:
-                        error_7 = _a.sent();
-                        console.log(error_7);
+                        error_10 = _a.sent();
+                        console.log(error_10);
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/, createdInboxSchema];
                 }
@@ -540,7 +598,7 @@ var Inbox = /** @class */ (function () {
     };
     Inbox.fetchInboxDataFromDatabase = function (userId) {
         return __awaiter(this, void 0, void 0, function () {
-            var inboxData, error_8, res;
+            var inboxData, error_11, res;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -550,10 +608,11 @@ var Inbox = /** @class */ (function () {
                         inboxData = _a.sent();
                         return [3 /*break*/, 3];
                     case 2:
-                        error_8 = _a.sent();
-                        console.log(error_8);
+                        error_11 = _a.sent();
+                        console.log(error_11);
                         return [3 /*break*/, 3];
                     case 3:
+                        Inbox.InboxSchema = inboxData[0];
                         res = inboxData[0];
                         return [2 /*return*/, res];
                 }
@@ -563,6 +622,26 @@ var Inbox = /** @class */ (function () {
     Inbox.prototype.setUserId = function (userId) {
         this.userId = userId;
         return userId;
+    };
+    Inbox.save = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var error_12;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, Inbox.InboxSchema.save()];
+                    case 1:
+                        _a.sent();
+                        return [3 /*break*/, 3];
+                    case 2:
+                        error_12 = _a.sent();
+                        console.log(error_12);
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
     };
     return Inbox;
 }());
@@ -698,7 +777,7 @@ var Project = /** @class */ (function () {
     // - ProjectSchemaインスタンス(mongooseDocument)を保存する処理　　saveProjectSchemaToDatabase() {doc.save()}
     Project.saveProjectSchemaToDatabase = function (projectSchemaInstance) {
         return __awaiter(this, void 0, void 0, function () {
-            var error_9;
+            var error_13;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -708,8 +787,8 @@ var Project = /** @class */ (function () {
                         _a.sent();
                         return [3 /*break*/, 3];
                     case 2:
-                        error_9 = _a.sent();
-                        console.log(error_9);
+                        error_13 = _a.sent();
+                        console.log(error_13);
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
@@ -887,7 +966,7 @@ var Activity = /** @class */ (function () {
     // - ActivitySchemaインスタンス(mongooseDocument)を保存する処理　　saveActivitySchemaToDatabase() {doc.save()}
     Activity.saveActivitySchemaToDatabase = function (activitySchemaInstance) {
         return __awaiter(this, void 0, void 0, function () {
-            var error_10;
+            var error_14;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -897,8 +976,48 @@ var Activity = /** @class */ (function () {
                         _a.sent();
                         return [3 /*break*/, 3];
                     case 2:
-                        error_10 = _a.sent();
-                        console.log(error_10);
+                        error_14 = _a.sent();
+                        console.log(error_14);
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    Activity.getActivitySchemaFromDatabase = function (userId) {
+        return __awaiter(this, void 0, void 0, function () {
+            var activitySchema, error_15;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, activitySchema_1.activityModel.findOne({ userId: userId })];
+                    case 1:
+                        activitySchema = _a.sent();
+                        Activity.ActivitySchema = activitySchema;
+                        return [3 /*break*/, 3];
+                    case 2:
+                        error_15 = _a.sent();
+                        console.log(error_15);
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/, activitySchema];
+                }
+            });
+        });
+    };
+    Activity.save = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var error_16;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, Activity.ActivitySchema.save()];
+                    case 1:
+                        _a.sent();
+                        return [3 /*break*/, 3];
+                    case 2:
+                        error_16 = _a.sent();
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
@@ -997,7 +1116,7 @@ var Logbook = /** @class */ (function () {
     // - LogbookSchemaインスタンス(mongooseDocument)を保存する処理　　saveLogbookSchemaToDatabase() {doc.save()}
     Logbook.saveLogbookSchemaToDatabase = function (logbookSchemaInstance) {
         return __awaiter(this, void 0, void 0, function () {
-            var error_11;
+            var error_17;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -1007,8 +1126,57 @@ var Logbook = /** @class */ (function () {
                         _a.sent();
                         return [3 /*break*/, 3];
                     case 2:
-                        error_11 = _a.sent();
-                        console.log(error_11);
+                        error_17 = _a.sent();
+                        console.log(error_17);
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    Logbook.pushTodoSchemaToLogbookSchemaList = function (todoSchema) {
+        try {
+            Logbook.LogbookSchema.list.push(todoSchema._id);
+        }
+        catch (error) {
+            console.log(error);
+        }
+    };
+    Logbook.getLogbookSchema = function (userId) {
+        return __awaiter(this, void 0, void 0, function () {
+            var logbookSchema, error_18;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, logbookSchema_1.logbookModel.findOne({ userId: userId })];
+                    case 1:
+                        logbookSchema = _a.sent();
+                        return [3 /*break*/, 3];
+                    case 2:
+                        error_18 = _a.sent();
+                        return [3 /*break*/, 3];
+                    case 3:
+                        Logbook.LogbookSchema = logbookSchema;
+                        return [2 /*return*/, logbookSchema];
+                }
+            });
+        });
+    };
+    Logbook.save = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var error_19;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, Logbook.LogbookSchema.save()];
+                    case 1:
+                        _a.sent();
+                        return [3 /*break*/, 3];
+                    case 2:
+                        error_19 = _a.sent();
+                        console.log(error_19);
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
@@ -1109,7 +1277,7 @@ var TrashBox = /** @class */ (function () {
     // - TrashBoxSchemaインスタンス(mongooseDocument)を保存する処理　　saveTrashBoxSchemaToDatabase() {doc.save()}
     TrashBox.saveTrashBoxSchemaToDatabase = function (trashBoxSchemaInstance) {
         return __awaiter(this, void 0, void 0, function () {
-            var error_12;
+            var error_20;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -1119,8 +1287,8 @@ var TrashBox = /** @class */ (function () {
                         _a.sent();
                         return [3 /*break*/, 3];
                     case 2:
-                        error_12 = _a.sent();
-                        console.log(error_12);
+                        error_20 = _a.sent();
+                        console.log(error_20);
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }

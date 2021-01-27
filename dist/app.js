@@ -157,6 +157,15 @@ app.get("/completeTodo/:todoId", function (req, res, next) { return __awaiter(vo
     return __generator(this, function (_a) {
         completedTodoId = req.params.todoId;
         console.log(completedTodoId);
+        // -*todo schemaの更新
+        // -todo schemaをデータベースから読み出す
+        // -todo schemaのisDone fieldをTrueにする
+        // *Inboxのlistから当該TOdoスキーマを削除 これはInbox routeで行われた際のアクションであり、もしtoday routeで行われた場合は、inboxではなくtoday list から削除をする
+        // - inboxスキーマをデータベースから読み出す
+        // -inbox instance をInitialize
+        // - instance methodでinbox listから当該todoIdに合致するtodoSchemaを削除（Filter or indexOf & splice)
+        // inbox instanceの状態をinbox schemaにセットしデータベースに保存
+        // *logbook スキーマのlistにtodo schemaを追加
         res.status(200).json({ a: 2 });
         return [2 /*return*/];
     });

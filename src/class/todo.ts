@@ -31,6 +31,7 @@ export interface TodoInterface {
 
 export class Todo implements TodoInterface {
   // priority 1 , 2 ,3.  1 = lowest, 3 = highest
+  static TodoSchema: ITodoSchema;
   id: string | ObjectId | null;
   title: string | null;
   notes: string | null;
@@ -256,6 +257,7 @@ export class Todo implements TodoInterface {
     let todoSchema;
     try {
       todoSchema = await TodoSchema.findById(todoId);
+      Todo.TodoSchema = todoSchema;
     } catch (error) {
       console.log(error);
     }
@@ -263,6 +265,14 @@ export class Todo implements TodoInterface {
       console.log("error");
     }
     return todoSchema;
+  }
+
+  static async save() {
+    try {
+      await Todo.TodoSchema.save();
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 
@@ -283,6 +293,7 @@ export interface TodayInterface {
 }
 
 export class Today implements TodayInterface {
+  static TodaySchema: ITodaysSchema;
   todaysList: Todo[] | ITodoSchema[] | any[];
   userId: ObjectId | IUserSchema | string | null;
   constructor() {
@@ -382,9 +393,9 @@ export class Today implements TodayInterface {
     }
   }
 
-  static async save() {
-    // save todaysList to database;
-  }
+  // static async save() {
+  //   // save todaysList to database;
+  // }
 
   static async getTodaysList() {
     // get todays list from; database
@@ -393,6 +404,26 @@ export class Today implements TodayInterface {
   setUserId(userId) {
     this.userId = userId;
     return this.userId;
+  }
+
+  static async getTodaySchemaFromDatabase(userId) {
+    let todaySchema;
+    try {
+      todaySchema = await TodaySchema.findOne({ userId });
+      Today.TodaySchema = todaySchema;
+    } catch (error) {
+      console.log(error);
+    }
+
+    return todaySchema;
+  }
+
+  static async save() {
+    try {
+      await Today.TodaySchema.save();
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 
@@ -403,6 +434,7 @@ export interface InboxInterface {
 }
 
 export class Inbox implements InboxInterface {
+  static InboxSchema: IInboxSchema;
   list: Todo[] | ITodoSchema[] | any[];
   size: number;
   userId: ObjectId | IUserSchema | string | null;
@@ -533,6 +565,7 @@ export class Inbox implements InboxInterface {
     } catch (error) {
       console.log(error);
     }
+    Inbox.InboxSchema = inboxData[0];
     const res = inboxData[0];
     return res;
   }
@@ -540,6 +573,14 @@ export class Inbox implements InboxInterface {
   setUserId(userId: string) {
     this.userId = userId;
     return userId;
+  }
+
+  static async save() {
+    try {
+      await Inbox.InboxSchema.save();
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 
@@ -583,6 +624,7 @@ export interface ProjectInterface {
 }
 
 export class Project {
+  static ProjectSchema: IProjectSchema;
   todoLists: Todo[] | ITodoSchema[] | any[];
   title: string | null;
   notes: string | null;
@@ -755,6 +797,8 @@ export class Activity implements ActivityInterface {
   //!!! Activity class に加え、Activities classを追加する.
   //!!! また、Activity Schemaだけでなく、activities schemaも追加する. user Schemaにrefをつける
   // !! 変更に従い、productivity scoreの集計ロジックのやり方と、配置するクラスに変更を加える必要があるかもしれない
+
+  static ActivitySchema: IActivitySchema;
 
   id: ObjectId | IUserSchema | string | null;
   date: Date | any;
@@ -954,6 +998,24 @@ export class Activity implements ActivityInterface {
       console.log(error);
     }
   }
+
+  static async getActivitySchemaFromDatabase(userId: string) {
+    let activitySchema;
+    try {
+      activitySchema = await ActivitySchema.findOne({ userId: userId });
+      Activity.ActivitySchema = activitySchema;
+    } catch (error) {
+      console.log(error);
+    }
+
+    return activitySchema;
+  }
+
+  static async save() {
+    try {
+      await Activity.ActivitySchema.save();
+    } catch (error) {}
+  }
 }
 
 export interface LogbookSchema {
@@ -963,6 +1025,7 @@ export interface LogbookSchema {
 
 export class Logbook implements LogbookSchema {
   // Logbook
+  static LogbookSchema: ILogbookSchema;
   list: Todo[] | ITodoSchema[] | any[];
   size: number;
   constructor() {
@@ -1062,6 +1125,31 @@ export class Logbook implements LogbookSchema {
   ) {
     try {
       await logbookSchemaInstance.save();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  static pushTodoSchemaToLogbookSchemaList(todoSchema) {
+    try {
+      Logbook.LogbookSchema.list.push(todoSchema._id);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  static async getLogbookSchema(userId: string) {
+    let logbookSchema;
+    try {
+      logbookSchema = await LogbookSchema.findOne({ userId: userId });
+    } catch (error) {}
+    Logbook.LogbookSchema = logbookSchema;
+    return logbookSchema;
+  }
+
+  static async save() {
+    try {
+      await Logbook.LogbookSchema.save();
     } catch (error) {
       console.log(error);
     }
