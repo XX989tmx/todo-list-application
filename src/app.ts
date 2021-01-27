@@ -123,32 +123,58 @@ app.post(
   }
 );
 
-app.post("/updateTodo/:targetTodoId", async (req, res, next) => {
-  const { title, notes, priority, scheduledDate, deadline } = req.body;
-  const targetTodoId = req.params.targetTodoId;
-  console.log(targetTodoId);
-
-
-  console.log(req.body);
-  console.log({
+app.post("/updateTodo", async (req, res, next) => {
+  const {
+    todoId,
     title,
     notes,
     priority,
     scheduledDate,
     deadline,
-    targetTodoId,
-  });
+  } = req.body;
+  // const targetTodoId = req.params.targetTodoId;
+  const userId = "600ac39664b8571ed5b8ef2b";
+  console.log(todoId);
+  console.log(req.body);
   
 
-  const page = req.query.page;
-  let inbox = [
-    new Todo("todo1", "note11111111", 3, new Date(), new Date(), null),
-    new Todo("todo2", "note2", 2, new Date(), new Date(), null),
-    new Todo("todo3", "note3", 1, new Date(), new Date(), null),
-    new Todo(title, notes, priority, scheduledDate, deadline, null),
-  ];
+  //- Update の手順
+  // - targetTodoIdにマッチする todo schemaをデータベースから読み出す
+  // - todo instanceをinitialize
+  // - todo schemaをTodoInstanceにセットする
+  // - user input(req.body)のデータをtodo instanceにセットする（Update)
+  // - todo instanceの内容をtodo schemaに代入（スキーマUpdate)
+  // - todo schemaを保存
+  try {
+    const todo = new Todo(
+      title,
+      notes,
+      priority,
+      scheduledDate,
+      deadline,
+      null
+    );
+    todo.updateTodoSchema(todoId);
+  } catch (error) {
+    console.log(error);
+  }
+
+  // - Inboxスキーマをデータベースから読み出す
+  // - inboxスキーマ配列をループし、Inbox　インスタンスをInitialize＆セットし、Inbox　Instance配列を作る。
+  // - Inbox instance配列をInbox ejsのVariableとしてわたして、inbox ejsをrender
+
+  const inboxList: any = await InboxRoutesLogic.renderInbox(userId);
+
+  
+
+  // let inbox = [
+  //   new Todo("todo1", "note11111111", 3, new Date(), new Date(), null),
+  //   new Todo("todo2", "note2", 2, new Date(), new Date(), null),
+  //   new Todo("todo3", "note3", 1, new Date(), new Date(), null),
+  //   new Todo(title, notes, priority, scheduledDate, deadline, null),
+  // ];
   // if page is inbox
-  res.status(200).render("inbox", { inbox });
+  res.status(200).render("inbox", { inbox: inboxList.list });
 });
 
 app.get("/completeTodo/:todoId", async (req, res, next) => {

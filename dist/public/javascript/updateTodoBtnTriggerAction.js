@@ -43,6 +43,7 @@ var MODAL_SCHEDULED_DATE_INPUT_ID = "update-todo-schedule";
 var MODAL_DEADLINE_INPUT_ID = "update-todo-deadline";
 var MODAL_SUBMIT_BUTTON_ID = "update-todo-inputs";
 var METHOD = "POST";
+//todo クラス名（とファイル名）はTodoModalSubmit として、UpdateだけでなくAddなど他のtodo modal submitアクションにも流用できるようにすべき。名前の変更
 var UpdateTodoSubmit = /** @class */ (function () {
     function UpdateTodoSubmit(modalTriggerButtonId, modalInputId, modalNotesId, modalPriorityOptionId, modalTodoScheduledDateId, modalDeadlineId, modalSubmitButtonId, httpMethod, url) {
         (this.modalTriggerButtonId = modalTriggerButtonId),
@@ -64,7 +65,8 @@ var UpdateTodoSubmit = /** @class */ (function () {
             var todoModalTriggerButton = todoModalTriggerButtons[i];
             todoModalTriggerButton.addEventListener("click", function (event) {
                 UpdateTodoSubmit.targetTodoId = todoModalTriggerButton.getAttribute("id");
-                // console.log(targetTodoId);
+                console.log("target todo is --");
+                console.log(UpdateTodoSubmit.targetTodoId);
             });
         };
         for (var i = 0; i < todoModalTriggerButtons.length; i++) {
@@ -100,7 +102,7 @@ var UpdateTodoSubmit = /** @class */ (function () {
     UpdateTodoSubmit.prototype.setDeadlineInModal = function () {
         var deadlineInputElement = document.getElementById(this.modalDeadlineId);
         deadlineInputElement === null || deadlineInputElement === void 0 ? void 0 : deadlineInputElement.addEventListener("change", function (event) {
-            UpdateTodoSubmit.body = event.target.value;
+            UpdateTodoSubmit.updatedDeadline = event.target.value;
         });
     };
     UpdateTodoSubmit.prototype.setBody = function () {
@@ -114,17 +116,22 @@ var UpdateTodoSubmit = /** @class */ (function () {
         };
     };
     UpdateTodoSubmit.prototype.setFullUrl = function () {
-        UpdateTodoSubmit.fullUrl = this.url + UpdateTodoSubmit.targetTodoId;
+        // UpdateTodoSubmit.fullUrl = this.url + UpdateTodoSubmit.targetTodoId;
+        UpdateTodoSubmit.fullUrl = this.url;
     };
     UpdateTodoSubmit.prototype.getFormSubmitElement = function () {
         return document.getElementById(this.modalSubmitButtonId);
     };
     UpdateTodoSubmit.prototype.sendHttpRequest = function () {
         var _this = this;
+        console.log("body--");
+        console.log(UpdateTodoSubmit.body);
         var submitButton = this.getFormSubmitElement();
         submitButton === null || submitButton === void 0 ? void 0 : submitButton.addEventListener("submit", function (event) { return __awaiter(_this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                // event.preventDefault();
+                event.preventDefault();
+                this.setBody();
+                this.setFullUrl();
                 fetch(UpdateTodoSubmit.fullUrl, {
                     method: this.httpMethod,
                     body: JSON.stringify(UpdateTodoSubmit.body),
@@ -138,7 +145,16 @@ var UpdateTodoSubmit = /** @class */ (function () {
             });
         }); });
     };
-    UpdateTodoSubmit.targetTodoId = "";
+    UpdateTodoSubmit.prototype.readyToSubmit = function () {
+        this.getTodoIdOfActionTarget();
+        this.setTitleFieldInModal();
+        this.setNotesFieldInModal();
+        this.setScheduledDateInModal();
+        this.setDeadlineInModal();
+        // this.setBody();
+        // this.setFullUrl();
+        this.sendHttpRequest();
+    };
     UpdateTodoSubmit.updatedTitle = "";
     UpdateTodoSubmit.updatedNotes = "";
     UpdateTodoSubmit.updatedPriority = "";
@@ -147,6 +163,8 @@ var UpdateTodoSubmit = /** @class */ (function () {
     UpdateTodoSubmit.fullUrl = "";
     return UpdateTodoSubmit;
 }());
+var u = new UpdateTodoSubmit(MODAL_TRIGGER_BUTTON_CLASS, MODAL_TITLE_INPUT_ID, MODAL_NOTES_INPUT_ID, MODAL_PRIORITY_INPUT_ID, MODAL_SCHEDULED_DATE_INPUT_ID, MODAL_DEADLINE_INPUT_ID, MODAL_SUBMIT_BUTTON_ID, METHOD, "http://localhost:8080/updateTodo");
+u.readyToSubmit();
 // console.log("update");
 // console.log(updateTodoModalTriggerButtons);
 // let targetTodoId: string;

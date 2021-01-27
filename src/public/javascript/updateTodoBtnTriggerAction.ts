@@ -16,9 +16,9 @@ interface modalInputBody {
   scheduledDate: string | any;
   deadline: string | any;
 }
-
+//todo クラス名（とファイル名）はTodoModalSubmit として、UpdateだけでなくAddなど他のtodo modal submitアクションにも流用できるようにすべき。名前の変更
 class UpdateTodoSubmit {
-  static targetTodoId: string | any = "";
+  static targetTodoId: string | any;
   static updatedTitle: string | any = "";
   static updatedNotes: string | any = "";
   static updatedPriority: string | any = "";
@@ -71,7 +71,9 @@ class UpdateTodoSubmit {
         UpdateTodoSubmit.targetTodoId = todoModalTriggerButton.getAttribute(
           "id"
         );
-        // console.log(targetTodoId);
+        console.log("target todo is --");
+
+        console.log(UpdateTodoSubmit.targetTodoId);
       });
     }
   }
@@ -114,7 +116,7 @@ class UpdateTodoSubmit {
   setDeadlineInModal() {
     const deadlineInputElement = document.getElementById(this.modalDeadlineId);
     deadlineInputElement?.addEventListener("change", (event) => {
-      UpdateTodoSubmit.body = event.target.value;
+      UpdateTodoSubmit.updatedDeadline = event.target.value;
     });
   }
 
@@ -130,7 +132,8 @@ class UpdateTodoSubmit {
   }
 
   setFullUrl() {
-    UpdateTodoSubmit.fullUrl = this.url + UpdateTodoSubmit.targetTodoId;
+    // UpdateTodoSubmit.fullUrl = this.url + UpdateTodoSubmit.targetTodoId;
+    UpdateTodoSubmit.fullUrl = this.url;
   }
 
   getFormSubmitElement() {
@@ -138,9 +141,14 @@ class UpdateTodoSubmit {
   }
 
   sendHttpRequest() {
+    console.log("body--");
+
+    console.log(UpdateTodoSubmit.body);
     const submitButton = this.getFormSubmitElement();
     submitButton?.addEventListener("submit", async (event) => {
-      // event.preventDefault();
+      event.preventDefault();
+      this.setBody();
+      this.setFullUrl();
 
       fetch(UpdateTodoSubmit.fullUrl, {
         method: this.httpMethod,
@@ -153,7 +161,31 @@ class UpdateTodoSubmit {
         .catch((err) => {});
     });
   }
+
+  readyToSubmit() {
+    this.getTodoIdOfActionTarget();
+    this.setTitleFieldInModal();
+    this.setNotesFieldInModal();
+    this.setScheduledDateInModal();
+    this.setDeadlineInModal();
+    // this.setBody();
+    // this.setFullUrl();
+    this.sendHttpRequest();
+  }
 }
+
+const u = new UpdateTodoSubmit(
+  MODAL_TRIGGER_BUTTON_CLASS,
+  MODAL_TITLE_INPUT_ID,
+  MODAL_NOTES_INPUT_ID,
+  MODAL_PRIORITY_INPUT_ID,
+  MODAL_SCHEDULED_DATE_INPUT_ID,
+  MODAL_DEADLINE_INPUT_ID,
+  MODAL_SUBMIT_BUTTON_ID,
+  METHOD,
+  "http://localhost:8080/updateTodo"
+);
+u.readyToSubmit();
 
 // console.log("update");
 

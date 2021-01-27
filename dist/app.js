@@ -114,31 +114,42 @@ app.post("/createTodo", function (req, res, next) { return __awaiter(void 0, voi
         }
     });
 }); });
-app.post("/updateTodo/:targetTodoId", function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, title, notes, priority, scheduledDate, deadline, targetTodoId, page, inbox;
+app.post("/updateTodo", function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, todoId, title, notes, priority, scheduledDate, deadline, userId, todo, inboxList;
     return __generator(this, function (_b) {
-        _a = req.body, title = _a.title, notes = _a.notes, priority = _a.priority, scheduledDate = _a.scheduledDate, deadline = _a.deadline;
-        targetTodoId = req.params.targetTodoId;
-        console.log(targetTodoId);
-        console.log(req.body);
-        console.log({
-            title: title,
-            notes: notes,
-            priority: priority,
-            scheduledDate: scheduledDate,
-            deadline: deadline,
-            targetTodoId: targetTodoId,
-        });
-        page = req.query.page;
-        inbox = [
-            new todo_1.Todo("todo1", "note11111111", 3, new Date(), new Date(), null),
-            new todo_1.Todo("todo2", "note2", 2, new Date(), new Date(), null),
-            new todo_1.Todo("todo3", "note3", 1, new Date(), new Date(), null),
-            new todo_1.Todo(title, notes, priority, scheduledDate, deadline, null),
-        ];
-        // if page is inbox
-        res.status(200).render("inbox", { inbox: inbox });
-        return [2 /*return*/];
+        switch (_b.label) {
+            case 0:
+                _a = req.body, todoId = _a.todoId, title = _a.title, notes = _a.notes, priority = _a.priority, scheduledDate = _a.scheduledDate, deadline = _a.deadline;
+                userId = "600ac39664b8571ed5b8ef2b";
+                console.log(todoId);
+                console.log(req.body);
+                //- Update の手順
+                // - targetTodoIdにマッチする todo schemaをデータベースから読み出す
+                // - todo instanceをinitialize
+                // - todo schemaをTodoInstanceにセットする
+                // - user input(req.body)のデータをtodo instanceにセットする（Update)
+                // - todo instanceの内容をtodo schemaに代入（スキーマUpdate)
+                // - todo schemaを保存
+                try {
+                    todo = new todo_1.Todo(title, notes, priority, scheduledDate, deadline, null);
+                    todo.updateTodoSchema(todoId);
+                }
+                catch (error) {
+                    console.log(error);
+                }
+                return [4 /*yield*/, inboxRoutesLogic_1.InboxRoutesLogic.renderInbox(userId)];
+            case 1:
+                inboxList = _b.sent();
+                // let inbox = [
+                //   new Todo("todo1", "note11111111", 3, new Date(), new Date(), null),
+                //   new Todo("todo2", "note2", 2, new Date(), new Date(), null),
+                //   new Todo("todo3", "note3", 1, new Date(), new Date(), null),
+                //   new Todo(title, notes, priority, scheduledDate, deadline, null),
+                // ];
+                // if page is inbox
+                res.status(200).render("inbox", { inbox: inboxList.list });
+                return [2 /*return*/];
+        }
     });
 }); });
 app.get("/completeTodo/:todoId", function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {

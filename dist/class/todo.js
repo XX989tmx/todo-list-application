@@ -220,6 +220,88 @@ var Todo = /** @class */ (function () {
         this.userId = userId;
         return this.userId;
     };
+    Todo.prototype.updateTodoSchema = function (todoId) {
+        return __awaiter(this, void 0, void 0, function () {
+            var updateObject, error_3;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        updateObject = {
+                            title: this.title,
+                            notes: this.notes,
+                            priority: this.priority,
+                            scheduledDate: this.scheduledDate,
+                            deadline: this.deadline,
+                        };
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, todoSchema_1.todoModel.findByIdAndUpdate(todoId, updateObject)];
+                    case 2:
+                        _a.sent();
+                        return [2 /*return*/, true];
+                    case 3:
+                        error_3 = _a.sent();
+                        console.log(error_3);
+                        return [2 /*return*/, false];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    Todo.updateTodoSchema = function (todoId, title, notes, priority, scheduledDate, deadline) {
+        return __awaiter(this, void 0, void 0, function () {
+            var updateObject, error_4;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        updateObject = {
+                            title: title,
+                            notes: notes,
+                            priority: +priority,
+                            scheduledDate: scheduledDate,
+                            deadline: deadline,
+                        };
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, todoSchema_1.todoModel.findByIdAndUpdate(todoId, updateObject)];
+                    case 2:
+                        _a.sent();
+                        return [2 /*return*/, true];
+                    case 3:
+                        error_4 = _a.sent();
+                        console.log(error_4);
+                        return [2 /*return*/, false];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    Todo.getTodoSchema = function (todoId) {
+        return __awaiter(this, void 0, void 0, function () {
+            var todoSchema, error_5;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, todoSchema_1.todoModel.findById(todoId)];
+                    case 1:
+                        todoSchema = _a.sent();
+                        return [3 /*break*/, 3];
+                    case 2:
+                        error_5 = _a.sent();
+                        console.log(error_5);
+                        return [3 /*break*/, 3];
+                    case 3:
+                        if (!todoSchema) {
+                            console.log("error");
+                        }
+                        return [2 /*return*/, todoSchema];
+                }
+            });
+        });
+    };
     return Todo;
 }());
 exports.Todo = Todo;
@@ -294,7 +376,7 @@ var Today = /** @class */ (function () {
     // - TodaySchemaインスタンス(mongooseDocument)を保存する処理　　saveTodaySchemaToDatabase() {doc.save()}
     Today.saveTodaySchemaToDatabase = function (todaySchemaInstance) {
         return __awaiter(this, void 0, void 0, function () {
-            var error_3;
+            var error_6;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -304,8 +386,8 @@ var Today = /** @class */ (function () {
                         _a.sent();
                         return [3 /*break*/, 3];
                     case 2:
-                        error_3 = _a.sent();
-                        console.log(error_3);
+                        error_6 = _a.sent();
+                        console.log(error_6);
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
@@ -431,7 +513,7 @@ var Inbox = /** @class */ (function () {
     };
     Inbox.saveInboxData = function (inboxInstance) {
         return __awaiter(this, void 0, void 0, function () {
-            var createdInboxSchema, error_4;
+            var createdInboxSchema, error_7;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -448,8 +530,8 @@ var Inbox = /** @class */ (function () {
                         _a.sent();
                         return [3 /*break*/, 4];
                     case 3:
-                        error_4 = _a.sent();
-                        console.log(error_4);
+                        error_7 = _a.sent();
+                        console.log(error_7);
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/, createdInboxSchema];
                 }
@@ -458,7 +540,7 @@ var Inbox = /** @class */ (function () {
     };
     Inbox.fetchInboxDataFromDatabase = function (userId) {
         return __awaiter(this, void 0, void 0, function () {
-            var inboxData, error_5, res;
+            var inboxData, error_8, res;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -468,8 +550,8 @@ var Inbox = /** @class */ (function () {
                         inboxData = _a.sent();
                         return [3 /*break*/, 3];
                     case 2:
-                        error_5 = _a.sent();
-                        console.log(error_5);
+                        error_8 = _a.sent();
+                        console.log(error_8);
                         return [3 /*break*/, 3];
                     case 3:
                         res = inboxData[0];
@@ -616,7 +698,7 @@ var Project = /** @class */ (function () {
     // - ProjectSchemaインスタンス(mongooseDocument)を保存する処理　　saveProjectSchemaToDatabase() {doc.save()}
     Project.saveProjectSchemaToDatabase = function (projectSchemaInstance) {
         return __awaiter(this, void 0, void 0, function () {
-            var error_6;
+            var error_9;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -626,8 +708,8 @@ var Project = /** @class */ (function () {
                         _a.sent();
                         return [3 /*break*/, 3];
                     case 2:
-                        error_6 = _a.sent();
-                        console.log(error_6);
+                        error_9 = _a.sent();
+                        console.log(error_9);
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
@@ -805,7 +887,7 @@ var Activity = /** @class */ (function () {
     // - ActivitySchemaインスタンス(mongooseDocument)を保存する処理　　saveActivitySchemaToDatabase() {doc.save()}
     Activity.saveActivitySchemaToDatabase = function (activitySchemaInstance) {
         return __awaiter(this, void 0, void 0, function () {
-            var error_7;
+            var error_10;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -815,8 +897,8 @@ var Activity = /** @class */ (function () {
                         _a.sent();
                         return [3 /*break*/, 3];
                     case 2:
-                        error_7 = _a.sent();
-                        console.log(error_7);
+                        error_10 = _a.sent();
+                        console.log(error_10);
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
@@ -915,7 +997,7 @@ var Logbook = /** @class */ (function () {
     // - LogbookSchemaインスタンス(mongooseDocument)を保存する処理　　saveLogbookSchemaToDatabase() {doc.save()}
     Logbook.saveLogbookSchemaToDatabase = function (logbookSchemaInstance) {
         return __awaiter(this, void 0, void 0, function () {
-            var error_8;
+            var error_11;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -925,8 +1007,8 @@ var Logbook = /** @class */ (function () {
                         _a.sent();
                         return [3 /*break*/, 3];
                     case 2:
-                        error_8 = _a.sent();
-                        console.log(error_8);
+                        error_11 = _a.sent();
+                        console.log(error_11);
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
@@ -1027,7 +1109,7 @@ var TrashBox = /** @class */ (function () {
     // - TrashBoxSchemaインスタンス(mongooseDocument)を保存する処理　　saveTrashBoxSchemaToDatabase() {doc.save()}
     TrashBox.saveTrashBoxSchemaToDatabase = function (trashBoxSchemaInstance) {
         return __awaiter(this, void 0, void 0, function () {
-            var error_9;
+            var error_12;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -1037,8 +1119,8 @@ var TrashBox = /** @class */ (function () {
                         _a.sent();
                         return [3 /*break*/, 3];
                     case 2:
-                        error_9 = _a.sent();
-                        console.log(error_9);
+                        error_12 = _a.sent();
+                        console.log(error_12);
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }

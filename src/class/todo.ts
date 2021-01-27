@@ -155,7 +155,7 @@ export class Todo implements TodoInterface {
     return todoSchemaInstance;
   }
   // - todoSchemaインスタンスにTodoインスタンス（Class)関連のデータアトリビュートを保存する処理(userID以外)　setTodoSchema()
-  static setTodoSchema(todoSchemaInstance: ITodoSchema|any, todo: any) {
+  static setTodoSchema(todoSchemaInstance: ITodoSchema | any, todo: any) {
     todoSchemaInstance.title = todo.title;
     todoSchemaInstance.notes = todo.notes;
     todoSchemaInstance.priority = todo.priority;
@@ -168,15 +168,14 @@ export class Todo implements TodoInterface {
   }
   // - todoSchemaインスタンスにuserIdを保存する処理 setUserIdToTodoSchema(userId)
   static setUserIdToTodoSchema(
-    todoSchemaInstance: ITodoSchema|any,
-    userSchemaInstance: IUserSchema|any
+    todoSchemaInstance: ITodoSchema | any,
+    userSchemaInstance: IUserSchema | any
   ) {
     todoSchemaInstance.userId = userSchemaInstance._id;
     return todoSchemaInstance;
   }
   // - todoSchemaインスタンス(mongooseDocument)を保存する処理　　saveTodoSchemaToDatabase() {doc.save()}
   static async saveTodoSchemaToDatabase(todoSchemaInstance: ITodoSchema | any) {
-    
     try {
       await todoSchemaInstance.save();
     } catch (error) {
@@ -210,6 +209,60 @@ export class Todo implements TodoInterface {
   setUserId(userId: string) {
     this.userId = userId;
     return this.userId;
+  }
+
+  async updateTodoSchema(todoId) {
+    const updateObject = {
+      title: this.title,
+      notes: this.notes,
+      priority: this.priority,
+      scheduledDate: this.scheduledDate,
+      deadline: this.deadline,
+    };
+    try {
+      await TodoSchema.findByIdAndUpdate(todoId, updateObject);
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+
+  static async updateTodoSchema(
+    todoId: string,
+    title?,
+    notes?,
+    priority?,
+    scheduledDate?,
+    deadline?
+  ) {
+    const updateObject = {
+      title,
+      notes,
+      priority: +priority,
+      scheduledDate,
+      deadline,
+    };
+    try {
+      await TodoSchema.findByIdAndUpdate(todoId, updateObject);
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+
+  static async getTodoSchema(todoId: string) {
+    let todoSchema;
+    try {
+      todoSchema = await TodoSchema.findById(todoId);
+    } catch (error) {
+      console.log(error);
+    }
+    if (!todoSchema) {
+      console.log("error");
+    }
+    return todoSchema;
   }
 }
 
@@ -353,7 +406,7 @@ export class Inbox implements InboxInterface {
   list: Todo[] | ITodoSchema[] | any[];
   size: number;
   userId: ObjectId | IUserSchema | string | null;
-  constructor(listData:any[], userId) {
+  constructor(listData: any[], userId) {
     this.list = listData ? listData : [];
     this.size = listData ? listData.length : 0;
     this.userId = userId ? userId : null;
@@ -469,18 +522,18 @@ export class Inbox implements InboxInterface {
     return createdInboxSchema;
   }
 
-  static async fetchInboxDataFromDatabase(userId:string) {
+  static async fetchInboxDataFromDatabase(userId: string) {
     // { userId:userId,
     //   inbox:[todoId]
     //   size: x
     // {
     let inboxData;
     try {
-      inboxData = await InboxSchema.find({userId});
+      inboxData = await InboxSchema.find({ userId });
     } catch (error) {
       console.log(error);
     }
-    const res = inboxData[0]
+    const res = inboxData[0];
     return res;
   }
 
