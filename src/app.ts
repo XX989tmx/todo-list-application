@@ -191,7 +191,9 @@ app.get("/completeTodo/:todoId", async (req, res, next) => {
   // - instance methodでinbox listから当該todoIdに合致するtodoSchemaを削除（Filter or indexOf & splice)
   // inbox instanceの状態をinbox schemaにセットしデータベースに保存
   // *logbook スキーマのlistにtodo schemaを追加
-  
+
+  // *Activity スキーマを更新
+
 
   res.status(200).json({ a: 2 });
 });
