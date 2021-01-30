@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Home page</title>
+    <%- include('./partials/_head.ejs') %>
+    <link href="/stylesheets/inbox.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <%- include('./partials/_header.ejs') %>
+    <main class="main">
+      <div class="container-md fluid">
+        <div class="row">
+          <!-- 以下はパーシャル化
+             -->
+
+          <div class="home-page-main-section main-area col-xs-9 col-sm-8 col-md-9"></div>
+          <div class="side-login-area col-xs-3 col-sm-4 col-md-3">
+            <div class="row">
+              <div class="col login-form-container">
+                <form action="">
+                  <div class="mb-3">
+                    <label for="name-input" class="form-label">Name</label>
+                    <input
+                      class="form-control"
+                      type="text"
+                      name="name"
+                      id="name-input"
+                    />
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="email-input" class="form-label">Email</label>
+                    <input
+                      type="email"
+                      name="email"
+                      class="form-control"
+                      id="email-input"
+                    />
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="password-input" class="form-label"
+                      >password</label
+                    >
+                    <input
+                      class="form-control"
+                      type="password"
+                      name="password"
+                      id="pasword-input"
+                    />
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="passwordConfirmation" class="form-label"
+                      >password(confirmation)</label
+                    >
+                    <input
+                      class="form-control"
+                      type="password"
+                      name="passwordConfirmation"
+                      id="passwordConfirmation-input"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <div><button type="submit">Signup</button></div>
+                    <div><a href="">Login if you have already account</a></div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <%- include('./partials/_footer.ejs') %>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
+      integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
+      integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+      class Sidebar {}
+    </script>
+    <script
+      type="text/javascript"
+      src="/javascript/sidebarColorChange.js"
+    ></script>
+  </body>
+</html>

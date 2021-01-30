@@ -239,3 +239,14 @@ Body {
 /* .arrow {
   border-right-color: red !important;
 }  */
+
+/* home */
+.home-page-main-section {
+  background-color: whitesmoke;
+}
+.side-login-area {
+  background-color: rgb(201, 255, 246);
+}
+.login-form-container {
+  margin-top: 20px;
+}
