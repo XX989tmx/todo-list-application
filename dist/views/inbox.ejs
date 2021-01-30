@@ -585,177 +585,26 @@
     <script src="/javascript/updateTodoBtnTriggerAction.js"></script>
     <script src="/javascript/today-icon.js"></script>
     <script>
-      const todoItemListUl = document.getElementById("todo-item-list-ul");
-      const traverseTodoItemRecursive = (todoItemListUl) => {
-        let idx = 0;
-        idx += 1;
-        const firstTodo = todoItemListUl.firstChild;
-        return traverseTodoItemRecursive(todoItemListUl.childNodes[idx]);
-      };
-      traverseTodoItemRecursive(todoItemListUl);
+      // const todoItemListUl = document.getElementById("todo-item-list-ul");
+      // const traverseTodoItemRecursive = (todoItemListUl) => {
+      //   let idx = 0;
+      //   idx += 1;
+      //   const firstTodo = todoItemListUl.firstChild;
+      //   return traverseTodoItemRecursive(todoItemListUl.childNodes[idx]);
+      // };
+      // traverseTodoItemRecursive(todoItemListUl);
     </script>
-    <script>
-      const todoItemList = document.querySelectorAll(".todo-item-list-ul");
-      console.log(todoItemList);
-      let todoItemsLi = todoItemList[0].children;
-      console.log(todoItemsLi);
-
-      for (let i = 0; i < todoItemsLi.length; i++) {
-        const todoItemLi = todoItemsLi[i];
-        console.log(todoItemLi);
-
-        setTimeout(() => {
-          todoItemsLi[i].style.backgroundColor = "rgb(252, 252, 252)";
-        }, 700);
-      }
+    <script src="/javascript/listStyleChange.js">
+      
     </script>
-    <script>
-      window.addEventListener("load", (event) => {
-        const inboxItems = "<%- inbox %>";
-        let idArr = [];
-        for (let i = 0; i < inboxItems.length; i++) {
-          const inboxItem = inboxItems[i];
-          const itemId = inboxItem.id;
-          idArr.push(itemId);
-        }
-        // const storage = window.localStorage;
-        // storage.setItem("inboxItems", `${idArr}`);
-      });
+    <script src="/javascript/saveListItemToStorage.js">
+     
     </script>
-    <script>
-      // move to trash action
-      const deleteHeaders = new Headers();
-      deleteHeaders.append("Content-Type", "text/html");
-
-      const init2 = {
-        method: "DELETE",
-        headers: deleteHeaders,
-        mode: "cors",
-        cache: "default",
-      };
-
-      // let request = new Request("http://localhost:8080/deleteTodo");
-      const sendDeleteTodoRequest = async (request, init) => {
-        try {
-          await fetch(request, init);
-        } catch (error) {}
-      };
-      const deleteTodoIcons = document.querySelectorAll(".delete-todo");
-      console.log("!delete todo icons !");
-      console.log(deleteTodoIcons);
-      for (let i = 0; i < deleteTodoIcons.length; i++) {
-        const deleteTodoIcon = deleteTodoIcons[i];
-        const deleteTodoId = deleteTodoIcon.getAttribute("id");
-        let body = {
-          deleteTodoId,
-        };
-        deleteTodoIcon.addEventListener("click", async (params) => {
-          console.log("move to trash!");
-          console.log(deleteTodoId);
-          url = "http://localhost:8080/moveToTrash/" + deleteTodoId;
-          fetch(url)
-            .then((result) => {
-              const liElement2 = deleteTodoIcon.parentElement.parentElement;
-              liElement2.style.backgroundColor = "rgb(239, 241, 242)";
-              liElement2.remove();
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-          // let request2 = new Request(
-          //   `http://localhost:8080/deleteTodo/${deleteTodoId}`
-          // );
-          // sendDeleteTodoRequest(request2, init2)
-          //   .then((response) => {
-          //     setTimeout(() => {
-          //       const liElement2 = deleteTodoIcon.parentElement.parentElement;
-
-          //       liElement2.remove();
-          //     }, 1500);
-
-          //     console.log(response);
-          //   })
-          //   .catch((err) => {
-          //     console.log(err);
-          //   });
-        });
-      }
+    <script src="/javascript/moveTodoToTrashBoxAction.js">
+      
     </script>
-    <script>
-      //complee todo request
-      let headers = new Headers();
-      headers.append("Content-Type", "text/html");
-
-      const init = {
-        method: "GET",
-        headers: headers,
-        mode: "cors",
-        cache: "default",
-      };
-
-      // let request = new Request("http://localhost:8080/completeTodo");
-      const sendCompleteTodoRequest = async (request, init) => {
-        let response;
-        try {
-          await fetch(request, init);
-        } catch (error) {}
-      };
-
-      const checkboxInputs = document.querySelectorAll(".todo-checkbox");
-      console.log(checkboxInputs);
-      for (let i = 0; i < checkboxInputs.length; i++) {
-        const input = checkboxInputs[i];
-        console.log("input");
-        console.log(input);
-        const inputId = input.getAttribute("id");
-        const isChecked = input.getAttribute("value");
-        console.log(isChecked);
-        const completedTodoId = inputId;
-        let body = {
-          completedTodoId,
-        };
-
-        console.log(inputId);
-        input.addEventListener("click", async () => {
-          console.log("12345");
-          console.log(inputId);
-          url = "http://localhost:8080/completeTodo/" + inputId;
-          fetch(url)
-            .then((result) => {
-              const LiElement = input.parentElement.parentElement.parentElement;
-              LiElement.style.backgroundColor = "rgb(239, 241, 242)";
-              setTimeout(() => {
-                LiElement.remove();
-              }, 1500);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-          // let request = new Request(
-          //   "http://localhost:8080/completeTodo/" + inputId
-          // );
-          // sendCompleteTodoRequest(request, init)
-          //   .then((result) => {
-          //     console.log(request);
-          //     setTimeout(() => {
-          //       const LiElement =
-          //         input.parentElement.parentElement.parentElement;
-
-          //       LiElement.remove();
-          //     }, 1500);
-          //   })
-          //   .catch((err) => {
-          //     console.log(err);
-          //   });
-        });
-      }
-      //
-      const todos = document.querySelectorAll(".todo-item");
-      console.log(todos);
-      for (let i = 0; i < todos.length; i++) {
-        const todoLiElement = todos[i];
-        const todoRow = todoLiElement.firstChild;
-      }
+    <script src="/javascript/completeTodoAction.js">
+     
     </script>
     <script
       type="text/javascript"
