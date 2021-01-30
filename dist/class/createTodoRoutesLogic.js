@@ -48,6 +48,7 @@ var user_1 = require("./user");
 var todo_1 = require("./todo");
 var inboxSchema_1 = require("../model/inboxSchema");
 var userSchema_1 = require("../model/userSchema");
+var inbox_1 = require("./inbox");
 // const User = user.user;
 var CreateTodoRoutesLogic = /** @class */ (function () {
     function CreateTodoRoutesLogic() {
@@ -88,7 +89,7 @@ var CreateTodoRoutesLogic = /** @class */ (function () {
                     case 1:
                         userData = _b.sent();
                         console.log(userData);
-                        return [4 /*yield*/, todo_1.Inbox.fetchInboxDataFromDatabase(userId)];
+                        return [4 /*yield*/, inbox_1.Inbox.fetchInboxDataFromDatabase(userId)];
                     case 2:
                         inboxData = _b.sent();
                         console.log("inboxData");
@@ -96,7 +97,7 @@ var CreateTodoRoutesLogic = /** @class */ (function () {
                         _a = req.body, title = _a.title, notes = _a.notes, priority = _a.priority, scheduledDate = _a.scheduledDate, deadline = _a.deadline;
                         userClassInstance = new user_1.User(userId, userData.name, userData.email, userData.password, userData.confirmPassword, userData.todo, userData.inbox, userData.today, userData.logbook, userData.trashBox, userData.activity, userData.lastLoggedIns);
                         console.log(userClassInstance);
-                        inboxClassInstance = new todo_1.Inbox(inboxData.list, userId);
+                        inboxClassInstance = new inbox_1.Inbox(inboxData.list, userId);
                         console.log(inboxClassInstance);
                         todoClassInstance = new todo_1.Todo(title, notes, priority, scheduledDate, deadline, userId);
                         console.log(todoClassInstance);
@@ -118,10 +119,10 @@ var CreateTodoRoutesLogic = /** @class */ (function () {
                         _b.sent();
                         updatedInboxClassInstance = inboxClassInstance.add(updatedTodoSchemaInstance2);
                         console.log(updatedInboxClassInstance);
-                        addedInboxData = todo_1.Inbox.setInboxSchema(inboxData, updatedInboxClassInstance);
+                        addedInboxData = inbox_1.Inbox.setInboxSchema(inboxData, updatedInboxClassInstance);
                         console.log(addedInboxData);
                         // -inbox schemaを保存 saveInboxSchemaToDatabase();
-                        return [4 /*yield*/, todo_1.Inbox.saveInboxSchemaToDatabase(addedInboxData)];
+                        return [4 /*yield*/, inbox_1.Inbox.saveInboxSchemaToDatabase(addedInboxData)];
                     case 4:
                         // -inbox schemaを保存 saveInboxSchemaToDatabase();
                         _b.sent();
@@ -228,7 +229,7 @@ var CreateTodoRoutesLogic = /** @class */ (function () {
                     case 1:
                         inboxData = _a.sent();
                         if (!inboxData) {
-                            inboxData = todo_1.Inbox.createInboxSchemaInstance();
+                            inboxData = inbox_1.Inbox.createInboxSchemaInstance();
                         }
                         return [3 /*break*/, 3];
                     case 2:
@@ -256,7 +257,7 @@ var CreateTodoRoutesLogic = /** @class */ (function () {
         return userInstance;
     };
     CreateTodoRoutesLogic.initializeInboxClassInstance = function (inboxData, userId) {
-        var inboxInstance = new todo_1.Inbox(inboxData.list, userId);
+        var inboxInstance = new inbox_1.Inbox(inboxData.list, userId);
         return inboxInstance;
     };
     CreateTodoRoutesLogic.initializeTodoClassInstance = function (todoInputs, userId) {
@@ -298,7 +299,7 @@ var CreateTodoRoutesLogic = /** @class */ (function () {
         return inboxClassInstance.add(todoSchema);
     };
     CreateTodoRoutesLogic.updateInboxDataWithInboxClassInstance = function (inboxData, inboxClassInstance) {
-        return todo_1.Inbox.setInboxSchema(inboxData, inboxClassInstance);
+        return inbox_1.Inbox.setInboxSchema(inboxData, inboxClassInstance);
     };
     CreateTodoRoutesLogic.saveInboxSchemaDataToDatabase = function (inboxData) {
         return __awaiter(this, void 0, void 0, function () {
@@ -307,7 +308,7 @@ var CreateTodoRoutesLogic = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, todo_1.Inbox.saveInboxSchemaToDatabase(inboxData)];
+                        return [4 /*yield*/, inbox_1.Inbox.saveInboxSchemaToDatabase(inboxData)];
                     case 1:
                         _a.sent();
                         return [3 /*break*/, 3];

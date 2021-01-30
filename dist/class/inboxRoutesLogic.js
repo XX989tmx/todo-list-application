@@ -37,11 +37,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.InboxRoutesLogic = void 0;
-// const mongoose = require('mongoose')
-// const InboxSchema = require('../model/inboxSchema')
-// const todo = require('./todo')
-var todo_1 = require("./todo");
 var inboxSchema_1 = require("../model/inboxSchema");
+var inbox_1 = require("./inbox");
 var InboxRoutesLogic = /** @class */ (function () {
     function InboxRoutesLogic() {
     }
@@ -74,7 +71,7 @@ var InboxRoutesLogic = /** @class */ (function () {
                     case 3:
                         inboxData = inbox[0];
                         inboxDataSize = inboxData.length;
-                        inboxInstance = new todo_1.Inbox(inboxData, userId);
+                        inboxInstance = new inbox_1.Inbox(inboxData, userId);
                         inboxList = inboxInstance.list;
                         // -Inbox Class InstanceをResとして返す。
                         return [2 /*return*/, inboxList];

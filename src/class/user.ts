@@ -1,4 +1,4 @@
-import { Activity, Inbox, Logbook, Today, Todo, TrashBox } from "./todo";
+import { Todo } from "./todo";
 
 import { userModel as userSchema, IUserSchema } from "../model/userSchema";
 import { ObjectID } from "bson";
@@ -10,6 +10,11 @@ import { IProjectSchema } from "../model/projectSchema";
 import { ITodaysSchema } from "../model/todaysSchema";
 import { IInboxSchema } from "../model/inboxSchema";
 import { ITodoSchema } from "../model/todoSchema";
+import { Activity } from "./activity";
+import { Inbox } from "./inbox";
+import { Logbook } from "./logbook";
+import { Today } from "./today";
+import { TrashBox } from "./trashBox";
 
 export interface UserInterface {
   id: string | null;

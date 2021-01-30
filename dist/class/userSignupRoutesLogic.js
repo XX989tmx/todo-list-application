@@ -39,6 +39,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserSignupRoutesLogic = void 0;
 var todo_1 = require("./todo");
 var user_1 = require("./user");
+var activity_1 = require("./activity");
+var inbox_1 = require("./inbox");
+var logbook_1 = require("./logbook");
+var project_1 = require("./project");
+var today_1 = require("./today");
+var trashBox_1 = require("./trashBox");
 var UserSignupRoutesLogic = /** @class */ (function () {
     function UserSignupRoutesLogic() {
     }
@@ -88,24 +94,24 @@ var UserSignupRoutesLogic = /** @class */ (function () {
                         todoSchemaInstance = todo_1.Todo.createTodoSchemaInstance();
                         console.log(todoSchemaInstance);
                         updatedUserSchemaInstance2 = UserSignupRoutesLogic.setTodoSchemaIdToUserSchema(todoSchemaInstance, userSchemaInstance);
-                        todaySchemaInstance = todo_1.Today.createTodaySchemaInstance();
+                        todaySchemaInstance = today_1.Today.createTodaySchemaInstance();
                         updatedUserSchemaInstance3 = user_1.User.setTodayIdToUserSchema(updatedUserSchemaInstance2, todaySchemaInstance);
-                        updatedTodaySchema = todo_1.Today.setUserIdToTodaySchema(todaySchemaInstance, updatedUserSchemaInstance3);
-                        inboxSchemaInstance = todo_1.Inbox.createInboxSchemaInstance();
+                        updatedTodaySchema = today_1.Today.setUserIdToTodaySchema(todaySchemaInstance, updatedUserSchemaInstance3);
+                        inboxSchemaInstance = inbox_1.Inbox.createInboxSchemaInstance();
                         updatedUserSchemaInstance4 = user_1.User.setInboxIdToUserSchema(updatedUserSchemaInstance3, inboxSchemaInstance);
-                        updatedInboxSchemaInstance = todo_1.Inbox.setUserIdToInboxSchema(inboxSchemaInstance, updatedUserSchemaInstance4);
-                        projectSchemaInstance = todo_1.Project.createProjectSchemaInstance();
+                        updatedInboxSchemaInstance = inbox_1.Inbox.setUserIdToInboxSchema(inboxSchemaInstance, updatedUserSchemaInstance4);
+                        projectSchemaInstance = project_1.Project.createProjectSchemaInstance();
                         updatedUserSchemaInstance5 = user_1.User.setProjectIdToUserSchema(updatedUserSchemaInstance4, projectSchemaInstance);
-                        updatedProjectSchemaInstance = todo_1.Project.setUserIdToProjectSchema(projectSchemaInstance, updatedUserSchemaInstance5);
-                        logbookSchemaInstance = todo_1.Logbook.createLogbookSchemaInstance();
+                        updatedProjectSchemaInstance = project_1.Project.setUserIdToProjectSchema(projectSchemaInstance, updatedUserSchemaInstance5);
+                        logbookSchemaInstance = logbook_1.Logbook.createLogbookSchemaInstance();
                         updatedUserSchemaInstance6 = user_1.User.setLogbookIdToUserSchema(updatedUserSchemaInstance5, logbookSchemaInstance);
-                        updatedLogbookSchemaInstance = todo_1.Logbook.setUserIdToLogbookSchema(logbookSchemaInstance, updatedUserSchemaInstance5);
-                        trashBoxSchemaInstance = todo_1.TrashBox.createTrashBoxSchemaInstance();
+                        updatedLogbookSchemaInstance = logbook_1.Logbook.setUserIdToLogbookSchema(logbookSchemaInstance, updatedUserSchemaInstance5);
+                        trashBoxSchemaInstance = trashBox_1.TrashBox.createTrashBoxSchemaInstance();
                         updatedUserSchemaInstance7 = user_1.User.setTrashBoxIdToUserSchema(updatedUserSchemaInstance6, trashBoxSchemaInstance);
-                        updatedTrashBoxSchemaInstance = todo_1.TrashBox.setUserIdToTrashBoxSchema(trashBoxSchemaInstance, updatedUserSchemaInstance7);
-                        activitySchemaInstance = todo_1.Activity.createActivitySchemaInstance();
+                        updatedTrashBoxSchemaInstance = trashBox_1.TrashBox.setUserIdToTrashBoxSchema(trashBoxSchemaInstance, updatedUserSchemaInstance7);
+                        activitySchemaInstance = activity_1.Activity.createActivitySchemaInstance();
                         updatedUserSchemaInstance8 = user_1.User.setActivityIdToUserSchema(updatedUserSchemaInstance7, activitySchemaInstance);
-                        updatedActivitySchemaInstance = todo_1.Activity.setUserIdToActivitySchema(activitySchemaInstance, updatedUserSchemaInstance8);
+                        updatedActivitySchemaInstance = activity_1.Activity.setUserIdToActivitySchema(activitySchemaInstance, updatedUserSchemaInstance8);
                         console.log("todo");
                         console.log(todoSchemaInstance);
                         console.log("inbox");
@@ -128,27 +134,27 @@ var UserSignupRoutesLogic = /** @class */ (function () {
                         // todo schema を保存
                         _a.sent();
                         // inbox schema を保存
-                        return [4 /*yield*/, todo_1.Inbox.saveInboxSchemaToDatabase(updatedInboxSchemaInstance)];
+                        return [4 /*yield*/, inbox_1.Inbox.saveInboxSchemaToDatabase(updatedInboxSchemaInstance)];
                     case 2:
                         // inbox schema を保存
                         _a.sent();
                         // today schemaを保存
-                        return [4 /*yield*/, todo_1.Today.saveTodaySchemaToDatabase(todaySchemaInstance)];
+                        return [4 /*yield*/, today_1.Today.saveTodaySchemaToDatabase(todaySchemaInstance)];
                     case 3:
                         // today schemaを保存
                         _a.sent();
                         // logbook schema を保存
-                        return [4 /*yield*/, todo_1.Logbook.saveLogbookSchemaToDatabase(updatedLogbookSchemaInstance)];
+                        return [4 /*yield*/, logbook_1.Logbook.saveLogbookSchemaToDatabase(updatedLogbookSchemaInstance)];
                     case 4:
                         // logbook schema を保存
                         _a.sent();
                         // trashBox schema を保存
-                        return [4 /*yield*/, todo_1.TrashBox.saveTrashBoxSchemaToDatabase(updatedTrashBoxSchemaInstance)];
+                        return [4 /*yield*/, trashBox_1.TrashBox.saveTrashBoxSchemaToDatabase(updatedTrashBoxSchemaInstance)];
                     case 5:
                         // trashBox schema を保存
                         _a.sent();
                         // activity schema を保存
-                        return [4 /*yield*/, todo_1.Activity.saveActivitySchemaToDatabase(updatedActivitySchemaInstance)];
+                        return [4 /*yield*/, activity_1.Activity.saveActivitySchemaToDatabase(updatedActivitySchemaInstance)];
                     case 6:
                         // activity schema を保存
                         _a.sent();
@@ -201,7 +207,7 @@ var UserSignupRoutesLogic = /** @class */ (function () {
         return updatedTodoSchemaInstance;
     };
     UserSignupRoutesLogic.initializeTodaySchemaInstance = function () {
-        var todaySchemaInstance = todo_1.Today.createTodaySchemaInstance();
+        var todaySchemaInstance = today_1.Today.createTodaySchemaInstance();
         return todaySchemaInstance;
     };
     UserSignupRoutesLogic.setTodaysSchemaIdToUserSchemaInstance = function (todaySchemaInstance, userSchemaInstance) {
@@ -209,11 +215,11 @@ var UserSignupRoutesLogic = /** @class */ (function () {
         return updatedUserSchemaInstance;
     };
     UserSignupRoutesLogic.setUserIdToTodaysSchema = function (userSchemaInstance, todaySchemaInstance) {
-        var updatedTodaySchemaInstance = todo_1.Today.setUserIdToTodaySchema(todaySchemaInstance, userSchemaInstance);
+        var updatedTodaySchemaInstance = today_1.Today.setUserIdToTodaySchema(todaySchemaInstance, userSchemaInstance);
         return updatedTodaySchemaInstance;
     };
     UserSignupRoutesLogic.initializeInboxSchemaInstance = function () {
-        var inboxSchemaInstance = todo_1.Inbox.createInboxSchemaInstance();
+        var inboxSchemaInstance = inbox_1.Inbox.createInboxSchemaInstance();
         return inboxSchemaInstance;
     };
     UserSignupRoutesLogic.setInboxSchemaIdToUserSchemaInstance = function (inboxSchemaInstance, userSchemaInstance) {
@@ -221,11 +227,11 @@ var UserSignupRoutesLogic = /** @class */ (function () {
         return updatedUserSchemaInstance;
     };
     UserSignupRoutesLogic.setUserIdToInboxSchema = function (userSchemaInstance, inboxSchemaInstance) {
-        var updatedInboxSchemaInstance = todo_1.Inbox.setUserIdToInboxSchema(inboxSchemaInstance, userSchemaInstance);
+        var updatedInboxSchemaInstance = inbox_1.Inbox.setUserIdToInboxSchema(inboxSchemaInstance, userSchemaInstance);
         return updatedInboxSchemaInstance;
     };
     UserSignupRoutesLogic.initializeProjectSchemaInstance = function () {
-        var projectSchemaInstance = todo_1.Project.createProjectSchemaInstance();
+        var projectSchemaInstance = project_1.Project.createProjectSchemaInstance();
         return projectSchemaInstance;
     };
     UserSignupRoutesLogic.setProjectSchemaIdToUserSchemaInstance = function (projectSchemaInstance, userSchemaInstance) {
@@ -233,11 +239,11 @@ var UserSignupRoutesLogic = /** @class */ (function () {
         return updatedUserSchemaInstance;
     };
     UserSignupRoutesLogic.setUserSchemaIdToProjectSchema = function (userSchemaInstance, projectSchemaInstance) {
-        var updatedProjectSchemaInstance = todo_1.Project.setUserIdToProjectSchema(projectSchemaInstance, userSchemaInstance);
+        var updatedProjectSchemaInstance = project_1.Project.setUserIdToProjectSchema(projectSchemaInstance, userSchemaInstance);
         return updatedProjectSchemaInstance;
     };
     UserSignupRoutesLogic.initializeLogbookSchemaInstance = function () {
-        var logbookSchemaInstance = todo_1.Logbook.createLogbookSchemaInstance();
+        var logbookSchemaInstance = logbook_1.Logbook.createLogbookSchemaInstance();
         return logbookSchemaInstance;
     };
     UserSignupRoutesLogic.setLogbookSchemaIdToUserSchemaId = function (logbookSchemaInstance, userSchemaInstance) {
@@ -245,7 +251,7 @@ var UserSignupRoutesLogic = /** @class */ (function () {
         return updatedUserSchemaInstance;
     };
     UserSignupRoutesLogic.setUserSchemaIdToLogbookSchema = function (userSchemaInstance, logbookSchemaInstance) {
-        var updatedLogbookSchemaInstance = todo_1.Logbook.setUserIdToLogbookSchema(logbookSchemaInstance, userSchemaInstance);
+        var updatedLogbookSchemaInstance = logbook_1.Logbook.setUserIdToLogbookSchema(logbookSchemaInstance, userSchemaInstance);
         return updatedLogbookSchemaInstance;
     };
     return UserSignupRoutesLogic;

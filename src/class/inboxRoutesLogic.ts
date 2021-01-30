@@ -2,8 +2,9 @@ import mongoose from "mongoose";
 // const mongoose = require('mongoose')
 // const InboxSchema = require('../model/inboxSchema')
 // const todo = require('./todo')
-import { Todo, Inbox, Today } from "./todo";
+import { Todo } from "./todo";
 import { inboxModel as InboxSchema } from "../model/inboxSchema";
+import { Inbox } from "./inbox";
 
 export class InboxRoutesLogic {
   // -データベースからInboxデータを読み出す

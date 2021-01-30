@@ -6,9 +6,10 @@ import { User } from "./user";
 // const Todo = todo.todo;
 // const Inbox = todo.inbox;
 // const user = require("./user");
-import { Todo, Inbox } from "./todo";
+import { Todo } from "./todo";
 import { inboxModel as InboxSchema } from "../model/inboxSchema";
 import { userModel as UserSchema } from "../model/userSchema";
+import { Inbox } from "./inbox";
 
 // const User = user.user;
 

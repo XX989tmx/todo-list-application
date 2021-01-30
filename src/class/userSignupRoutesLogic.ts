@@ -3,13 +3,7 @@ import { ITodoSchema } from "./../model/todoSchema";
 import { ITodaysSchema } from "./../model/todaysSchema";
 import axios from "axios";
 import {
-  Todo,
-  Inbox,
-  Today,
-  Project,
-  Activity,
-  Logbook,
-  TrashBox,
+  Todo
 } from "./todo";
 import { User } from "./user";
 import { todoModel as TodoSchema } from "../model/todoSchema";
@@ -31,6 +25,12 @@ import { trashBoxModel as TrashBoxSchema } from "../model/trashBoxSchema";
 import { userModel as UserSchema, IUserSchema } from "../model/userSchema";
 import { Document } from "mongoose";
 import { Request } from "express";
+import { Activity } from "./activity";
+import { Inbox } from "./inbox";
+import { Logbook } from "./logbook";
+import { Project } from "./project";
+import { Today } from "./today";
+import { TrashBox } from "./trashBox";
 
 export interface userInputsData {
   name: string;
