@@ -208,6 +208,12 @@ Body {
 .today-icon-active {
   background-color: rgb(255, 217, 0);
 }
+.edit-icon:hover {
+  background-color: rgb(114, 216, 114);
+}
+.delete-icon:hover {
+  background-color: #ce5127;
+}
 
 /* Popover
 .popover {
