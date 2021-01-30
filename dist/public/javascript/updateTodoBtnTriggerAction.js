@@ -64,12 +64,37 @@ var UpdateTodoSubmit = /** @class */ (function () {
         var _loop_1 = function (i) {
             var todoModalTriggerButton = todoModalTriggerButtons[i];
             todoModalTriggerButton.addEventListener("click", function (event) {
+                var _a, _b, _c;
                 UpdateTodoSubmit.targetTodoId = todoModalTriggerButton.getAttribute("id");
                 console.log("target todo is --");
                 console.log(UpdateTodoSubmit.targetTodoId);
                 var idFieldInModal = document.getElementById("todoId");
                 idFieldInModal === null || idFieldInModal === void 0 ? void 0 : idFieldInModal.setAttribute("value", UpdateTodoSubmit.targetTodoId);
                 console.log(idFieldInModal);
+                //
+                var todoItemsRow = todoModalTriggerButton.parentNode;
+                console.log(todoItemsRow);
+                var todoCol = todoItemsRow === null || todoItemsRow === void 0 ? void 0 : todoItemsRow.children;
+                console.log(todoCol);
+                // priority
+                var priority = (_a = todoCol[1].children[0].firstChild) === null || _a === void 0 ? void 0 : _a.textContent;
+                console.log(priority);
+                // title
+                var title = (_b = todoCol[2].children[0].firstChild) === null || _b === void 0 ? void 0 : _b.textContent;
+                console.log(title);
+                // set to modal
+                var titleField = document.getElementById("update-todo-input-title");
+                titleField === null || titleField === void 0 ? void 0 : titleField.setAttribute("value", title);
+                var select = (_c = document.getElementById("update-priority-option")) === null || _c === void 0 ? void 0 : _c.children;
+                console.log(select);
+                for (var j = 0; j < select.length; j++) {
+                    var option = select[j];
+                    console.log(option.textContent);
+                    if (+option.innerHTML == +priority) {
+                        option.setAttribute("value", priority);
+                        option.setAttribute("selected", "selected");
+                    }
+                }
             });
         };
         for (var i = 0; i < todoModalTriggerButtons.length; i++) {

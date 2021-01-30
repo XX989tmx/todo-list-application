@@ -77,6 +77,32 @@ class UpdateTodoSubmit {
         const idFieldInModal = document.getElementById("todoId");
         idFieldInModal?.setAttribute("value", UpdateTodoSubmit.targetTodoId);
         console.log(idFieldInModal);
+        //
+        const todoItemsRow = todoModalTriggerButton.parentNode;
+        console.log(todoItemsRow);
+        const todoCol = todoItemsRow?.children;
+        console.log(todoCol);
+        // priority
+        const priority = todoCol[1].children[0].firstChild?.textContent;
+        console.log(priority);
+        // title
+        const title = todoCol[2].children[0].firstChild?.textContent;
+        console.log(title);
+
+        // set to modal
+        const titleField = document.getElementById("update-todo-input-title");
+        titleField?.setAttribute("value", title);
+        const select = document.getElementById("update-priority-option")?.children;
+        console.log(select);
+        
+        for (let j = 0; j < select.length; j++) {
+          const option = select[j];
+          console.log(option.textContent);
+          if (+option.innerHTML == +priority) {
+            option.setAttribute("value",priority);
+            option.setAttribute("selected","selected");
+          }
+        }
       });
     }
   }
