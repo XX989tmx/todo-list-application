@@ -74,6 +74,9 @@ class UpdateTodoSubmit {
         console.log("target todo is --");
 
         console.log(UpdateTodoSubmit.targetTodoId);
+        const idFieldInModal = document.getElementById("todoId");
+        idFieldInModal?.setAttribute("value", UpdateTodoSubmit.targetTodoId);
+        console.log(idFieldInModal);
       });
     }
   }

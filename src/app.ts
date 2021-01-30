@@ -125,7 +125,6 @@ app.post(
 
 app.post("/updateTodo", async (req, res, next) => {
   const {
-    todoId,
     title,
     notes,
     priority,
@@ -133,6 +132,7 @@ app.post("/updateTodo", async (req, res, next) => {
     deadline,
   } = req.body;
   // const targetTodoId = req.params.targetTodoId;
+  const todoId = req.body['target-todo-id'].trim()
   const userId = "600ac39664b8571ed5b8ef2b";
   console.log(todoId);
   console.log(req.body);

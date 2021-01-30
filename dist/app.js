@@ -115,11 +115,12 @@ app.post("/createTodo", function (req, res, next) { return __awaiter(void 0, voi
     });
 }); });
 app.post("/updateTodo", function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, todoId, title, notes, priority, scheduledDate, deadline, userId, todo, inboxList;
+    var _a, title, notes, priority, scheduledDate, deadline, todoId, userId, todo, inboxList;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
-                _a = req.body, todoId = _a.todoId, title = _a.title, notes = _a.notes, priority = _a.priority, scheduledDate = _a.scheduledDate, deadline = _a.deadline;
+                _a = req.body, title = _a.title, notes = _a.notes, priority = _a.priority, scheduledDate = _a.scheduledDate, deadline = _a.deadline;
+                todoId = req.body['target-todo-id'].trim();
                 userId = "600ac39664b8571ed5b8ef2b";
                 console.log(todoId);
                 console.log(req.body);

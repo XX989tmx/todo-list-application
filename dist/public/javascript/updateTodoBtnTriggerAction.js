@@ -67,6 +67,9 @@ var UpdateTodoSubmit = /** @class */ (function () {
                 UpdateTodoSubmit.targetTodoId = todoModalTriggerButton.getAttribute("id");
                 console.log("target todo is --");
                 console.log(UpdateTodoSubmit.targetTodoId);
+                var idFieldInModal = document.getElementById("todoId");
+                idFieldInModal === null || idFieldInModal === void 0 ? void 0 : idFieldInModal.setAttribute("value", UpdateTodoSubmit.targetTodoId);
+                console.log(idFieldInModal);
             });
         };
         for (var i = 0; i < todoModalTriggerButtons.length; i++) {
