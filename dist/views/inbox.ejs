@@ -32,10 +32,20 @@
                         style="height: 100%; width: 100%"
                       >
                         <path
-                          d="M14.12 10.163l1.715.858c.22.11.22.424 0 .534L8.267 15.34a.598.598 0 0 1-.534 0L.165 11.555a.299.299 0 0 1 0-.534l1.716-.858 5.317 2.659c.505.252 1.1.252 1.604 0l5.317-2.66zM7.733.063a.598.598 0 0 1 .534 0l7.568 3.784a.3.3 0 0 1 0 .535L8.267 8.165a.598.598 0 0 1-.534 0L.165 4.382a.299.299 0 0 1 0-.535L7.733.063z"
+                          d="M14.12 10.163l1.715.858c.22.11.22.424 0
+                                .534L8.267 15.34a.598.598 0 0 1-.534 0L.165
+                                11.555a.299.299 0 0 1 0-.534l1.716-.858 5.317
+                                2.659c.505.252 1.1.252 1.604
+                                0l5.317-2.66zM7.733.063a.598.598 0 0 1 .534
+                                0l7.568 3.784a.3.3 0 0 1 0 .535L8.267
+                                8.165a.598.598 0 0 1-.534 0L.165 4.382a.299.299
+                                0 0 1 0-.535L7.733.063z"
                         />
                         <path
-                          d="M14.12 6.576l1.715.858c.22.11.22.424 0 .534l-7.568 3.784a.598.598 0 0 1-.534 0L.165 7.968a.299.299 0 0 1 0-.534l1.716-.858 5.317 2.659c.505.252 1.1.252 1.604 0l5.317-2.659z"
+                          d="M14.12 6.576l1.715.858c.22.11.22.424 0
+                                  .534l-7.568 3.784a.598.598 0 0 1-.534 0L.165
+                                  7.968a.299.299 0 0 1 0-.534l1.716-.858 5.317
+                                  2.659c.505.252 1.1.252 1.604 0l5.317-2.659z"
                         />
                       </svg>
                     </div>
@@ -53,116 +63,238 @@
               <div id="main-section" class="main-section row">
                 <div class="col-12">
                   <ul
-                    class="margin-and-padding-0 list-style-none list-group todo-item-list-ul"
+                    class="margin-and-padding-0 list-style-none list-group todo-item-list-ul" id="todo-container"
                   >
-                    <% inbox.forEach(todo => { %>
-
-                    <li id="todo-item-li" class="list-group-item todo-item <%= todo.priority === 1 ? "todoColorPriority1" : todo.priority === 2 ? "todoColorPriority2" : "todoColorPriority3" %> ">
-                      <div class="todo-items row">
-                        <div class="col-1">
-                          <input
-                            class="todo-checkbox"
-                            type="checkbox"
-                            name=""
-                            id="<%- todo.id %> "
-                          />
-                        </div>
-                        <div class="col-1" id="todo-priority">
-                          <% if (todo.priority === 3) { %>
-                          <span class="priority3"><%= todo.priority %> </span>
-                          <% } else if (todo.priority === 2) { %>
-                          <span class="priority2"><%= todo.priority %> </span>
-                          <% } else { %>
-                          <span class="priority1"><%= todo.priority %> </span>
-
-                          <% } %>
-                        </div>
-                        <div
-                          class="col-7"
-                          id="todo-item"
-                          data-toggle="collapse"
-                          data-target="#todo-item-collapse"
-                        >
-                          <span value="<% todo.title %> "
-                            ><%= todo.title %>
-                          </span>
-                        </div>
-                        <div class="drag-button col-1" id="drag-button">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            fill="currentColor"
-                            class="bi bi-grip-vertical"
-                            viewBox="0 0 16 16"
-                          >
-                            <path
-                              d="M7 2a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zM7 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zM7 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-3 3a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-3 3a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"
-                            />
-                          </svg>
-                        </div>
-                        <div
-                          class="col-1 update-todo-modal-trigger-button"
+                    <% inbox.forEach(todo=> { %> <li id="todo-item-li"
+                    class="list-group-item todo-item <%= todo.priority === 1
+                    ?"todoColorPriority1" : todo.priority === 2
+                    ?"todoColorPriority2" :"todoColorPriority3" %> ">
+                    <div class="todo-items row">
+                      <div class="col-1">
+                        <input
+                          class="todo-checkbox"
+                          type="checkbox"
+                          name=""
                           id="<%- todo.id %> "
+                        />
+                      </div>
+                      <div class="col-1" id="todo-priority">
+                        <% if (todo.priority === 3) { %>
+                        <span class="priority3"><%= todo.priority %> </span>
+                        <% } else if (todo.priority === 2) { %>
+                        <span class="priority2"><%= todo.priority %> </span>
+                        <% } else { %>
+                        <span class="priority1"><%= todo.priority %> </span>
+
+                        <% } %>
+                      </div>
+                      <div
+                        class="col-6"
+                        id="todo-item"
+                        data-toggle="collapse"
+                        data-target="#todo-item-collapse"
+                      >
+                        <span
+                          value="<% todo.title
+                                                      %> "
+                          ><%= todo.title %>
+                        </span>
+                      </div>
+
+                      <div class="today-icon col-1" >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          fill="currentColor"
+                          class="bi bi-star setAsTodayIcon"
+                          viewBox="0 0 16 16"
+                          id="set-as-today-icon"
+                        >
+                          <path
+                            d="M2.866
+                                                          14.85c-.078.444.36.791.746.593l4.39-2.256
+                                                          4.389
+                                                          2.256c.386.198.824-.149.746-.592l-.83-4.73
+                                                          3.523-3.356c.329-.314.158-.888-.283-.95l-4.898-.696L8.465.792a.513.513
+                                                          0 0 0-.927 0L5.354
+                                                          5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523
+                                                          3.356-.83
+                                                          4.73zm4.905-2.767l-3.686
+                                                          1.894.694-3.957a.565.565
+                                                          0 0 0-.163-.505L1.71
+                                                          6.745l4.052-.576a.525.525
+                                                          0 0 0
+                                                          .393-.288l1.847-3.658
+                                                          1.846 3.658a.525.525 0
+                                                          0 0
+                                                          .393.288l4.052.575-2.906
+                                                          2.77a.564.564 0 0
+                                                          0-.163.506l.694
+                                                          3.957-3.686-1.894a.503.503
+                                                          0 0 0-.461 0z"
+                          />
+                        </svg>
+                      </div>
+                      <div class="drag-button col-1" id="drag-button">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          fill="currentColor"
+                          class="bi bi-grip-vertical"
+                          viewBox="0 0 16 16"
+                        >
+                          <path
+                            d="M7 2a1 1 0 1 1-2
+                                                            0 1 1 0 0 1 2 0zm3
+                                                            0a1 1 0 1 1-2 0 1 1
+                                                            0 0 1 2 0zM7 5a1 1 0
+                                                            1 1-2 0 1 1 0 0 1 2
+                                                            0zm3 0a1 1 0 1 1-2 0
+                                                            1 1 0 0 1 2 0zM7 8a1
+                                                            1 0 1 1-2 0 1 1 0 0
+                                                            1 2 0zm3 0a1 1 0 1
+                                                            1-2 0 1 1 0 0 1 2
+                                                            0zm-3 3a1 1 0 1 1-2
+                                                            0 1 1 0 0 1 2 0zm3
+                                                            0a1 1 0 1 1-2 0 1 1
+                                                            0 0 1 2 0zm-3 3a1 1
+                                                            0 1 1-2 0 1 1 0 0 1
+                                                            2 0zm3 0a1 1 0 1 1-2
+                                                            0 1 1 0 0 1 2 0z"
+                          />
+                        </svg>
+                      </div>
+                      <div
+                        class="col-1 update-todo-modal-trigger-button"
+                        id="<%- todo.id %> "
+                        data-toggle="modal"
+                        data-target="#update-todo-input-modal"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          fill="currentColor"
+                          class="bi bi-pencil-square"
+                          viewBox="0 0 16 16"
+                        >
+                          <path
+                            d="M15.502
+                                                              1.94a.5.5 0 0 1 0
+                                                              .706L14.459
+                                                              3.69l-2-2L13.502.646a.5.5
+                                                              0 0 1 .707 0l1.293
+                                                              1.293zm-1.75
+                                                              2.456l-2-2L4.939
+                                                              9.21a.5.5 0 0
+                                                              0-.121.196l-.805
+                                                              2.414a.25.25 0 0 0
+                                                              .316.316l2.414-.805a.5.5
+                                                              0 0 0
+                                                              .196-.12l6.813-6.814z"
+                          />
+                          <path
+                            fill-rule="evenodd"
+                            d="M1 13.5A1.5
+                                                                1.5 0 0 0 2.5
+                                                                15h11a1.5 1.5 0
+                                                                0 0
+                                                                1.5-1.5v-6a.5.5
+                                                                0 0 0-1 0v6a.5.5
+                                                                0 0
+                                                                1-.5.5h-11a.5.5
+                                                                0 0
+                                                                1-.5-.5v-11a.5.5
+                                                                0 0 1
+                                                                .5-.5H9a.5.5 0 0
+                                                                0 0-1H2.5A1.5
+                                                                1.5 0 0 0 1
+                                                                2.5v11z"
+                          />
+                        </svg>
+                      </div>
+                      <div
+                        id="<%- todo.id %>
+                                                              "
+                        class="col-1 delete-todo"
+                        data-toggle="popover"
+                        data-content="delete
+                                                              todo"
+                        placement="right"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          fill="currentColor"
+                          class="bi bi-backspace"
+                          viewBox="0 0 16
+                                                                16"
+                        >
+                          <path
+                            d="M5.83
+                                                                  5.146a.5.5 0 0
+                                                                  0 0 .708L7.975
+                                                                  8l-2.147
+                                                                  2.146a.5.5 0 0
+                                                                  0
+                                                                  .707.708l2.147-2.147
+                                                                  2.146
+                                                                  2.147a.5.5 0 0
+                                                                  0
+                                                                  .707-.708L9.39
+                                                                  8l2.146-2.146a.5.5
+                                                                  0 0
+                                                                  0-.707-.708L8.683
+                                                                  7.293 6.536
+                                                                  5.146a.5.5 0 0
+                                                                  0-.707 0z"
+                          />
+                          <path
+                            d="M13.683
+                                                                    1a2 2 0 0 1
+                                                                    2 2v10a2 2 0
+                                                                    0 1-2
+                                                                    2h-7.08a2 2
+                                                                    0 0
+                                                                    1-1.519-.698L.241
+                                                                    8.65a1 1 0 0
+                                                                    1
+                                                                    0-1.302L5.084
+                                                                    1.7A2 2 0 0
+                                                                    1 6.603
+                                                                    1h7.08zm-7.08
+                                                                    1a1 1 0 0
+                                                                    0-.76.35L1
+                                                                    8l4.844
+                                                                    5.65a1 1 0 0
+                                                                    0
+                                                                    .759.35h7.08a1
+                                                                    1 0 0 0
+                                                                    1-1V3a1 1 0
+                                                                    0
+                                                                    0-1-1h-7.08z"
+                          />
+                        </svg>
+                      </div>
+                      <div
+                        id="todo-item-collapse"
+                        class="todo-item-collapse collapse row"
+                      >
+                        <div
+                          id="todo-item-collapse-contents"
                           data-toggle="modal"
                           data-target="#update-todo-input-modal"
                         >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            fill="currentColor"
-                            class="bi bi-pencil-square"
-                            viewBox="0 0 16 16"
-                          >
-                            <path
-                              d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
-                            />
-                            <path
-                              fill-rule="evenodd"
-                              d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
-                            />
-                          </svg>
-                        </div>
-                        <div
-                          id="<%- todo.id %> "
-                          class="col-1 delete-todo"
-                          data-toggle="popover"
-                          data-content="delete todo"
-                          placement="right"
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            fill="currentColor"
-                            class="bi bi-backspace"
-                            viewBox="0 0 16 16"
-                          >
-                            <path
-                              d="M5.83 5.146a.5.5 0 0 0 0 .708L7.975 8l-2.147 2.146a.5.5 0 0 0 .707.708l2.147-2.147 2.146 2.147a.5.5 0 0 0 .707-.708L9.39 8l2.146-2.146a.5.5 0 0 0-.707-.708L8.683 7.293 6.536 5.146a.5.5 0 0 0-.707 0z"
-                            />
-                            <path
-                              d="M13.683 1a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-7.08a2 2 0 0 1-1.519-.698L.241 8.65a1 1 0 0 1 0-1.302L5.084 1.7A2 2 0 0 1 6.603 1h7.08zm-7.08 1a1 1 0 0 0-.76.35L1 8l4.844 5.65a1 1 0 0 0 .759.35h7.08a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1h-7.08z"
-                            />
-                          </svg>
-                        </div>
-                        <div
-                          id="todo-item-collapse"
-                          class="todo-item-collapse collapse row"
-                        >
-                          <div
-                            id="todo-item-collapse-contents"
-                            data-toggle="modal"
-                            data-target="#update-todo-input-modal"
-                          >
-                            <p>todo notes & deadline</p>
-                            <p><%= todo.notes %></p>
-                            <span><%= todo.deadline %> </span>
-                          </div>
+                          <p>todo notes & deadline</p>
+                          <p><%= todo.notes %></p>
+                          <span><%= todo.deadline %> </span>
                         </div>
                       </div>
-                    </li>
+                    </div>
+                          </li>
                     <% }) %>
                   </ul>
                 </div>
@@ -224,7 +356,6 @@
                               name=""
                               value=""
                             /> -->
-
                               <textarea
                                 class="form-control"
                                 rows="7"
@@ -232,7 +363,6 @@
                                 placeholder="notes"
                                 name="notes"
                               ></textarea>
-
                               <!-- <textarea
                               rows=""
                               cols=""
@@ -273,7 +403,6 @@
                                 aria-label="deadline"
                               />
                             </div>
-
                             <button
                               id="submit-addNewTodo-todo-inputs"
                               type="submit"
@@ -341,14 +470,14 @@
                           </div>
                           <div class="form-group">
                             <label for="todo-input-title">todo name</label>
-
                             <input
                               class="form-control"
                               id="update-todo-input-title"
                               type="text"
                               name="title"
                               value=""
-                              placeholder="to do"
+                              placeholder="to
+                                                                            do"
                               autofocus
                             />
                           </div>
@@ -405,7 +534,6 @@
                               aria-label="deadline"
                             />
                           </div>
-
                           <button
                             id="update-todo-inputs"
                             type="submit"
@@ -452,12 +580,11 @@
       integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
       crossorigin="anonymous"
     ></script>
-
     <script>
       class Sidebar {}
     </script>
-
     <script src="/javascript/updateTodoBtnTriggerAction.js"></script>
+    <script src="/javascript/today-icon.js"></script>
     <script>
       const todoItemListUl = document.getElementById("todo-item-list-ul");
       const traverseTodoItemRecursive = (todoItemListUl) => {
@@ -468,9 +595,7 @@
       };
       traverseTodoItemRecursive(todoItemListUl);
     </script>
-
     <script>
-      
       const todoItemList = document.querySelectorAll(".todo-item-list-ul");
       console.log(todoItemList);
       let todoItemsLi = todoItemList[0].children;
@@ -485,7 +610,6 @@
         }, 700);
       }
     </script>
-
     <script>
       window.addEventListener("load", (event) => {
         const inboxItems = "<%- inbox %>";
@@ -499,7 +623,6 @@
         // storage.setItem("inboxItems", `${idArr}`);
       });
     </script>
-
     <script>
       // move to trash action
       const deleteHeaders = new Headers();
@@ -559,7 +682,6 @@
         });
       }
     </script>
-
     <script>
       //complee todo request
       let headers = new Headers();
@@ -636,7 +758,6 @@
         const todoRow = todoLiElement.firstChild;
       }
     </script>
-
     <script
       type="text/javascript"
       src="/javascript/sidebarColorChange.js"

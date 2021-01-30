@@ -205,6 +205,10 @@ Body {
   border-left: 6px solid rgb(224, 37, 37);
 }
 
+.today-icon-active {
+  background-color: rgb(255, 217, 0);
+}
+
 /* Popover
 .popover {
   border: 2px dotted red;
