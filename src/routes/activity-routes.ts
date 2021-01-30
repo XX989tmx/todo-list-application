@@ -1,13 +1,8 @@
-import express, {Request,Response,NextFunction} from 'express'
+import { activityAll } from "./../controllers/activity-controllers";
+import express, { Request, Response, NextFunction } from "express";
 
 const router = express.Router();
 
-
-router.get(
-  "/activity",
-  async (req: Request, res: Response, next: NextFunction) => {
-    res.status(200).render("activity");
-  }
-);
+router.get("/activity", activityAll);
 
 export default router;

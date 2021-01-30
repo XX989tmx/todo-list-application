@@ -1,9 +1,8 @@
+import { trashBoxAll } from './../controllers/trashBox-controllers';
 import express from 'express'
 
 const router = express.Router();
 
-router.get("/trashBox", async (req, res, next) => {
-  res.status(200).render("trashBox");
-});
+router.get("/trashBox",trashBoxAll);
 
 export default router;

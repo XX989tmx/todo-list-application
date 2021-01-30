@@ -1,9 +1,8 @@
+import { todayAll } from './../controllers/today-controllers';
 import express from 'express'
 
 const router = express.Router();
 
-router.get("/today", async (req, res, next) => {
-  res.status(200).render("today");
-});
+router.get("/today",todayAll);
 
 export default router;
