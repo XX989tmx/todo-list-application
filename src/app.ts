@@ -13,11 +13,16 @@ import path from "path";
 
 // const database = require("../utils/database");
 
-import {
-  Todo,
-  
-} from "./class/todo";
+import { Todo } from "./class/todo";
 import { NextFunction, Request, Response } from "express-serve-static-core";
+import homeRoutes from "./routes/home-routes";
+import inboxRoutes from "./routes/inbox-routes";
+import todoRooutes from "./routes/todo-rooutes";
+import authRoutes from "./routes/auth-routes";
+import activityRoutes from "./routes/activity-routes";
+import todayRoutes from "./routes/today-routes";
+import logbookRoutes from "./routes/logbook-routes";
+import trashBoxRoutes from "./routes/trashBox-routes";
 
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
@@ -36,6 +41,15 @@ app.use(express.static(__dirname + "/public"));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+app.use(homeRoutes);
+app.use(inboxRoutes);
+app.use(todoRooutes);
+app.use(activityRoutes);
+app.use(authRoutes);
+app.use(todayRoutes);
+app.use(logbookRoutes);
+app.use(trashBoxRoutes);
 // app.use(
 //   expressSession({
 //     secret: `${process.env.SESSION_SECRET}`,
@@ -46,229 +60,6 @@ app.use(bodyParser.json());
 // );
 // app.use(passport.initialize());
 // app.use(passport.session());
-
-app.get("/inbox", async (req: Request, res: Response, next: NextFunction) => {
-  // get todo data from database
-
-  //   // initialize todo class
-  //   const todo = new Todo("uuu", "www", 3, new Date(), new Date(), false, "1234");
-  //   console.log(todo);
-
-  //   const emptyTodoSchemaInstance = Todo.createTodoSchemaInstance();
-  //  const settedTodoSchemaInstance = Todo.setTodoSchema(emptyTodoSchemaInstance,todo);
-  //  console.log(settedTodoSchemaInstance);
-
-  //   // get inbox data from database
-
-  //   // initialize inbox class
-  //   const inbox = new Inbox();
-
-  //   inbox.add(todo);
-  //   console.log(inbox);
-  // let inbox = [
-  //   new Todo("todo1", "note11111111", 3, new Date(), new Date(), null),
-  //   new Todo("todo2", "note2", 2, new Date(), new Date(), null),
-  //   new Todo("todo3", "note3", 1, new Date(), new Date(), null),
-  // ];
-  const userId = "600ac39664b8571ed5b8ef2b";
-  const inbox: any = await InboxRoutesLogic.renderInbox(userId);
-  console.log(inbox);
-
-  // pass inbox data
-  res.status(200).render("inbox", { inbox: inbox.list });
-});
-
-app.post(
-  "/createTodo",
-  async (req: Request, res: Response, next: NextFunction) => {
-    const { title, notes, priority, scheduledDate, deadline } = req.body;
-
-    // // initialize todo class
-    // const todo = new Todo(title, notes, priority, scheduledDate, deadline);
-    console.log(req.body);
-
-    // // initialize inbox class
-    // const inbox = new Inbox();
-    // get inbox data from database;
-    // initialize inbox class with inbox data;
-    // update inbox class with todo data; inbox.addNewTodo(title, notes, priority, scheduledDate, deadline)
-    // initialize user class
-
-    // save todo to database
-    // todo save
-    // user save
-    // save inbox to database
-    // inbox save
-    // user save
-
-    const inbox = await CreateTodoRoutesLogic.create(req);
-
-    // let inbox = [
-    //   new Todo("todo1", "note11111111", 3, new Date(), new Date(), null),
-    //   new Todo("todo2", "note2", 2, new Date(), new Date(), null),
-    //   new Todo("todo3", "note3", 1, new Date(), new Date(), null),
-    //   new Todo(title, notes, priority, scheduledDate, deadline, null),
-    // ];
-    // const addedTodo = inbox[inbox.length - 1];
-    res.redirect("/inbox");
-    // res.status(200).render('inbox',{inbox})
-
-    // res.status(200).send({ m:1 });
-    // res.status(302).redirect("/inbox");
-  }
-);
-
-app.post("/updateTodo", async (req, res, next) => {
-  const {
-    title,
-    notes,
-    priority,
-    scheduledDate,
-    deadline,
-  } = req.body;
-  // const targetTodoId = req.params.targetTodoId;
-  const todoId = req.body['target-todo-id'].trim()
-  const userId = "600ac39664b8571ed5b8ef2b";
-  console.log(todoId);
-  console.log(req.body);
-  
-
-  //- Update の手順
-  // - targetTodoIdにマッチする todo schemaをデータベースから読み出す
-  // - todo instanceをinitialize
-  // - todo schemaをTodoInstanceにセットする
-  // - user input(req.body)のデータをtodo instanceにセットする（Update)
-  // - todo instanceの内容をtodo schemaに代入（スキーマUpdate)
-  // - todo schemaを保存
-  try {
-    const todo = new Todo(
-      title,
-      notes,
-      priority,
-      scheduledDate,
-      deadline,
-      null
-    );
-    todo.updateTodoSchema(todoId);
-  } catch (error) {
-    console.log(error);
-  }
-
-  // - Inboxスキーマをデータベースから読み出す
-  // - inboxスキーマ配列をループし、Inbox　インスタンスをInitialize＆セットし、Inbox　Instance配列を作る。
-  // - Inbox instance配列をInbox ejsのVariableとしてわたして、inbox ejsをrender
-
-  const inboxList: any = await InboxRoutesLogic.renderInbox(userId);
-
-  
-
-  // let inbox = [
-  //   new Todo("todo1", "note11111111", 3, new Date(), new Date(), null),
-  //   new Todo("todo2", "note2", 2, new Date(), new Date(), null),
-  //   new Todo("todo3", "note3", 1, new Date(), new Date(), null),
-  //   new Todo(title, notes, priority, scheduledDate, deadline, null),
-  // ];
-  // if page is inbox
-  res.status(200).render("inbox", { inbox: inboxList.list });
-});
-
-app.get("/completeTodo/:todoId", async (req, res, next) => {
-  const completedTodoId = req.params.todoId;
-  console.log(completedTodoId);
-  
-
-  // -*todo schemaの更新
-  // -todo schemaをデータベースから読み出す
-  // -todo schemaのisDone fieldをTrueにする
-  // *Inboxのlistから当該TOdoスキーマを削除 これはInbox routeで行われた際のアクションであり、もしtoday routeで行われた場合は、inboxではなくtoday list から削除をする
-  // - inboxスキーマをデータベースから読み出す
-  // -inbox instance をInitialize
-  // - instance methodでinbox listから当該todoIdに合致するtodoSchemaを削除（Filter or indexOf & splice)
-  // inbox instanceの状態をinbox schemaにセットしデータベースに保存
-  // *logbook スキーマのlistにtodo schemaを追加
-
-  // *Activity スキーマを更新
-
-
-  res.status(200).json({ a: 2 });
-});
-app.get("/moveToTrash/:todoId", async (req, res, next) => {
-  const movedToTrashTodoId = req.params.todoId;
-  console.log(movedToTrashTodoId);
-
-  res.status(200).json({ a: 3 });
-
-  // move todo into trashBox class
-});
-app.delete("/deleteTodo", async (req, res, next) => {
-  // delete todo doc permanently
-});
-
-app.get(
-  "/activity",
-  async (req: Request, res: Response, next: NextFunction) => {
-    res.status(200).render("activity");
-  }
-);
-
-app.post(
-  "/user/signup",
-  // passport.authenticate("local", {
-  //   successRedirect: "/",
-  //   failureRedirect: "/user/signup",
-  //   failureFlash: "サインアップに失敗しました",
-  //   successFlash: "サインアップに成功しました",
-  // }),
-  async (req: Request, res: Response, next: NextFunction) => {
-    // singup
-    const SignupLogic = new UserSignupRoutesLogic();
-    SignupLogic.signup(req);
-
-    res.status(200).json({ res: "signup succeed" });
-  }
-);
-
-app.post(
-  "/user/login",
-  // passport.authenticate("local", {
-  //   successRedirect: "/",
-  //   failureRedirect: "/user/login",
-  //   failureFlash: "ログインに失敗しました",
-  //   successFlash: "ログインに成功しました",
-  // }),
-  async (req, res, next) => {
-    // login
-    res.redirect("/user/" + "req.user.username");
-  }
-);
-
-app.get("/today", async (req, res, next) => {
-  res.status(200).render("today");
-});
-
-app.get("/whatToDoNext", async (req, res, next) => {
-  res.status(200).render("whatToDoNext");
-});
-
-app.get("/log", async (req, res, next) => {
-  res.status(200).render("log");
-});
-
-app.get("/trashBox", async (req, res, next) => {
-  res.status(200).render("trashBox");
-});
-// database.getConnection((err) => {
-//     if (err) console.log(err);
-//     connection.release();
-// })
-// database
-//   .execute("SELECT * FROM todo")
-//   .then((result) => {
-//     console.log(result);
-//   })
-//   .catch((err) => {
-//     console.log(err);
-//   });
 
 app.use((req, res, next) => {
   res.status(404).render("404");
