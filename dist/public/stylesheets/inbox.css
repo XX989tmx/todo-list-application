@@ -255,3 +255,25 @@ Body {
 .login-form-container {
   margin-top: 20px;
 }
+
+
+.navbar { 
+    background-color: #001e60;
+}
+.navbar.collapse {
+    display:flex;
+}
+
+/*  change navbar li colors, also active one but not disabled one */
+.navbar ul.navbar-nav li.nav-item a.nav-link {
+  color: white;
+}
+
+/* change navbar-brand color */
+/* .navbar a.navbar-brand {
+  color: white;
+} */
+/* change navbar-brand color on hover */
+/* .navbar a.navbar-brand:hover {
+  color: yellow;
+} */

@@ -1,20 +1,42 @@
 <header class="header-style">
-  <nav class="navbar">
-    <a href="http://localhost:8080/home">Home</a>
-    <div>
-      <span></span>
-      <span></span>
-      <span></span>
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#collapsableNavbarContents"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <a class="navbar-brand" href="http://localhost:8080/home">Home</a>
+      <div class="collapse navbar-collapse " id="collapsableNavbarContents">
+        <ul class="navbar-nav  me-auto mb-2 mb-lg-0">
+          <li class="nav-item"></li>
+          <li class="nav-item"><a class="nav-link" href="http://localhost:8080/inbox">Inbox</a></li>
+          <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            ダッシュボード
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <li><a class="dropdown-item" href="http://localhost:8080/inbox">Inbox</a></li>
+            <li><a class="dropdown-item" href="http://localhost:8080/today">Today</a></li>
+            <li><a class="dropdown-item" href="http://localhost:8080/whatToDoNext">Next</a></li>
+            <li><a class="dropdown-item" href="http://localhost:8080/activity">Activity</a></li>
+            <li><a class="dropdown-item" href="http://localhost:8080/logbook">Logbook</a></li>
+            <li><a class="dropdown-item" href="http://localhost:8080/trashBox">TrashBox</a></li>
+          </ul>
+        </li>
+          <li class="nav-item">
+            <a class="nav-link" href="http://localhost:8080/user/signup_page">サインアップ</a>
+          </li class="nav-item">
+          <li class="nav-item"><a class="nav-link" href="http://localhost:8080/user/login_page">ログイン</a></li>
+        </ul>
+      </div>
     </div>
-    <ul class="navbar-nav">
-      <li></li>
-      <li><a href="http://localhost:8080/inbox">Inbox</a></li>
-      <li><a href="http://localhost:8080/user/signup_page">サインアップ</a></li>
-      <li><a href="http://localhost:8080/user/login_page">ログイン</a></li>
-    </ul>
-    <ul class="navbar-nav">
-      <li></li>
-      <li></li>
-    </ul>
   </nav>
 </header>
