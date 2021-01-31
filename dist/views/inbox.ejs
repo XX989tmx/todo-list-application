@@ -9,13 +9,13 @@
   <body>
     <%- include('./partials/_header.ejs') %>
     <main class="main">
-      <div class="container-md fluid">
+      <div class="container fluid">
         <div class="row">
           <!-- 以下はパーシャル化
              -->
 
           <%- include('./partials/_sidebar.ejs') %>
-          <div class="main-area col-xs-9 col-sm-8 col-md-9">
+          <div class="main-area col-xs-12 col-sm-12 col-md-9">
             <!-- main section -->
             <div class="main-area-inner">
               <div class="row">
@@ -61,7 +61,7 @@
                 </div>
               </div>
               <div id="main-section" class="main-section row">
-                <div class="col-12">
+                <div class="col">
                   <ul
                     class="margin-and-padding-0 list-style-none list-group todo-item-list-ul" id="todo-container"
                   >
@@ -70,7 +70,7 @@
                     ?"todoColorPriority1" : todo.priority === 2
                     ?"todoColorPriority2" :"todoColorPriority3" %> ">
                     <div class="todo-items row">
-                      <div class="col-1">
+                      <div class="col-1 col-sm-1 col-md-1">
                         <input
                           class="todo-checkbox"
                           type="checkbox"
@@ -78,7 +78,7 @@
                           id="<%- todo.id %> "
                         />
                       </div>
-                      <div class="col-1" id="todo-priority">
+                      <div class="col-1 col-sm-1 col-md-1" id="todo-priority">
                         <% if (todo.priority === 3) { %>
                         <span class="priority3"><%= todo.priority %> </span>
                         <% } else if (todo.priority === 2) { %>
@@ -89,7 +89,7 @@
                         <% } %>
                       </div>
                       <div
-                        class="col-6"
+                        class="col-10 col-sm-10 col-md-6"
                         id="todo-item"
                         data-toggle="collapse"
                         data-target="#todo-item-collapse"
@@ -101,7 +101,7 @@
                         </span>
                       </div>
 
-                      <div class="today-icon col-1" >
+                      <div class="today-icon col-3 col-sm-3 col-md-1" >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="16"
@@ -136,7 +136,7 @@
                           />
                         </svg>
                       </div>
-                      <div class="drag-button col-1" id="drag-button">
+                      <div class="drag-button col-3 col-sm-3 col-md-1" id="drag-button">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="16"
@@ -167,7 +167,7 @@
                         </svg>
                       </div>
                       <div
-                        class="col-1 update-todo-modal-trigger-button"
+                        class="col-3 col-sm-3 col-md-1 update-todo-modal-trigger-button"
                         id="<%- todo.id %> "
                         data-toggle="modal"
                         data-target="#update-todo-input-modal"
@@ -218,7 +218,7 @@
                       <div
                         id="<%- todo.id %>
                                                               "
-                        class="col-1 delete-todo "
+                        class="col-3 col-sm-3 col-md-1 delete-todo "
                         data-toggle="popover"
                         data-content="delete
                                                               todo"
