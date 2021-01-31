@@ -12,6 +12,8 @@ export const signup = async (
   res: Response,
   next: NextFunction
 ) => {
+    console.log(req.body);
+    
   // singup
   const SignupLogic = new UserSignupRoutesLogic();
   SignupLogic.signup(req);
@@ -20,5 +22,6 @@ export const signup = async (
 };
 
 export const login = async(req:Request,res:Response,next:NextFunction) => {
+    console.log(req.body);
     res.status(200).json({res:"login"})
 }

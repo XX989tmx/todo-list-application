@@ -47,6 +47,7 @@ var userSignupRoutesLogic_1 = require("../class/userSignupRoutesLogic");
 var signup = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
     var SignupLogic;
     return __generator(this, function (_a) {
+        console.log(req.body);
         SignupLogic = new userSignupRoutesLogic_1.UserSignupRoutesLogic();
         SignupLogic.signup(req);
         res.status(200).json({ res: "signup succeed" });
@@ -56,6 +57,7 @@ var signup = function (req, res, next) { return __awaiter(void 0, void 0, void 0
 exports.signup = signup;
 var login = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
+        console.log(req.body);
         res.status(200).json({ res: "login" });
         return [2 /*return*/];
     });

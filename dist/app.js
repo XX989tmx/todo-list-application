@@ -16,6 +16,7 @@ var activity_routes_1 = __importDefault(require("./routes/activity-routes"));
 var today_routes_1 = __importDefault(require("./routes/today-routes"));
 var logbook_routes_1 = __importDefault(require("./routes/logbook-routes"));
 var trashBox_routes_1 = __importDefault(require("./routes/trashBox-routes"));
+var users_routes_1 = __importDefault(require("./routes/users-routes"));
 if (process.env.NODE_ENV !== "production") {
     require("dotenv").config();
 }
@@ -39,6 +40,7 @@ app.use(auth_routes_1.default);
 app.use(today_routes_1.default);
 app.use(logbook_routes_1.default);
 app.use(trashBox_routes_1.default);
+app.use(users_routes_1.default);
 // app.use(
 //   expressSession({
 //     secret: `${process.env.SESSION_SECRET}`,

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Home page</title>
+    <title>login page</title>
     <%- include('./partials/_head.ejs') %>
     <link href="/stylesheets/inbox.css" rel="stylesheet" type="text/css" />
   </head>
@@ -13,8 +13,40 @@
           <!-- 以下はパーシャル化
              -->
 
-          <div class="home-page-main-section main-area col-xs-9 col-sm-8 col-md-9"></div>
-          
+          <div class="side-login-area col-xs-3 col-sm-4 col-md-3">
+            <div class="row">
+              <div class="col login-form-container">
+                <form action="/auth/login" method="POST">
+                  <div class="mb-3">
+                    <label for="email-input" class="form-label">Email</label>
+                    <input
+                      type="email"
+                      name="email"
+                      class="form-control"
+                      id="email-input"
+                    />
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="password-input" class="form-label"
+                      >password</label
+                    >
+                    <input
+                      class="form-control"
+                      type="password"
+                      name="password"
+                      id="pasword-input"
+                    />
+                  </div>
+
+                  <div class="mb-3">
+                    <div><button type="submit">Login</button></div>
+                    <div><a href="">Signup</a></div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </main>

@@ -23,6 +23,7 @@ import activityRoutes from "./routes/activity-routes";
 import todayRoutes from "./routes/today-routes";
 import logbookRoutes from "./routes/logbook-routes";
 import trashBoxRoutes from "./routes/trashBox-routes";
+import usersRoutes from "./routes/users-routes";
 
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
@@ -50,6 +51,7 @@ app.use(authRoutes);
 app.use(todayRoutes);
 app.use(logbookRoutes);
 app.use(trashBoxRoutes);
+app.use(usersRoutes);
 // app.use(
 //   expressSession({
 //     secret: `${process.env.SESSION_SECRET}`,
