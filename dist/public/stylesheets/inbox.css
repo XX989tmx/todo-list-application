@@ -3,6 +3,10 @@ Body {
     system-ui, Roboto, "Helvetica Neue", sans-serif;
 }
 
+.minHeight {
+  min-height: 100vh;
+}
+
 .main {
   margin-top: 5px;
 }
@@ -140,6 +144,7 @@ Body {
   width: 100%;
   z-index: 100;
   box-shadow: 3px 2px 4px grey;
+  color: white;
 }
 
 /* .footer-style {
